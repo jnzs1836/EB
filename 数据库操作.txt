@@ -1,0 +1,74 @@
+create user owner@localhost identified with mysql_native_password by "123456";
+grant all privileges on *.* to owner@localhost;
+flush privileges; 
+以上为pymysql支持的用户格式
+
+create database EB;
+
+create table user(
+	user_name varchar(20) primary key,
+	user_password varchar(40) not null,
+	telephone varchar(15) not null,
+	user_type char(1) not null,
+	start_time datetime,
+	day_left int	
+);
+账号表格，user_type是"L"或者"H"
+密码以md5储存
+
+DELIMITER $
+create trigger user_limit before insert
+on user for each row
+begin
+if new.type not in ("L", "H")
+then signal sqlstate '45000';
+end if;
+end $
+DELIMITER ;
+建立user_type的触发器
+
+create table login_log(
+	user_name varchar(20),
+	date datetime not null,
+	state char(1) not null,
+	foreign key (user_id) references user(user_name)
+);
+登录日志，状态为"S"或者"F"
+
+DELIMITER $
+create trigger login_log_limit before insert
+on login_log for each row
+begin
+if new.state not in ("S", "F")
+then signal sqlstate '45000';
+end if;
+end $
+DELIMITER ;
+登录日志的触发器
+
+create table vip_log(
+	user_name varchar(20),
+	date datetime not null,
+	foreign key (user_id) references user(user_name)
+);
+账号充值的日志
+
+
+create table today_stock(
+	stock_ID char(10) primary key,
+	stock_name char(20) not null,
+	price decimal(5,2) not null,
+	date datetime not null 
+);
+今日股票价格
+
+create table previous_stock(
+	stock_ID char(10) primary key,
+	stock_name char(20) not null,
+	start_price decimal(5,2) not null, 
+	end_price decimal(5,2) not null,   
+	max_price decimal(5,2) not null, 
+	min_price decimal(5,2) not null, 
+	date datetime not null 
+);
+历史股票价格
