@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-    <title>股票交易系统</title>
+    <title>密码找回</title>
 
 
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
@@ -43,17 +43,33 @@
 </head>
 <body>
 
-    <form action="/" method="post" class="myForm">
+    <div>
+        <a href="/">返回</a>
+    </div>
+
+    <form action="/retrieve" method="post" class="myForm">
         <h3 class="page-title">登录</h3>
         <div class="form-container">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="用户名" name="username" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" name="password" required>
+                <input type="number" class="form-control" placeholder="手机号码" name="telephone" required>
+            </div>
+            <div>
+                <button>发送验证码</button>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">登录</button>
+                <input type="number" class="form-control" placeholder="验证码" name="verification" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="请输入新密码" name="password1" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="再次输入新密码" name="password2" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">修改密码</button>
             </div>
         </div>
     </form>

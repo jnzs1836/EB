@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-    <title>股票交易系统</title>
+{% extends 'base.html' %}
 
+{% block title %}
+    主页
+{% endblock %}
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+{% block c1%}active{% endblock %}
 
+{% block head%}
     <style>
-        .form-container{
-            width: 300px;
-            margin: 0 auto;
-        }
-        .page-title{
-            text-align: center;
+        #d1
+        {
+            width: 450px;
+            margin:0 auto;
         }
         #d4
         {
@@ -30,34 +21,31 @@
             font-size: 40px;
             text-align:center;
         }
-    </style>
-
-    <script>
-        function jump()
+        #myForm
         {
-            window.location.href="/query";
+            font-size: 20px;
+            margin-bottom: 10px;
         }
-    </script>
+        #b1
+        {
+            width: 340px;
+            margin-top: 10px;
+        }
+        #l
+        {
+            width: 100px;
+        }
+    </style>
+{% endblock %}
 
-
-</head>
-<body>
-
-    <form action="/" method="post" class="myForm">
-        <h3 class="page-title">登录</h3>
-        <div class="form-container">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="用户名" name="username" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" name="password" required>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">登录</button>
-            </div>
-        </div>
-    </form>
-
+{% block main %}
+    <div id="d1">
+        <form id="myForm" method="post" action="/borrow">
+            <label for="card_id" id="l">借书证号:</label>
+            <input name="card_id" id="card_id" required>
+            <button type="submit" class="btn btn-primary btn-block" id="b1">提交</button>
+        </form>
+    </div>
 
     {% for v in get_flashed_messages(category_filter=['err']) %}
         <div id="d4">
@@ -65,7 +53,39 @@
         </div>
     {% endfor %}
 
+    <div class="container" id="d3">
+        <div class="row">
+                {% if presentResults %}
+                <table>
+                    <caption>查询结果</caption>
+                    <thead>
+                        <tr>
+                            <th>股票代码</th>
+                            <th>股票名称</th>
+                            <th>价格</th>
+                            <th>涨幅</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for i in presentResults %}
+                        <tr>
+                            <td>{{ i[0] }}</td>
+                            <td>{{ i[1] }}</td>
+                            <td>{{ i[2] }}</td>
+                            <td>{{ i[3] }}</td>
+                        </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+                <nav aria-label="Page navigation" class="pull-right">
+                    <ul class="pagination">
+                        {{ html|safe }}
+                    </ul>
+                </nav>
+        </div>
+    </div>
+
+{% endblock %}
 
 
-</body>
-</html>

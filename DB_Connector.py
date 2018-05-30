@@ -130,5 +130,39 @@ def Renew(user_name, duration):
         dbForOwner.close()
         return flag
 
+def get_type(user_name):
+    # 打开数据库连接
+    dbForOwner = pymysql.connect(user="owner",
+                                 password="123456",
+                                 db="EB",
+                                 host="localhost",
+                                 charset='utf8mb4')
+    flag = 0
+    sql = "select type from user where user_name=%s"
+    args = [user_name, ]
 
+    cur = dbForOwner.cursor()
 
+    try:
+        cur.execute(sql, args)
+        results = cur.fetchall()
+        user_type = results[0]
+        flag = 1
+
+    except Exception as e:
+        flag = 0
+
+    finally:
+        dbForOwner.close()
+        if flag:
+            return user_type
+        else:
+            return flag
+
+# 主页显示所有股票价格
+def query_all():
+    pass
+
+# 查询某一股票的价格,name为ID或者名字,option选择名字还是ID
+def query(name, option):
+    pass
