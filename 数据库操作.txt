@@ -20,7 +20,7 @@ DELIMITER $
 create trigger user_limit before insert
 on user for each row
 begin
-if new.type not in ("L", "H")
+if new.user_type not in ("L", "H")
 then signal sqlstate '45000';
 end if;
 end $
@@ -31,7 +31,7 @@ create table login_log(
 	user_name varchar(20),
 	date datetime not null,
 	state char(1) not null,
-	foreign key (user_id) references user(user_name)
+	foreign key (user_name) references user(user_name)
 );
 登录日志，状态为"S"或者"F"
 
@@ -48,14 +48,16 @@ DELIMITER ;
 
 create table vip_log(
 	user_name varchar(20),
-	date datetime not null,
-	foreign key (user_id) references user(user_name)
+	start_time date not null,
+	duration int not null,
+	foreign key (user_name) references user(user_name)
 );
 账号充值的日志
+duration以月为单位，30天。
 
 
 create table today_stock(
-	stock_ID char(10) primary key,
+	stock_id char(10) primary key,
 	stock_name char(20) not null,
 	price decimal(5,2) not null,
 	date datetime not null 
@@ -63,7 +65,7 @@ create table today_stock(
 今日股票价格
 
 create table previous_stock(
-	stock_ID char(10) primary key,
+	stock_id char(10) primary key,
 	stock_name char(20) not null,
 	start_price decimal(5,2) not null, 
 	end_price decimal(5,2) not null,   

@@ -36,14 +36,19 @@
             width: 100px;
         }
     </style>
+
+    {% for jsfile_name in script_list %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+
 {% endblock %}
 
 {% block main %}
     <div id="d1">
-        <form id="myForm" method="post" action="/borrow">
-            <label for="card_id" id="l">借书证号:</label>
-            <input name="card_id" id="card_id" required>
-            <button type="submit" class="btn btn-primary btn-block" id="b1">提交</button>
+        <form id="myForm" method="post" action="/query">
+            <label for="stock" id="l">股票代码或股票名字:</label>
+            <input name="stock" id="stock" required>
+            <button type="submit" class="btn btn-primary btn-block" id="b1">查询</button>
         </form>
     </div>
 
@@ -52,6 +57,9 @@
             <p style="color:red;"><strong>{{ v }}</strong></p>
         </div>
     {% endfor %}
+
+
+    {{ myechart|safe }}
 
     <div class="container" id="d3">
         <div class="row">

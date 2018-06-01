@@ -3,6 +3,8 @@ import DB_Connector as DB
 import config
 from urllib.parse import urlencode
 from pager import Pagination
+import random
+from pyecharts import Kline
 
 app = Flask(__name__)
 
@@ -13,6 +15,9 @@ UPLOAD_FOLDER = "./static" # 预留
 
 # 存查询结果，为了分页用
 r = []
+
+# 画图用
+REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
 # 登录
 @app.route('/', methods=['GET', 'POST'])
@@ -86,7 +91,21 @@ def home():
             user_type = "账户续费"
         else:
             user_type = "账户升级"
-        # 显示大盘曲线
+
+        # 显示大盘曲线 这里模拟一些数据
+        a = []
+        for i in range(20):
+            b = []
+            n = int(random.random() * 100)
+            b.append(n)
+            b.append(n + int(random.uniform(1.1, 10.1) * 100) / 100.0 - 6)
+            b.append(n + int(random.uniform(1.1, 11.2) * 100) / 100.0 - 6)
+            b.append(n + int(random.uniform(1.1, 10.5) * 100) / 100.0 - 6)
+            a.append(b)
+        kline = Kline("K 线图示例")
+        kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a)
+
+
 
         # 显示所有股票的代码、名字、价格、涨幅
         # 下面是分页的模板
@@ -100,12 +119,15 @@ def home():
         get_dict = request.args.to_dict()
         path = urlencode(get_dict)  # 转化成urlencode格式的
         get_dict["_list_filter"] = path
-        return render_template("home.html", user_type=user_type, presentResults=presentResults, html=html)
+        return render_template("home.html", user_type=user_type, presentResults=presentResults, html=html,
+                                myechart=kline.render_embed(),
+                                host=REMOTE_HOST,
+                                script_list=kline.get_js_dependencies())
 
 # 修改密码
 @app.route('/modify', methods=['GET','POST'])
 def modify():
-    if request.method=='POST':  # 注册
+    if request.method=='POST':  # 修改密码
         if DB.Modify(request.form['username'], request.form['password2'])==1:
             return redirect(url_for('login'))
         else:
@@ -117,7 +139,7 @@ def modify():
 # 账号升级或续费
 @app.route('/renew', methods=['GET','POST'])
 def renew():
-    if request.method=='POST':  # 注册
+    if request.method=='POST':  # 账号升级
         if DB.Modify(request.form['username'], request.form['password'])==1:
             return redirect(url_for('login'))
         else:
