@@ -20,24 +20,24 @@ r = []
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
 # 登录
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST']) # "/" 说明url为"http://127.0.0.1:5000/"调用这个函数，接受post和get两个请求
 def login():
-    if request.method=='POST':  # 登录
+    if request.method=='POST':  # 登录     当为post请求时，即发送表单时
         if DB.Login(request.form['username'], request.form['password'])==1: # 列出所有账号密码，再进行查询确定
             session.clear()
             session["username"] = request.form['username']
             session["password"] = request.form['password']
             session.permanent = True
-            return render_template("index.html")
+            return render_template("index.html")    # 账号密码正确，返回一个html网页
         else:
             flash("用户名或密码错误！！", 'err')
-            return redirect(url_for('login'))
+            return redirect(url_for('login'))   # 账号密码错误，提示错误信息，再次返回到登录页面，即再次调用login()函数
     else:   # 把账号密码记录清除
         if session.get("username"):
             session.pop("username")
         if session.get("password"):
             session.pop("password")
-        return render_template("login.html")
+        return render_template("login.html")    # 除了post请求外，比如随便输入网站进去，返回登录页面
 
 
 # 注册页面
