@@ -44,11 +44,11 @@
 <body>
 
     <div>
-        <a href="/register">注册</a>
+        <a href="{{ url_for('register') }}">注册</a>
     </div>
 
     <div>
-        <a href="/retrieve">密码找回</a>
+        <a href="{{ url_for('retrieve') }}">密码找回</a>
     </div>
 
     <form action="/" method="post" class="myForm">

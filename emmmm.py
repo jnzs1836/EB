@@ -34,4 +34,4 @@ def Register(user_name, user_password, telephone):
         dbForOwner.close()
         return flag
 
-Register("chen", "123456", "15068831024")
+Register("xin", "123456", "15068831024")

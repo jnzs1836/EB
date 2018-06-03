@@ -178,12 +178,13 @@ def login_log(user_name, state): # 输入用户名以及登录状态
     present_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     sql = "insert into login_log values(%s, %s, %s)"
-    agrs = [user_name, present_time, state]
+    args = [user_name, present_time, state]
 
     cur = dbForOwner.cursor()
 
     try:
-        cur.execute(sql, agrs) # 写入数据库
+        cur.execute(sql, args) # 写入数据库
+        dbForOwner.commit()
         flag = 1
 
     except Exception as e:

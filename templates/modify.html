@@ -44,7 +44,7 @@
 <body>
 
     <div>
-        <a href="/home">返回</a>
+        <a href="{{ url_for('home') }}">返回</a>
     </div>
 
     <form action="/modify" method="post" class="myForm">
@@ -71,6 +71,7 @@
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">登录</button>
             </div>
+
         </div>
     </form>
 

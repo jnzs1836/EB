@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-    <title>股票交易系统</title>
+{% extends 'base.html' %}
 
+{% block title %}
+    {{ user_type }}
+{% endblock %}
 
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+{% block c1%}active{% endblock %}
 
+{% block head%}
     <style>
-        .form-container{
-            width: 300px;
-            margin: 0 auto;
-        }
-        .page-title{
-            text-align: center;
+        #d1
+        {
+            width: 450px;
+            margin:0 auto;
         }
         #d4
         {
@@ -30,27 +21,55 @@
             font-size: 40px;
             text-align:center;
         }
+        #myForm
+        {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        #b1
+        {
+            width: 340px;
+            margin-top: 10px;
+        }
+        #l
+        {
+            width: 100px;
+        }
     </style>
 
-    <script>
-        function jump()
-        {
-            window.location.href="/query";
-        }
-    </script>
+    {% for jsfile_name in script_list %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
 
+{% endblock %}
 
-</head>
-<body>
+{% block main %}
 
-    <form action="/" method="post" class="myForm">
+    <div>
+        <a href="{{ url_for('home') }}">返回</a>
+    </div>
+
+    <form action="/renew" method="post" class="myForm">
         <h3 class="page-title">登录</h3>
         <div class="form-container">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="用户名" name="username" required>
+                <label style="width:120px;">请选择时长:</label>
+                <select name="select" required>
+                    <option>1个月</option>
+                    <option>3个月</option>
+                    <option>6个月</option>
+                    <option>12个月</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="手机号码" name="telephone" required>
+            </div>
+            <div>
+                <button>发送验证码</button>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" name="password" required>
+                <input type="number" class="form-control" placeholder="验证码" name="verification" required>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">登录</button>
@@ -58,14 +77,4 @@
         </div>
     </form>
 
-
-    {% for v in get_flashed_messages(category_filter=['err']) %}
-        <div id="d4">
-            <p style="color:red;"><strong>{{ v }}</strong></p>
-        </div>
-    {% endfor %}
-
-
-
-</body>
-</html>
+{% endblock %}
