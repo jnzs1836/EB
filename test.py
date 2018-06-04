@@ -4,12 +4,15 @@ from pyecharts import Kline
 from flask import Flask, render_template
 
 
+import time
+
+
 app = Flask(__name__)
 
 
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
-@app.route("/")
+@app.route("/graph")
 def g():
     a = []
     for i in range(20):
@@ -28,6 +31,34 @@ def g():
         host=REMOTE_HOST,
         script_list=kline.get_js_dependencies(),
     )
+
+n = 1
+
+@app.route("/")
+def home():
+    global n
+    time.sleep(1)
+    n += 1
+    return render_template("test.html")
+
+
+@app.route("/1")
+def t1():
+    global n
+    time.sleep(1)
+    n += 1
+    return render_template("test2.html")
+
+@app.route("/2")
+def t2():
+    global n
+    time.sleep(1)
+    n += 1
+    return render_template("test3.html")
+
+@app.context_processor
+def emm():
+    return {"n": n}
 
 
 if __name__ == "__main__":
