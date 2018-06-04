@@ -1,4 +1,5 @@
 # EB
+<<<<<<< HEAD
 *软工基股票交易系统*  
 *Chen Xin*
 
@@ -18,3 +19,13 @@
       * DB_Connector.py 连接数据库
       * pager.py 分页类
       * config.py 配置文件
+=======
+# 软工基股票交易系统
+# Chen Xin
+
+1. 下载mysql8.0、PyCharm
+2. 根据数据库操作.txt里创建适合pymysql的user
+3. 利用emmmm.py注册一个用户，注意下面改账号密码，默认账号chen，密码123456
+4. mian.py里面运行
+5. http://127.0.0.1:5000 进入登录页面
+>>>>>>> d00bb0e38f09a4d738d28fec0dcd3ce7f0ab7f2d
