@@ -56,8 +56,15 @@ create table vip_log(
 duration以月为单位，30天。
 
 
+
+//获得 最新成交价格和当前购买指令的最高价格
+def get_stock_info(stock_id):
+	dic = {"latest_price":"", "buy_highest_price":""}
+	return dic
+
+
 create table today_stock(
-	stock_id char(10) primary key,
+	stock_id char(10),
 	stock_name char(20) not null,
 	price decimal(5,2) not null,
 	date datetime not null 
@@ -65,7 +72,7 @@ create table today_stock(
 今日股票价格
 
 create table previous_stock(
-	stock_id char(10) primary key,
+	stock_id char(10),
 	stock_name char(20) not null,
 	start_price decimal(5,2) not null, 
 	end_price decimal(5,2) not null,   
@@ -74,3 +81,46 @@ create table previous_stock(
 	date datetime not null 
 );
 历史股票价格
+
+
+create table notice(
+    stock_id char(10),
+    stock_notice varchar(10000)
+);
+公告
+
+
+####################################################################
+和交易客户端交互
+
+POST请求  路由为/stock
+{
+	"code": "123",
+	"name": "ABC"
+}
+//返回
+{
+	"latest_price": "", //最新成交价格
+	"buy_highest_price": "",  //当前购买指令的最高价格
+	"sale_lowest_price": "", //当前出售的最低价格
+	"today_price": { //当日最高，最低成交价格
+		"highest_price":"",
+		"lowest_price":"",
+	},
+	"week_price": { //本周最高，最低成交价格
+		"highest_price":"",
+		"lowest_price":"",
+	},
+	"month_price": { //本月最高，最低成交价格
+		"highest_price":"",
+		"lowest_price":"",
+	},
+	"stock_info":"", //股票的重要公告
+}
+
+####################################################################
+和中央交易系统间的交互
+//获得 最新成交价格 和 当前购买指令的最高价格 和 当前出售的最低价格
+def get_stock_info(stock_id):
+	dic = {"latest_price":"", "buy_highest_price":"", "sale_lowest_price":""}
+	return dic

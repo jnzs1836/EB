@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import DB_Connector as DB
 import config
 from urllib.parse import urlencode
@@ -6,6 +6,7 @@ from pager import Pagination
 import random
 from pyecharts import Kline
 from functools import wraps
+import json
 
 app = Flask(__name__)
 
@@ -18,6 +19,51 @@ app.config.from_object(config)  # 配置文件
 # 画图用
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
+
+##################################################################################################################
+# 中央交易系统给我们提供的函数，我这里随便模拟数据
+def get_stock_info(stock_id):
+    dic = {"latest_price": "1.11", "buy_highest_price": "2.22", "sale_lowest_price": "3.33"}
+    return dic
+
+
+# 输入股票名字模糊查找
+def get_info_name(stock_name):
+    # 根据股票名字进行模糊查找，得到最匹配的一个股票的id
+    stock_id = ""
+    dic = get_info_id(stock_id)
+    return dic
+
+
+# 输入股票id精确查找
+def get_info_id(stock_id):
+    dic = {}
+    tmp = get_stock_info(stock_id)
+    dic["latest_price"] = tmp["latest_price"]
+    dic["buy_highest_price"] = tmp["buy_highest_price"]
+    dic["sale_lowest_price"] = tmp["sale_lowest_price"]
+    dic["today_price"] = {"highest_price":"", "lowest_price":""}
+    dic["week_price"] = {"highest_price":"", "lowest_price":""}
+    dic["month_price"] = {"highest_price":"", "lowest_price":""}
+    dic["stock_info"] = ""
+    return dic
+
+
+# 提供给交易客户端的端口
+@app.route('/stock', methods=['POST'])
+def send_stock_info():
+    if request.method == 'POST':
+        data = json.loads(request.get_data())
+        stock_id = data["code"]
+        stock_name = data["name"]
+        return_data = {}
+        if stock_id and stock_name == "":
+            return_data = get_info_id(stock_id)
+        if stock_name and stock_id == "":
+            return_data = get_info_name(stock_name)
+
+        return jsonify(return_data)
+##################################################################################################################
 
 # 登录
 @app.route('/', methods=['GET', 'POST'])  # "/" 说明url为"http://127.0.0.1:5000/"调用这个函数，接受post和get两个请求
@@ -211,4 +257,5 @@ def show_type():
 if __name__ == "__main__":
     # app.run(port=1234)
     # 看情况换端口
+    # app.run(host="0.0.0.0") 换成这ip，则校内所有人都可以访问，可用于测试
     app.run()
