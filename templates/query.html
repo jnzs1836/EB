@@ -37,7 +37,19 @@
         }
     </style>
 
-    {% for jsfile_name in script_list %}
+    {% for jsfile_name in script_list1 %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+
+    {% for jsfile_name in script_list2 %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+
+    {% for jsfile_name in script_list3 %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+
+    {% for jsfile_name in script_list4 %}
         <script src="{{ host }}/{{ jsfile_name }}.js"></script>
     {% endfor %}
 
@@ -61,8 +73,19 @@
         </div>
     {% endfor %}
 
-    <!-- 大盘曲线预留 -->
-    {{ myechart|safe }}
+    <!-- 当日 -->
+    {{ myechart1|safe }}
+
+    <!-- 日k -->
+    {{ myechart2|safe }}
+
+    <!-- 月k -->
+    {{ myechart3|safe }}
+
+    <!-- 年k -->
+    {{ myechart4|safe }}
+
+
 
     <!-- 所有股票信息显示预留 -->
     <div class="container" id="d3">

@@ -4,7 +4,7 @@ import config
 from urllib.parse import urlencode
 from pager import Pagination
 import random
-from pyecharts import Kline
+from pyecharts import Kline, Line, Overlap
 from functools import wraps
 import json
 
@@ -46,6 +46,7 @@ def get_info_id(stock_id):
     dic["week_price"] = {"highest_price":"", "lowest_price":""}
     dic["month_price"] = {"highest_price":"", "lowest_price":""}
     dic["stock_info"] = ""
+    dic["current_price"] = ""
     return dic
 
 
@@ -65,19 +66,22 @@ def send_stock_info():
         return jsonify(return_data)
 ##################################################################################################################
 
+
 # 登录
 @app.route('/', methods=['GET', 'POST'])  # "/" 说明url为"http://127.0.0.1:5000/"调用这个函数，接受post和get两个请求
 def login():
-    session.clear()
+    if session.get("username"):
+        session.pop("username", None)
+
     if request.method == 'POST':  # 登录     当为post请求时，即发送表单时
         if DB.Login(request.form['username'], request.form['password']) == 1:  # 列出所有账号密码，再进行查询确定
             session["username"] = request.form['username']
             session.permanent = True
-            DB.login_log(request.form['username'], "S")
+            DB.login_log(request.form['username'], "S")  # 登录成功日志
             return redirect(url_for("home"))
         else:
-            DB.login_log(request.form['username'], "F")
-            flash("用户名或密码错误！！", 'err')
+            DB.login_log(request.form['username'], "F")  # 登录失败日志
+            flash("用户名或密码错误", 'err')
             return redirect(url_for('login'))   # 账号密码错误，提示错误信息，再次返回到登录页面，即再次调用login()函数
     else:
         return render_template("login.html")    # 除了post请求外，比如随便输入网站进去，返回登录页面
@@ -86,7 +90,9 @@ def login():
 # 注册页面
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    session.clear()  # 清除session
+    if session.get("username"):
+        session.pop("username", None)
+
     if request.method == 'POST':  # 注册
         if DB.Register(request.form['username'], request.form['password1'], request.form['telephone']) == 1:
             return redirect(url_for('login'))
@@ -100,7 +106,9 @@ def register():
 # 密码找回
 @app.route('/retrieve', methods=['GET', 'POST'])
 def retrieve():
-    session.clear()
+    if session.get("username"):
+        session.pop("username", None)
+
     if request.method == 'POST':  # 密码找回
         if DB.Modify(request.form['username'], request.form['password1'])==1:
             return redirect(url_for('login'))
@@ -219,22 +227,81 @@ def query():
         # 预留
         # 显示股票曲线 这里模拟一些数据
         # 根据用户类型显示k线
-        a = []
-        for i in range(20):
-            b = []
-            n = int(random.random() * 100)
-            b.append(n)
-            b.append(n + int(random.uniform(1.1, 10.1) * 100) / 100.0 - 6)
-            b.append(n + int(random.uniform(1.1, 11.2) * 100) / 100.0 - 6)
-            b.append(n + int(random.uniform(1.1, 10.5) * 100) / 100.0 - 6)
-            a.append(b)
-        kline = Kline("K 线图示例")
-        kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a)
+
+        x1 = []
+        y1 = []
+        day_kline = Kline("日K线图")
+        day_kline.add("日K", x1, y1, is_datazoom_show=True, is_toolbox_show=False)
+
+        x2 = []
+        y2 = []
+        month_kline = Kline("月K线图")
+        month_kline.add("月K", x2, y2, is_datazoom_show=True, is_toolbox_show=False)
+
+        x3 = []
+        y3 = []
+        year_kline = Kline("月K线图")
+        year_kline.add("年K", x3, y3, is_datazoom_show=True, is_toolbox_show=False)
+
+        x_pma_5 = []
+        y_pma_5 = []
+        pma_5 = Line()
+        pma_5.add("5 PMA", x_pma_5, y_pma_5, is_datazoom_show=True, is_toolbox_show=False)
+
+        x_pma_10 = []
+        y_pma_10 = []
+        pma_10 = Line()
+        pma_10.add("10 PMA", x_pma_10, y_pma_10, is_datazoom_show=True, is_toolbox_show=False)
+
+        x_pma_30 = []
+        y_pma_30 = []
+        pma_30 = Line()
+        pma_30.add("30 PMA", x_pma_30, y_pma_30, is_datazoom_show=True, is_toolbox_show=False)
+
+        # 集成了日k线，5日均线，10日均线，30均线
+        overlap = Overlap()
+        overlap.add(day_kline)
+        overlap.add(pma_5)
+        overlap.add(pma_10)
+        overlap.add(pma_30)
+
+        x0 = []
+        y0 = []
+        average_line = Line()
+        average_line.add("today", x0, y0, is_datazoom_show=True, is_toolbox_show=False)
+
+
+
+        # a = []
+        # c = []
+        # for i in range(20):
+        #     b = []
+        #     n = int(random.random() * 100)
+        #     b.append(n)
+        #     b.append(n + int(random.uniform(1.1, 10.1) * 100) / 100.0 - 6)
+        #     b.append(n + int(random.uniform(1.1, 11.2) * 100) / 100.0 - 6)
+        #     b.append(n + int(random.uniform(1.1, 10.5) * 100) / 100.0 - 6)
+        #     c.append(n + int(random.uniform(1.1, 10.8) * 100) / 100.0 - 6)
+        #     a.append(b)
+        # kline = Kline("K 线图示例")
+        # kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a, is_datazoom_show=True, is_toolbox_show=False)
+        # line = Line()
+        # line.add("line", ["2018/5/{}".format(i + 1) for i in range(20)], c, is_datazoom_show=True, is_toolbox_show=False)
+        #
+        # overlap = Overlap()
+        # overlap.add(kline)
+        # overlap.add(line)
 
         return render_template("query.html",
-                               myechart=kline.render_embed(),
                                host=REMOTE_HOST,
-                               script_list=kline.get_js_dependencies())
+                               myechart1=average_line.render_embed(),
+                               script_list1=average_line.get_js_dependencies(),
+                               myechart2=overlap.render_embed(),
+                               script_list2=overlap.get_js_dependencies(),
+                               myechart3=month_kline.render_embed(),
+                               script_list3=month_kline.get_js_dependencies(),
+                               myechart4=year_kline.render_embed(),
+                               script_list4=year_kline.get_js_dependencies())
     else:
         return redirect(url_for('home'))
 

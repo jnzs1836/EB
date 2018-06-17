@@ -57,17 +57,20 @@ duration以月为单位，30天。
 
 
 
-//获得 最新成交价格和当前购买指令的最高价格
-def get_stock_info(stock_id):
-	dic = {"latest_price":"", "buy_highest_price":""}
-	return dic
+
+create table stock_set(
+    stock_id char(10),
+    stock_name char(20) not null,
+    primary key(stock_id)
+);
 
 
 create table today_stock(
 	stock_id char(10),
 	stock_name char(20) not null,
 	price decimal(5,2) not null,
-	date datetime not null 
+	date datetime not null
+	foreign key (stock_id) references stock_set(stock_id)
 );
 今日股票价格
 
@@ -78,7 +81,8 @@ create table previous_stock(
 	end_price decimal(5,2) not null,   
 	max_price decimal(5,2) not null, 
 	min_price decimal(5,2) not null, 
-	date datetime not null 
+	date datetime not null
+	foreign key (stock_id) references stock_set(stock_id)
 );
 历史股票价格
 
@@ -93,34 +97,41 @@ create table notice(
 ####################################################################
 和交易客户端交互
 
-POST请求  路由为/stock
+# POST请求  路由为/stock
+# 发送的json包格式
 {
 	"code": "123",
 	"name": "ABC"
 }
-//返回
+
+# 返回的json包格式
 {
-	"latest_price": "", //最新成交价格
-	"buy_highest_price": "",  //当前购买指令的最高价格
-	"sale_lowest_price": "", //当前出售的最低价格
-	"today_price": { //当日最高，最低成交价格
+	"latest_price": "", # 最新成交价格
+	"buy_highest_price": "",  # 当前购买指令的最高价格
+	"sale_lowest_price": "", # 当前出售的最低价格
+	"today_price": { # 当日最高，最低成交价格
 		"highest_price":"",
 		"lowest_price":"",
 	},
-	"week_price": { //本周最高，最低成交价格
+	"week_price": { # 本周最高，最低成交价格
 		"highest_price":"",
 		"lowest_price":"",
 	},
-	"month_price": { //本月最高，最低成交价格
+	"month_price": { # 本月最高，最低成交价格
 		"highest_price":"",
 		"lowest_price":"",
 	},
-	"stock_info":"", //股票的重要公告
+	"stock_info":"", # 股票的重要公告
+	"current_price":"", # 实时的价格
 }
 
 ####################################################################
 和中央交易系统间的交互
 //获得 最新成交价格 和 当前购买指令的最高价格 和 当前出售的最低价格
 def get_stock_info(stock_id):
-	dic = {"latest_price":"", "buy_highest_price":"", "sale_lowest_price":""}
+	dic = {
+	        "latest_price":"",
+	        "buy_highest_price":"",
+	        "sale_lowest_price":""
+	      }
 	return dic
