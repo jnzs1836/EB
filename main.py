@@ -19,6 +19,14 @@ app.config.from_object(config)  # 配置文件
 # 画图用
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
+######
+
+
+def get_stock_price(stock_id):
+    pass
+
+######
+
 
 ##################################################################################################################
 # 中央交易系统给我们提供的函数，我这里随便模拟数据
@@ -139,17 +147,11 @@ def login_required(func):
 def home():
     # 预留
     # 显示大盘曲线 这里模拟一些数据
-    a = []
-    for i in range(20):
-        b = []
-        n = int(random.random() * 100)
-        b.append(n)
-        b.append(n + int(random.uniform(1.1, 10.1) * 100) / 100.0 - 6)
-        b.append(n + int(random.uniform(1.1, 11.2) * 100) / 100.0 - 6)
-        b.append(n + int(random.uniform(1.1, 10.5) * 100) / 100.0 - 6)
-        a.append(b)
-    kline = Kline("K 线图示例")
-    kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a)
+
+    x1 = []
+    y1 = []
+    day_kline = Kline("大盘日K线图")
+    day_kline.add("日K", x1, y1, is_datazoom_show=True, is_toolbox_show=False)
 
     # 预留
     # 显示所有股票的代码、名字、价格、涨幅
@@ -168,9 +170,9 @@ def home():
     return render_template("home.html",
                             presentResults=present_results,
                             html=html,
-                            myechart=kline.render_embed(),
+                            myechart=day_kline.render_embed(),
                             host=REMOTE_HOST,
-                            script_list=kline.get_js_dependencies())
+                            script_list=day_kline.get_js_dependencies())
 
 
 # 修改密码
@@ -223,85 +225,75 @@ def query():
         user_type = DB.get_type(username)
         stock = request.form['stock']
         # 判断，预留
+        # 查询
 
-        # 预留
-        # 显示股票曲线 这里模拟一些数据
-        # 根据用户类型显示k线
+        infos = []
 
-        x1 = []
-        y1 = []
-        day_kline = Kline("日K线图")
-        day_kline.add("日K", x1, y1, is_datazoom_show=True, is_toolbox_show=False)
+        pager_obj = Pagination(request.args.get("page", 1), len(infos), request.path, request.args,
+                               per_page_count=20)  # 每页显示20个查询结果
+        present_results = infos[pager_obj.start:pager_obj.end]  # 现在要显示的结果
+        html = pager_obj.page_html()
+        get_dict = request.args.to_dict()
+        path = urlencode(get_dict)  # 转化成urlencode格式的
+        get_dict["_list_filter"] = path
 
-        x2 = []
-        y2 = []
-        month_kline = Kline("月K线图")
-        month_kline.add("月K", x2, y2, is_datazoom_show=True, is_toolbox_show=False)
+        if user_type == "H":
+            x1 = []
+            y1 = []
+            day_kline = Kline("日K线图")
+            day_kline.add("日K", x1, y1, is_datazoom_show=True, is_toolbox_show=False)
 
-        x3 = []
-        y3 = []
-        year_kline = Kline("月K线图")
-        year_kline.add("年K", x3, y3, is_datazoom_show=True, is_toolbox_show=False)
+            x2 = []
+            y2 = []
+            month_kline = Kline("月K线图")
+            month_kline.add("月K", x2, y2, is_datazoom_show=True, is_toolbox_show=False)
 
-        x_pma_5 = []
-        y_pma_5 = []
-        pma_5 = Line()
-        pma_5.add("5 PMA", x_pma_5, y_pma_5, is_datazoom_show=True, is_toolbox_show=False)
+            x3 = []
+            y3 = []
+            year_kline = Kline("月K线图")
+            year_kline.add("年K", x3, y3, is_datazoom_show=True, is_toolbox_show=False)
 
-        x_pma_10 = []
-        y_pma_10 = []
-        pma_10 = Line()
-        pma_10.add("10 PMA", x_pma_10, y_pma_10, is_datazoom_show=True, is_toolbox_show=False)
+            x_pma_5 = []
+            y_pma_5 = []
+            pma_5 = Line()
+            pma_5.add("5 PMA", x_pma_5, y_pma_5, is_datazoom_show=True, is_toolbox_show=False)
 
-        x_pma_30 = []
-        y_pma_30 = []
-        pma_30 = Line()
-        pma_30.add("30 PMA", x_pma_30, y_pma_30, is_datazoom_show=True, is_toolbox_show=False)
+            x_pma_10 = []
+            y_pma_10 = []
+            pma_10 = Line()
+            pma_10.add("10 PMA", x_pma_10, y_pma_10, is_datazoom_show=True, is_toolbox_show=False)
 
-        # 集成了日k线，5日均线，10日均线，30均线
-        overlap = Overlap()
-        overlap.add(day_kline)
-        overlap.add(pma_5)
-        overlap.add(pma_10)
-        overlap.add(pma_30)
+            x_pma_30 = []
+            y_pma_30 = []
+            pma_30 = Line()
+            pma_30.add("30 PMA", x_pma_30, y_pma_30, is_datazoom_show=True, is_toolbox_show=False)
 
-        x0 = []
-        y0 = []
-        average_line = Line()
-        average_line.add("today", x0, y0, is_datazoom_show=True, is_toolbox_show=False)
+            # 集成了日k线，5日均线，10日均线，30均线
+            overlap = Overlap()
+            overlap.add(day_kline)
+            overlap.add(pma_5)
+            overlap.add(pma_10)
+            overlap.add(pma_30)
 
 
+            # kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a, is_datazoom_show=True, is_toolbox_show=False)
 
-        # a = []
-        # c = []
-        # for i in range(20):
-        #     b = []
-        #     n = int(random.random() * 100)
-        #     b.append(n)
-        #     b.append(n + int(random.uniform(1.1, 10.1) * 100) / 100.0 - 6)
-        #     b.append(n + int(random.uniform(1.1, 11.2) * 100) / 100.0 - 6)
-        #     b.append(n + int(random.uniform(1.1, 10.5) * 100) / 100.0 - 6)
-        #     c.append(n + int(random.uniform(1.1, 10.8) * 100) / 100.0 - 6)
-        #     a.append(b)
-        # kline = Kline("K 线图示例")
-        # kline.add("日K", ["2018/5/{}".format(i + 1) for i in range(20)], a, is_datazoom_show=True, is_toolbox_show=False)
-        # line = Line()
-        # line.add("line", ["2018/5/{}".format(i + 1) for i in range(20)], c, is_datazoom_show=True, is_toolbox_show=False)
-        #
-        # overlap = Overlap()
-        # overlap.add(kline)
-        # overlap.add(line)
 
-        return render_template("query.html",
-                               host=REMOTE_HOST,
-                               myechart1=average_line.render_embed(),
-                               script_list1=average_line.get_js_dependencies(),
-                               myechart2=overlap.render_embed(),
-                               script_list2=overlap.get_js_dependencies(),
-                               myechart3=month_kline.render_embed(),
-                               script_list3=month_kline.get_js_dependencies(),
-                               myechart4=year_kline.render_embed(),
-                               script_list4=year_kline.get_js_dependencies())
+            return render_template("query.html",
+                                   host=REMOTE_HOST,
+                                   myechart1=overlap.render_embed(),
+                                   script_list1=overlap.get_js_dependencies(),
+                                   myechart2=month_kline.render_embed(),
+                                   script_list2=month_kline.get_js_dependencies(),
+                                   myechart3=year_kline.render_embed(),
+                                   script_list3=year_kline.get_js_dependencies(),
+                                   presentResults=present_results,
+                                   html=html)
+        else:
+            return render_template("query.html",
+                                   presentResults=present_results,
+                                   html=html)
+
     else:
         return redirect(url_for('home'))
 

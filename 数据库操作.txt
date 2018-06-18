@@ -69,7 +69,7 @@ create table today_stock(
 	stock_id char(10),
 	stock_name char(20) not null,
 	price decimal(5,2) not null,
-	date datetime not null
+	date datetime not null,
 	foreign key (stock_id) references stock_set(stock_id)
 );
 今日股票价格
@@ -81,7 +81,7 @@ create table previous_stock(
 	end_price decimal(5,2) not null,   
 	max_price decimal(5,2) not null, 
 	min_price decimal(5,2) not null, 
-	date datetime not null
+	date datetime not null,
 	foreign key (stock_id) references stock_set(stock_id)
 );
 历史股票价格

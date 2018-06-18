@@ -1,9 +1,10 @@
 import pymysql
 import datetime
 import re
+import random
+import time
 
-
-def stock_change():
+def stock_change(info):
     # 打开数据库连接
     dbForOwner = pymysql.connect(user="owner",
                                  password="123456",
@@ -12,13 +13,25 @@ def stock_change():
                                  charset='utf8mb4')
 
     flag = 0
-    sql = "update user set user_password=%s where user_name=%s"
-    args = []
+    sql = "insert into today_stock values(%s, %s, %s, %s)"
+    present_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    args_list = []
+    for i in range(len(info)):
+        args = []
+        args.append(info[0])
+        args.append(info[1])
+        yesterday_price = int(info[3])
+        today_price = yesterday_price + yesterday_price * random.uniform(-0.1, 0.1)
+        args.append(today_price)
+        args.append(present_time)
+        args_list.append(args)
+
 
     cur = dbForOwner.cursor()
 
     try:
-        cur.execute(sql, args)
+        for i in args_list:
+            cur.execute(sql, i)
         dbForOwner.commit()
         flag = 1
 
@@ -29,7 +42,7 @@ def stock_change():
         dbForOwner.close()
         return flag
 
-def get_closing_price():
+def get_yesterdat_info():
     # 打开数据库连接
     dbForOwner = pymysql.connect(user="owner",
                                  password="123456",
@@ -45,6 +58,7 @@ def get_closing_price():
     args = [yesterday,]
 
     cur = dbForOwner.cursor()
+    results = []
 
     try:
         cur.execute(sql, args)
@@ -56,7 +70,7 @@ def get_closing_price():
 
     finally:
         dbForOwner.close()
-        return flag
+        return results
 
 def get_yesterday(today):
     words = re.split("[ -]", today)
@@ -85,10 +99,8 @@ def get_yesterday(today):
             return str(year) + "-" + str(month) + "-" + str(day)
 
 
-
-
 if __name__ == "__main__":
-
-    stock_info_yesterday = get_closing_price()
-
-    pass
+    stock_info_yesterday = get_yesterdat_info()
+    while True:
+        time.sleep(1)
+        stock_change(stock_info_yesterday)
