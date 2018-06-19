@@ -19,6 +19,7 @@ def add_stocks(stocks):
         args = []
         args.append(i)
         args.append(stocks[i])
+        args_list.append(args)
 
     cur = dbForOwner.cursor()
 
@@ -42,19 +43,16 @@ def add_stocks_previous_price(stocks):
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
-    year = 1998
-    month = 1
-    day = 17
+    year = 2018
+    month = 5
+    day = 1
     date = [year, month, day]
 
-    today = [2018, 6, 20]
+    today = [2018, 6, 19]
 
     flag = 0
     sql = "insert into previous_stock values(%s, %s, %s, %s, %s, %s, %s)"
-    for i in stocks:
-        args = []
-        args.append(i)
-        args.append(stocks[i])
+
 
     cur = dbForOwner.cursor()
 
@@ -65,6 +63,7 @@ def add_stocks_previous_price(stocks):
         args_list = []
         now_day = str(date[0]) + "-" + str(date[1]) + "-" + str(date[2])
         for i in stocks:
+            args = []
             args.append(i)
             args.append(stocks[i])
             max_price = random.uniform(5.0, 100.0)
@@ -101,6 +100,7 @@ def add_stocks_previous_price(stocks):
                 now_day = str(date[0]) + "-" + str(date[1]) + "-" + str(date[2])
                 j = 0
                 for i in stocks:
+                    args = []
                     args.append(i)
                     args.append(stocks[i])
                     max_price = args_list[t+j][3] + args_list[t+j][3] * random.uniform(-0.07, 0.1)
@@ -133,6 +133,7 @@ def add_stocks_previous_price(stocks):
 
     except Exception as e:
         flag = 0
+        raise e
 
     finally:
         dbForOwner.close()
@@ -169,4 +170,8 @@ def get_day(date):
 
 if __name__ == "__main__":
     stocks = {}  # id: name
-    add_stocks(stocks)
+    stocks[123] = "s1"
+    stocks[456] = "s2"
+    stocks[789] = "s3"
+    # add_stocks(stocks)
+    add_stocks_previous_price(stocks)

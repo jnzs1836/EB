@@ -18,9 +18,9 @@ def stock_change(info):
     args_list = []
     for i in range(len(info)):
         args = []
-        args.append(info[0])
-        args.append(info[1])
-        yesterday_price = int(info[3])
+        args.append(info[i][0])
+        args.append(info[i][1])
+        yesterday_price = int(info[i][3])
         today_price = yesterday_price + yesterday_price * random.uniform(-0.1, 0.1)
         args.append(today_price)
         args.append(present_time)
@@ -78,7 +78,7 @@ def get_yesterday(today):
     month = int(words[1])
     day = int(words[2])
     if day > 1:
-        day = day + 1
+        day = day - 1
         return str(year) + "-" + str(month) + "-" + str(day)
     else:
         if month > 3 or month == 2:
