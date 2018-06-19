@@ -21,7 +21,7 @@ REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 
 ######
 
-
+# 输入一个股票id，获得实时价格
 def get_stock_price(stock_id):
     pass
 
@@ -75,8 +75,52 @@ def send_stock_info():
 ##################################################################################################################
 
 
-# 登录
+
+########
+
+
+def get_stock_info(stock_id):
+    id = ""  # 股票代码
+    name = ""  # 股票名称
+    present_price = ""  # 当前价格（元）
+    price_rise_rate = ""  # 涨幅（%）
+    price_rise = ""  # 涨跌（元）
+    yesterday_end_price = ""  # 昨日收盘价（元）
+    today_start_price = ""  # 今日开盘价（元）
+    today_max_price = ""  # 今日最高价（元）
+    today_min_price = ""  # 今日最低价（元）
+
+    result = [id, name, present_price, price_rise_rate, price_rise, yesterday_end_price, today_start_price, today_max_price, today_min_price]
+
+    return result
+
+
+
+########
+
+
+# 欢迎
 @app.route('/', methods=['GET', 'POST'])  # "/" 说明url为"http://127.0.0.1:5000/"调用这个函数，接受post和get两个请求
+def welcome():
+    if session.get("username"):
+        session.pop("username", None)
+
+    if request.method == 'POST':  # 登录     当为post请求时，即发送表单时
+        if DB.Login(request.form['username'], request.form['password']) == 1:  # 列出所有账号密码，再进行查询确定
+            session["username"] = request.form['username']
+            session.permanent = True
+            DB.login_log(request.form['username'], "S")  # 登录成功日志
+            return redirect(url_for("home"))
+        else:
+            DB.login_log(request.form['username'], "F")  # 登录失败日志
+            flash("用户名或密码错误", 'err')
+            return redirect(url_for('/'))   # 账号密码错误，提示错误信息，再次返回到登录页面，即再次调用login()函数
+    else:
+        return render_template("welcome.html")    # 除了post请求外，比如随便输入网站进去，返回登录页面
+
+
+# 登录
+@app.route('/login', methods=['GET', 'POST'])  # "/" 说明url为"http://127.0.0.1:5000/"调用这个函数，接受post和get两个请求
 def login():
     if session.get("username"):
         session.pop("username", None)
@@ -288,11 +332,13 @@ def query():
                                    myechart3=year_kline.render_embed(),
                                    script_list3=year_kline.get_js_dependencies(),
                                    presentResults=present_results,
-                                   html=html)
+                                   html=html,
+                                   flag=1)
         else:
             return render_template("query.html",
                                    presentResults=present_results,
-                                   html=html)
+                                   html=html,
+                                   flag=0)
 
     else:
         return redirect(url_for('home'))
