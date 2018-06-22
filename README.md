@@ -4,7 +4,7 @@
 
 操作：
 1. 先创建数据库和user
-2. add_stock.py中取消add_stocks(stocks)和add_notice(stocks)的注释，并运行
+2. add_stock.py中取消add_stocks(stocks)和add_notice(stocks)的注释，并运行 (如果之前创建股票了则不用取消注释，股票的量至少40，自行在代码里设置)
 3. 运行kline_control.py
 4. 运行stock.control.py
 5. 运行main.py 端口为5000
