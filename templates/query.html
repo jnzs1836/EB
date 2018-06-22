@@ -143,7 +143,7 @@
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
             <div class="input-group">
-                <input type="text" class="form-control" name="name" placeholder="请输入检索关键字" autocomplete="off" name="stock">
+                <input type="text" class="form-control" name="name" placeholder="请输入检索关键字" autocomplete="off">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit" ><span class="glyphicon glyphicon-search"></span> 检索</button>
                 </span>
@@ -213,11 +213,12 @@
 
 {% endif %}
     <!-- 所有股票信息显示预留 -->
-<div class=container style="text-align:center">
-    <hr class="half-rule">
-      <h3 class=bs-docs-featurette-title>股票详细信息</h3>
-    <p class=lead><small></small>下表所示为所搜索股票的详细信息，页面每5秒自动刷新数据，用户可根据需要手动刷新以获取最新信息。</p>
-</div>
+    <div class=container style="text-align:center">
+        <hr class="half-rule">
+          <h3 class=bs-docs-featurette-title>股票详细信息</h3>
+        <p class=lead><small></small>下表所示为所搜索股票的详细信息，页面每5秒自动刷新数据，用户可根据需要手动刷新以获取最新信息。</p>
+    </div>
+
     <div class="container" id="d3">
         <div class="row">
                 {% if presentResults %}
@@ -238,7 +239,7 @@
                     </thead>
                     <tbody>
                             {% for i in presentResults %}
-                        <tr class="clt" id="{{ i[0] }}" onclick="window.location.href='/query?id={{ i[0] }}'">
+                        <tr class="clt" id="{{ i[0] }}" onclick="window.location.href='/query?id={{ i[0] }}&page={{ page_now }}'">
                             <td>{{ i[0] }}</td>
                             <td>{{ i[1] }}</td>
                             <td>{{ i[2] }}</td>
@@ -261,7 +262,7 @@
                         {{ html|safe }}
                     </ul>
                 </nav>
-            </div>
-            </div>
+        </div>
+    </div>
 
 {% endblock %}

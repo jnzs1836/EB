@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request
 import pymysql
 import config
 
@@ -54,7 +54,6 @@ def mobile():
             return render_template("mobile.html", value = telephone, msg = t)
     else:
         return render_template("mobile.html")
-
 
 
 if __name__ == "__main__":

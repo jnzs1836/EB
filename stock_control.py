@@ -22,6 +22,8 @@ def stock_change(info):
         args.append(info[i][1])
         yesterday_price = int(info[i][3])
         today_price = yesterday_price + yesterday_price * random.uniform(-0.1, 0.1)
+        while today_price < 4.0:
+            today_price = yesterday_price + yesterday_price * random.uniform(0, 0.05)
         args.append(today_price)
         args.append(present_time)
         args_list.append(args)
@@ -70,7 +72,6 @@ def get_yesterdat_info():
     finally:
         dbForOwner.close()
         return results
-
 
 
 if __name__ == "__main__":

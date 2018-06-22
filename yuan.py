@@ -308,13 +308,6 @@ def get_type(user_name):
         else:
             return flag
 
-# 主页显示所有股票价格
-def query_all():
-    pass
-
-# 查询某一股票的价格,name为ID或者名字,option选择名字还是ID
-def query(name, option):
-    pass
 
 def login_log(user_name, state): # 输入用户名以及登录状态
     # 打开数据库连接

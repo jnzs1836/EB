@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify, g
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import DB_Connector as DB
 import config
 from urllib.parse import urlencode
@@ -401,6 +401,7 @@ def renew_code():
         code = request.form['verification']
         if yuan.Verificate(code, ren_vno) == 1:
             if yuan.Renew(username, duration) == 1:
+                DB.vip_log(username, duration)
                 return redirect(url_for('home'))
         else:
             flash('验证码错误')
@@ -435,7 +436,6 @@ def ltos(infos):
 def stol(s):
     l = s.split()
     n = len(l) / 9
-    print(n)
     infos = []
     for i in range(int(n)):
         list = []
@@ -465,9 +465,14 @@ def query():
         else:
             infos = Jiang.query(request.form['name'], 1)
 
+        if len(infos[0]) == 0:
+            flash("无结果", 'err')
+            return redirect(url_for('home'))
+
         stock_id = infos[0][0]
         session["infos"] = ltos(infos)
 
+        page_now = request.args.get("page", 1)
         pager_obj = Pagination(request.args.get("page", 1), len(infos), request.path, request.args,
                                per_page_count=20)  # 每页显示20个查询结果
         present_results = infos[pager_obj.start:pager_obj.end]  # 现在要显示的结果
@@ -538,18 +543,21 @@ def query():
                                    presentResults=present_results,
                                    html=html,
                                    flag=1,
-                                   kid=present_results[0][0])
+                                   kid=present_results[0][0],
+                                   page_now=page_now)
         else:
             return render_template("query.html",
                                    presentResults=present_results,
                                    html=html,
                                    kid=present_results[0][0],
-                                   flag=0)
+                                   flag=0,
+                                   page_now=page_now)
     else:
         if request.args.get('id', None):
             stock_id = request.args.get('id')
             infos = stol(session.get("infos"))
 
+            page_now = request.args.get("page", 1)
             pager_obj = Pagination(request.args.get("page", 1), len(infos), request.path, request.args,
                                    per_page_count=20)  # 每页显示20个查询结果
             present_results = infos[pager_obj.start:pager_obj.end]  # 现在要显示的结果
@@ -621,13 +629,101 @@ def query():
                                        presentResults=present_results,
                                        html=html,
                                        flag=1,
-                                       kid=stock_id)
+                                       kid=stock_id,
+                                       page_now=page_now)
             else:
                 return render_template("query.html",
                                        presentResults=present_results,
                                        html=html,
                                        kid=stock_id,
-                                       flag=0)
+                                       flag=0,
+                                       page_now=page_now)
+        elif request.args.get('page'):
+            # stock_id = request.args.get('id')
+            infos = stol(session.get("infos"))
+            stock_id = infos[20 * (int(request.args.get('page')) - 1)][0]
+
+            page_now = request.args.get("page", 1)
+            pager_obj = Pagination(request.args.get("page", 1), len(infos), request.path, request.args,
+                                   per_page_count=20)  # 每页显示20个查询结果
+            present_results = infos[pager_obj.start:pager_obj.end]  # 现在要显示的结果
+            html = pager_obj.page_html()
+            get_dict = request.args.to_dict()
+            path = urlencode(get_dict)  # 转化成urlencode格式的
+            get_dict["_list_filter"] = path
+
+            user_type = DB.get_type(username)
+            if user_type == "H":
+                x1 = []
+                y1 = []
+                info = Jiang.dayk(stock_id)
+
+                for i in range(len(info)):
+                    x1.append(info[i][0])
+                    y1.append(info[i][1:])
+                day_kline = Kline("日K线图")
+                day_kline.add("日K", x1, y1, is_datazoom_show=True, is_toolbox_show=False)
+
+                x2 = []
+                y2 = []
+                info = Jiang.monthk(stock_id)
+                for i in range(len(info)):
+                    x2.append(info[i][0])
+                    y2.append(info[i][1:])
+                month_kline = Kline("月K线图")
+                month_kline.add("月K", x2, y2, is_datazoom_show=True, is_toolbox_show=False)
+
+                x3 = []
+                y3 = []
+                info = Jiang.yeark(stock_id)
+                for i in range(len(info)):
+                    x3.append(info[i][0])
+                    y3.append(info[i][1:])
+                year_kline = Kline("年K线图")
+                year_kline.add("年K", x3, y3, is_datazoom_show=True, is_toolbox_show=False)
+
+                x_pma_5 = kline_control.get_info(5, stock_id)[0]
+                y_pma_5 = kline_control.get_info(5, stock_id)[1]
+                pma_5 = Line()
+                pma_5.add("5 PMA", x_pma_5, y_pma_5, is_datazoom_show=True, is_toolbox_show=False)
+
+                x_pma_10 = kline_control.get_info(10, stock_id)[0]
+                y_pma_10 = kline_control.get_info(10, stock_id)[1]
+                pma_10 = Line()
+                pma_10.add("10 PMA", x_pma_10, y_pma_10, is_datazoom_show=True, is_toolbox_show=False)
+
+                x_pma_30 = kline_control.get_info(30, stock_id)[0]
+                y_pma_30 = kline_control.get_info(30, stock_id)[1]
+                pma_30 = Line()
+                pma_30.add("30 PMA", x_pma_30, y_pma_30, is_datazoom_show=True, is_toolbox_show=False)
+
+                # 集成了日k线，5日均线，10日均线，30均线
+                overlap = Overlap()
+                overlap.add(day_kline)
+                overlap.add(pma_5)
+                overlap.add(pma_10)
+                overlap.add(pma_30)
+
+                return render_template("query.html",
+                                       host=REMOTE_HOST,
+                                       myechart1=overlap.render_embed(),
+                                       script_list1=overlap.get_js_dependencies(),
+                                       myechart2=month_kline.render_embed(),
+                                       script_list2=month_kline.get_js_dependencies(),
+                                       myechart3=year_kline.render_embed(),
+                                       script_list3=year_kline.get_js_dependencies(),
+                                       presentResults=present_results,
+                                       html=html,
+                                       flag=1,
+                                       kid=stock_id,
+                                       page_now=page_now)
+            else:
+                return render_template("query.html",
+                                       presentResults=present_results,
+                                       html=html,
+                                       kid=stock_id,
+                                       flag=0,
+                                       page_now=page_now)
         else:
             return redirect(url_for('home'))
 
@@ -648,4 +744,5 @@ def show_type():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000)
+    # app.run(host="0.0.0.0", ssl_context='adhoc')

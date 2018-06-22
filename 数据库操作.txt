@@ -48,10 +48,11 @@ DELIMITER ;
 
 create table vip_log(
 	user_name varchar(20),
-	start_time date not null,
+	start_time datetime not null,
 	duration int not null,
 	foreign key (user_name) references user(user_name)
 );
+
 账号充值的日志
 duration以月为单位，30天。
 

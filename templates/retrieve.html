@@ -90,19 +90,12 @@
                   </dl>
                     <button class="btn btn-primary btn-large btn-block" type="submit" >点击发送手机验证码</button>
                     {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning">
+                    <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
 
                     {{ message }}
-                </div>
-                {% endfor %}
-                </form>
-                  {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ message }}
-                </div>
-                {% endfor %}
+                    </div>
+                    {% endfor %}
              </div>
             </div>
         </div>

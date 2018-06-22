@@ -15,11 +15,11 @@
         }
         #d4
         {
-            width = 450px;
+            width:450px;
             margin:0 auto;
-            margin-top: 40px;
-            font-size: 40px;
-            text-align:center;
+            <!--margin-top: 40px;-->
+            <!--font-size: 40px;-->
+            <!--text-align:center;-->
         }
         #myForm
         {
@@ -120,43 +120,44 @@
 <div class=container style="text-align:center">
       <h3 class=bs-docs-featurette-title>股票详情查询</h3>
 </div>
- <form method="POST" action="/query">
-<div class="container">
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <div class="input-group">
-                <input type="text" name="name" class="form-control" placeholder="请输入检索关键字" autocomplete="off">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit" ><span class="glyphicon glyphicon-search"></span> 检索</button>
-                </span>
+
+<form method="POST" action="/query">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="input-group">
+                    <input type="text" name="name" class="form-control" placeholder="请输入检索关键字" autocomplete="off">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit" ><span class="glyphicon glyphicon-search"></span> 检索</button>
+                    </span>
+                </div>
             </div>
         </div>
+    </div><br/>
+    <div class=container style="text-align:center">
+        <label>  检索内容  </label>
+        <label class="radio-inline">
+            <input type="radio" name="optionsRadiosinline" id="querybycode" value="stockcode" checked> 股票代码
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="optionsRadiosinline" id="querybyacro"  value="stockacro"> 股票简称
+        </label>
+        <!-- 错误信息 -->
+            {% for v in get_flashed_messages(category_filter=['err']) %}
+                <div class="alert alert-warning" id="d4">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ v }}
+                </div>
+            {% endfor %}
+        <hr class=half-rule>
     </div>
-</div><br/>
-<div class=container style="text-align:center">
-<label>  检索内容  </label>
-	<label class="radio-inline">
-		<input type="radio" name="optionsRadiosinline" id="querybycode" value="stockcode" checked> 股票代码
-	</label>
-	<label class="radio-inline">
-		<input type="radio" name="optionsRadiosinline" id="querybyacro"  value="stockacro"> 股票简称
-	</label>
-    <hr class=half-rule>
-</div>
 </form>
 
-
-    <!-- 错误信息 -->
-    {% for v in get_flashed_messages(category_filter=['err']) %}
-        <div id="d4">
-            <p style="color:red;"><strong>{{ v }}</strong></p>
-        </div>
-    {% endfor %}
 
     <!-- K 线 图 预 览 -->
     <div class=container style="text-align:center">
           <h3 class=bs-docs-featurette-title>大盘曲线一览</h3>
-        <p class=lead><small></small>下图为本平台关联所有股票大盘信息图。</p>
+        <!--<p class=lead><small></small>下图为本平台关联所有股票大盘信息图。</p>-->
     </div>
     <div class=container style="margin 0px auto">
         <div class="klinegraph">
@@ -169,7 +170,7 @@
 <div class=container style="text-align:center">
     <hr class="half-rule">
       <h3 class=bs-docs-featurette-title>股票基本信息</h3>
-    <p class=lead><small></small>下表所示为本平台关联所有股票的基本信息，页面每5秒自动刷新数据，用户可根据需要手动刷新以获取最新信息。</p>
+    <p class=lead><small></small>下表所示为本平台关联所有股票的基本信息，页面每5秒自动刷新数据，可根据需要手动刷新。</p>
 </div>
     <div class="container" id="d3">
         <div class="row">
