@@ -35,24 +35,116 @@
         {
             width: 100px;
         }
+        .klinegraph{
+        width:900px;
+        padding:10px;
+        border:3px solid gray;
+        margin:0px auto;
+        }
     </style>
 
     {% for jsfile_name in script_list %}
         <script src="{{ host }}/{{ jsfile_name }}.js"></script>
     {% endfor %}
 
+    <script>
+        var list = new Object()
+        var lnum = 0
+
+        {% for i in presentResults %}
+            list[lnum] = '{{ i[0] }}'
+            lnum++
+        {% endfor %}
+
+        window.addEventListener("load", function() {
+            setTimeout('timing()', 5000)
+        })
+        function timing() {
+            var aj = new XMLHttpRequest();
+            aj.open('POST', '/AJAXinfo', true)
+            aj.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+            aj.send('list=' + JSON.stringify(list));
+            aj.onreadystatechange = function() {
+                if(aj.readyState == 4 && aj.status == 200) {
+                    var now = new String()
+                    now = aj.responseText
+                    var res = now.split(";")
+
+                    for(var i = 0; i < lnum; i++) {
+                        var resrow = new String()
+                        resrow = res[i].split(",")
+                        //这里直接遍历一行，如果有不需要的内容可以给cnt加特判
+                        for(var cnt = 0; cnt < 9; cnt++) {
+                            //记得给table加上id=‘restable’
+                            var tab = document.getElementById('restable').rows[i + 1].cells[cnt]
+                            tab.innerHTML = resrow[cnt]
+                        }
+                    }
+                }
+            }
+
+            setTimeout('timing()', 5000)
+        }
+
+        function fresh() {
+            var aj = new XMLHttpRequest();
+            aj.open('POST', '/AJAXinfo', true)
+            aj.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+            aj.send('list=' + JSON.stringify(list));
+            aj.onreadystatechange = function() {
+                if(aj.readyState == 4 && aj.status == 200) {
+                    var now = new String()
+                    now = aj.responseText
+                    var res = now.split(";")
+
+                    for(var i = 0; i < lnum; i++) {
+                        var resrow = new String()
+                        resrow = res[i].split(",")
+                        //这里直接遍历一行，如果有不需要的内容可以给cnt加特判
+                        for(var cnt = 0; cnt < 9; cnt++) {
+                            //记得给table加上id=‘restable’
+                            var tab = document.getElementById('restable').rows[i + 1].cells[cnt]
+                            tab.innerHTML = resrow[cnt]
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
 {% endblock %}
 
 {% block main %}
 
     <!-- 查询 -->
-    <div id="d1">
-        <form id="myForm" method="post" action="/query">
-            <label for="stock" id="l">股票代码或股票名字:</label>
-            <input name="stock" id="stock" required>
-            <button type="submit" class="btn btn-primary btn-block" id="b1">查询</button>
-        </form>
+<div class=container style="text-align:center">
+      <h3 class=bs-docs-featurette-title>股票详情查询</h3>
+</div>
+ <form method="POST" action="/query">
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="input-group">
+                <input type="text" name="name" class="form-control" placeholder="请输入检索关键字" autocomplete="off">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit" ><span class="glyphicon glyphicon-search"></span> 检索</button>
+                </span>
+            </div>
+        </div>
     </div>
+</div><br/>
+<div class=container style="text-align:center">
+<label>  检索内容  </label>
+	<label class="radio-inline">
+		<input type="radio" name="optionsRadiosinline" id="querybycode" value="stockcode" checked> 股票代码
+	</label>
+	<label class="radio-inline">
+		<input type="radio" name="optionsRadiosinline" id="querybyacro"  value="stockacro"> 股票简称
+	</label>
+    <hr class=half-rule>
+</div>
+</form>
+
 
     <!-- 错误信息 -->
     {% for v in get_flashed_messages(category_filter=['err']) %}
@@ -61,26 +153,40 @@
         </div>
     {% endfor %}
 
-    <!-- 大盘曲线预留 -->
-    {{ myechart|safe }}
-
+    <!-- K 线 图 预 览 -->
+    <div class=container style="text-align:center">
+          <h3 class=bs-docs-featurette-title>大盘曲线一览</h3>
+        <p class=lead><small></small>下图为本平台关联所有股票大盘信息图。</p>
+    </div>
+    <div class=container style="margin 0px auto">
+        <div class="klinegraph">
+        {{ myechart|safe }}
+        </div>
+    </div><br/>
+    <!-- 未完成 -->
     <!-- 所有股票信息显示预留 -->
+<br/>
+<div class=container style="text-align:center">
+    <hr class="half-rule">
+      <h3 class=bs-docs-featurette-title>股票基本信息</h3>
+    <p class=lead><small></small>下表所示为本平台关联所有股票的基本信息，页面每5秒自动刷新数据，用户可根据需要手动刷新以获取最新信息。</p>
+</div>
     <div class="container" id="d3">
         <div class="row">
                 {% if presentResults %}
-                <table>
-                    <caption>查询结果</caption>
+                <table class="table table-hover table-bordered" id="restable">
+                    <caption style="text-align:center"><b>信息全览</b></caption>
                     <thead>
                         <tr>
-                            <th>股票代码</th>
-                            <th>股票名称</th>
-                            <th>当前价格（元）</th>
-                            <th>涨幅（%）</th>
-                            <th>涨跌（元）</th>
-                            <th>昨日收盘价（元）</th>
-                            <th>今日开盘价（元）</th>
-                            <th>今日最高价（元）</th>
-                            <th>今日最低价（元）</th>
+                            <th style="vertical-align: middle;text-align: center">股票代码</th>
+                            <th style="vertical-align: middle;text-align: center">股票名称</th>
+                            <th style="vertical-align: middle;text-align: center">当前价格（元）</th>
+                            <th style="vertical-align: middle;text-align: center">涨幅（%）</th>
+                            <th style="vertical-align: middle;text-align: center">涨跌（元）</th>
+                            <th style="vertical-align: middle;text-align: center">昨日收盘价（元）</th>
+                            <th style="vertical-align: middle;text-align: center">今日开盘价（元）</th>
+                            <th style="vertical-align: middle;text-align: center">今日最高价（元）</th>
+                            <th style="vertical-align: middle;text-align: center">今日最低价（元）</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,14 +206,18 @@
                     </tbody>
                 </table>
                 {% endif %}
-                <nav aria-label="Page navigation" class="pull-right">
+</div>
+<br/>
+        <!-- 添加刷新按钮 -->
+                <!-- 未完成 -->
+                <center><button class="btn btn-primary" style="text-align:center" onclick="fresh()"><b>刷新</b></button></center>
+                <nav aria-label="Page navigation" style="text-align:center">
                     <ul class="pagination">
                         {{ html|safe }}
                     </ul>
                 </nav>
-        </div>
-    </div>
-
+            </div>
+            </div>
 {% endblock %}
 
 

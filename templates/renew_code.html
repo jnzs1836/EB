@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ user_type }}
+{% endblock %}
+
+{% block c1%}active{% endblock %}
+
+{% block head%}
+    <style>
+        #d1
+        {
+            width: 450px;
+            margin:0 auto;
+        }
+        #d4
+        {
+            width = 450px;
+            margin:0 auto;
+            margin-top: 40px;
+            font-size: 40px;
+            text-align:center;
+        }
+        #myForm
+        {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        #b1
+        {
+            width: 340px;
+            margin-top: 10px;
+        }
+        #l
+        {
+            width: 100px;
+        }
+    </style>
+
+    {% for jsfile_name in script_list %}
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+
+{% endblock %}
+
+{% block main %}
+<div class=container style="text-align:center">
+      <h2 class=bs-docs-featurette-title>用户购买/续费高级服务</h2>
+      <p class=lead>本页面为用户提供了账号升级/续费的入口，成为高级用户后，您将能查看股票K线图，掌握更多股票最新权威资讯！</p>
+      <hr class=half-rule>
+</div>
+<!--<form class="form-container">-->
+    <form action="/renew/verification" method="post" class="myForm">
+        <h3 class="page-title">升级/续费（10元/月）</h3><br/>
+        <div class="form-container">
+
+            <div class="form-group">
+                <button class="btn btn-default btn-block" type="button"  name="phone"  onclick="resend();time(this)" id="sub">点击重新发送手机验证码</button>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="验证码" name="verification" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">确认开通/续费</button>
+                <!-- 这里应该加一个程序控制缴费 -->
+            </div>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+                <script language="javascript" type="text/javascript">
+                    function resend() {
+                        var aj = new XMLHttpRequest();
+                        var tel = document.getElementById("_telephone").value;
+                        aj.open("GET", "/ajax?tel="+tel);
+                        aj.send();
+                        aj.onreadystatechange = function(){
+                            if(this.readyState == 4 && this.status == 200){
+                                myobj = JSON.parse(this.responseText);
+                                document.getElementById("vno").value = myobj.vno;
+                            }
+                        }
+                    }
+                </script>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="vno" id = "vno"  value="{{vno}}"  style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="_username" id = "_username"  value="{{user_name}}" style="display:none">
+                </div>
+                <div>
+                    <input type="number" class="form-control" name="_telephone" id="_telephone"  value="{{telephone}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="_select" id="_select"  value="{{select}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="_time" id="_time"  value="{{time}}" style="display:none">
+                </div>
+                <script language="javascript" type="text/javascript">
+                    var wait=document.getElementById("_time").value;
+                    function time(o) {
+                        if (wait == 0) {
+                            o.removeAttribute("disabled");
+                            o.innerHTML="点击发送手机验证码";
+                            document.getElementById("_time").value = 60;
+                            wait = document.getElementById("_time").value;
+                        } else {
+                            o.innerHTML=wait+"秒后可以重新发送";
+                            o.setAttribute("disabled", true);
+                            document.getElementById("_time").value=wait;
+                            wait--;
+                            setTimeout(function() {
+                                    time(o)
+                                },
+                                1000)
+                        }
+                    }
+                </script>
+                <script language="javascript" type="text/javascript">
+                    time(document.getElementById("sub"))
+                </script>
+
+        </div>
+    </form>
+<!--</form>-->
+{% endblock %}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>验证码</title>
+
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .form-container{
+            width: 300px;
+            margin: 0 auto;
+        }
+        .page-title{
+            text-align: center;
+        }
+        #d4
+        {
+            width = 450px;
+            margin:0 auto;
+            margin-top: 40px;
+            font-size: 40px;
+            text-align:center;
+        }
+    </style>
+
+    <script>
+        function jump()
+        {
+            window.location.href="/query";
+        }
+    </script>
+
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+          <div class="container-fluid">
+                <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">
+                          <img src="{{url_for('static',filename='logo.png')}}" width="30px">
+                      </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                            <li class="{% block c1 %}{% endblock %}"><a href="{{ url_for('home') }}"><span class="glyphicon glyphicon-home"></span> 主界面<span class="sr-only">(current)</span></a></li>
+                            <li class="{% block c2 %}{% endblock %}"><a href="#">预留</a></li>
+                      </ul>
+
+                      <ul class="nav navbar-nav navbar-right">
+                            <li><a id="showtime" href="#"></a></li>
+                            <li class="{% block c3 %}{% endblock %}"><a href="#">预留</a></li>
+                            <li class="{% block c4 %}{% endblock %}"><a href="{{ url_for('renew') }}"><span class="glyphicon glyphicon-user"></span> {{ user_type }}</a></li>
+                            <li class="{% block c5 %}{% endblock %}"><a href="{{ url_for('home') }}"><span class="glyphicon glyphicon-log-in"></span> 返回主页</a></li>
+                            <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-out"></span> 注销</a></li>
+                      </ul>
+                </div>
+          </div>
+    </nav>
+    <form action="/modify/verification" method="post" class="myForm">
+        <h1 class="page-title">修改密码</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="请输入新密码" name="password2" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="再次输入新密码" name="password3" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default btn-block" type="button"  name="phone"  onclick="resend();time(this)" id="sub">点击重新发送手机验证码</button>
+            </div>
+            <div>
+                <script language="javascript" type="text/javascript">
+                    function resend() {
+                        var aj = new XMLHttpRequest();
+                        var tel = document.getElementById("_telephone").value;
+                        aj.open("GET", "/ajax?tel="+tel);
+                        aj.send();
+                        aj.onreadystatechange = function(){
+                            if(this.readyState == 4 && this.status == 200){
+                                myobj = JSON.parse(this.responseText);
+                                document.getElementById("vno").value = myobj.vno;
+                            }
+                        }
+                    }
+                </script>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="vno" id = "vno"  value="{{vno}}"  style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="_username" id = "_username"  value="{{user_name}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="_telephone" id="_telephone"  value="{{telephone}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="_time" id="_time"  value="{{time}}" style="display:none">
+                </div>
+                <script language="javascript" type="text/javascript">
+                    var wait=document.getElementById("_time").value;
+                    function time(o) {
+                        if (wait == 0) {
+                            o.removeAttribute("disabled");
+                            o.innerHTML="点击发送手机验证码";
+                            document.getElementById("_time").value = 60;
+                            wait = document.getElementById("_time").value;
+                        } else {
+                            o.innerHTML=wait+"秒后可以重新发送";
+                            o.setAttribute("disabled", true);
+                            document.getElementById("_time").value=wait;
+                            wait--;
+                            setTimeout(function() {
+                                    time(o)
+                                },
+                                1000)
+                        }
+                    }
+                </script>
+                <script language="javascript" type="text/javascript">
+                    time(document.getElementById("sub"))
+                </script>
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="验证码" name="verification" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">确认修改</button>
+            </div>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    </form>
+</body>
+</html>

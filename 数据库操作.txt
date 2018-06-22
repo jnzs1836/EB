@@ -89,9 +89,51 @@ create table previous_stock(
 
 create table notice(
     stock_id char(10),
-    stock_notice varchar(10000)
+    stock_notice varchar(10000),
+    foreign key (stock_id) references stock_set(stock_id)
 );
 公告
+
+
+
+# date 计算是，比如，算今天的pma5值，即不包括今天向前推移5天的收盘价的均值
+create table pma5(
+    stock_id char(10),
+    date datetime not null,
+    average_price decimal(5,2) not null,
+    foreign key (stock_id) references stock_set(stock_id)
+);
+
+create table pma10(
+    stock_id char(10),
+    date datetime not null,
+    average_price decimal(5,2) not null,
+    foreign key (stock_id) references stock_set(stock_id)
+);
+
+
+create table pma30(
+    stock_id char(10),
+    date datetime not null,
+    average_price decimal(5,2) not null,
+    foreign key (stock_id) references stock_set(stock_id)
+);
+
+CREATE TABLE vcode(
+telephone VARCHAR(15) NULL,
+code CHAR(6) NULL,
+`no` INT NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (`no`));
+
+create index ts_index on today_stock(date);
+
+create index ps_index on previous_stock(date);
+
+create index p5_index on pma5(date);
+
+create index p10_index on pma10(date);
+
+create index p30_index on pma30(date);
 
 
 ####################################################################
@@ -106,6 +148,7 @@ create table notice(
 
 # 返回的json包格式
 {
+	"state":"true" # 查询是否有结果 true 或者false
 	"latest_price": "", # 最新成交价格
 	"buy_highest_price": "",  # 当前购买指令的最高价格
 	"sale_lowest_price": "", # 当前出售的最低价格
@@ -135,3 +178,27 @@ def get_stock_info(stock_id):
 	        "sale_lowest_price":""
 	      }
 	return dic
+
+###################
+
+
+------------------------------------------------------------------------------
+操作：
+1. 先创建数据库和user
+2. add_stock.py中取消add_stocks(stocks)和add_notice(stocks)的注释，并运行
+3. 运行kline_control.py
+4. 运行stock.control.py
+5. 运行main.py 端口为5000
+6. 运行mobile.py 端口为1234
+
+
+
+
+
+
+
+
+
+
+
+

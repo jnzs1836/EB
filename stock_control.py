@@ -51,11 +51,10 @@ def get_yesterdat_info():
                                  charset='utf8mb4')
 
     flag = 0
-    # present_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    yesterday = get_yesterday(today)
+    today = datetime.datetime.now()
+    yesterday = today + datetime.timedelta(days=-1)
     sql = "select * from previous_stock where date=%s"
-    args = [yesterday,]
+    args = [yesterday.strftime("%Y-%m-%d"),]
 
     cur = dbForOwner.cursor()
     results = []
@@ -72,31 +71,6 @@ def get_yesterdat_info():
         dbForOwner.close()
         return results
 
-def get_yesterday(today):
-    words = re.split("[ -]", today)
-    year = int(words[0])
-    month = int(words[1])
-    day = int(words[2])
-    if day > 1:
-        day = day - 1
-        return str(year) + "-" + str(month) + "-" + str(day)
-    else:
-        if month > 3 or month == 2:
-            month = month - 1
-            return str(year) + "-" + str(month) + "-" + str(day)
-        elif month == 3:
-            month = month - 1
-            if year % 400 == 0 or (year % 100 != 0 and year % 4 == 0):
-                day = 29
-                return str(year) + "-" + str(month) + "-" + str(day)
-            else:
-                day = 28
-                return str(year) + "-" + str(month) + "-" + str(day)
-        elif month == 1:
-            month = 12
-            year = year - 1
-            day = 31
-            return str(year) + "-" + str(month) + "-" + str(day)
 
 
 if __name__ == "__main__":

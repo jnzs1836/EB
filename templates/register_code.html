@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证码</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .form-container{
+            width: 300px;
+            margin: 0 auto;
+        }
+        .page-title{
+            text-align: center;
+        }
+        #d4
+        {
+            width = 450px;
+            margin:0 auto;
+            margin-top: 40px;
+            font-size: 40px;
+            text-align:center;
+        }
+    </style>
+    <script>
+        function agree() {
+            alert("test");
+        }
+    </script>
+
+
+</head>
+<body>
+    <form action="/register/verification" method="post" class="myForm">
+        <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        <a class="navbar-brand" href="#" style="color:white"><span class="glyphicon glyphicon-signal"></span> 信息发布系统</a>
+    </div>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ url_for('retrieve') }}" style="color:white"><span class="glyphicon glyphicon-pencil"></span> 密码找回</a></li>
+		 <li><a href="{{ url_for('login') }}" style="color:white"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+		 <li><a href="{{last_url}}" style="color:white"><span class="glyphicon glyphicon-log-out"></span> 返回</a></li>
+        </ul>
+    </div>
+    </nav>
+        <h1 class="page-title">修改密码</h1>
+     <div class="form-container">
+            <div class="form-group">
+                <!-- 未完成 -->
+                    <button class="btn btn-default btn-block" type="button"  name="phone"  onclick="resend();time(this)" id="sub">点击重新发送手机验证码</button>
+                </div>
+                <div>
+                <script language="javascript" type="text/javascript">
+                    function resend() {
+                        var aj = new XMLHttpRequest();
+                        var tel = document.getElementById("_telephone").value;
+                        aj.open("GET", "/ajax?tel="+tel);
+                        aj.send();
+                        aj.onreadystatechange = function(){
+                            if(this.readyState == 4 && this.status == 200){
+                                myobj = JSON.parse(this.responseText);
+                                document.getElementById("vno").value = myobj.vno;
+                            }
+                        }
+                    }
+                </script>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="vno" id = "vno"  value="{{vno}}"  style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="_username" id = "_username"  value="{{user_name}}" style="display:none">
+                </div>
+                <div class="form-group">
+                     <input type="text" class="form-control"  name="_password" id="_password"  value="{{password}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="_telephone" id="_telephone"  value="{{telephone}}" style="display:none">
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="_time" id="_time"  value="{{time}}" style="display:none">
+                </div>
+                <script language="javascript" type="text/javascript">
+                    var wait=document.getElementById("_time").value;
+                    function time(o) {
+                        if (wait == 0) {
+                            o.removeAttribute("disabled");
+                            o.innerHTML="点击发送手机验证码";
+                            document.getElementById("_time").value = 60;
+                            wait = document.getElementById("_time").value;
+                        } else {
+                            o.innerHTML=wait+"秒后可以重新发送";
+                            o.setAttribute("disabled", true);
+                            document.getElementById("_time").value=wait;
+                            wait--;
+                            setTimeout(function() {
+                                    time(o)
+                                },
+                                1000)
+                        }
+                    }
+                </script>
+                <script language="javascript" type="text/javascript">
+                    time(document.getElementById("sub"))
+                </script>
+
+
+
+            </div>
+     </div>
+        <div class="form-container">
+
+
+            <div class="form-group">
+                <input id="code" type="number" class="form-control" placeholder="验证码" name="verification" required>
+            </div>
+             <div>
+                    <label>
+                        <input id="checkbox" type="checkbox" name="check" style="float:left" required >我已阅读并同意
+                        <a href="/agreement"  target="_blank">用户注册协议</a>
+                    </label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit" name="confirm" id="ok" >确认注册</button>
+            </div>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+</form>
+</body>
+</html>

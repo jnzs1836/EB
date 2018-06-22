@@ -37,40 +37,42 @@
         }
     </style>
 
+
 {% endblock %}
 
 {% block main %}
+<div class=container style="text-align:center">
+      <h2 class=bs-docs-featurette-title>用户购买/续费高级服务</h2>
+      <p class=lead>本页面为用户提供了账号升级/续费的入口，成为高级用户后，您将能查看股票K线图，掌握更多股票最新权威资讯！</p>
+      <hr class=half-rule>
+</div>
+<!--<form class="form-container">-->
+        <form action="/renew" method="post" class="myForm">
+            <h3 class="page-title">升级/续费（10元/月）</h3><br/>
+            <div class="form-container">
+                <div class="form-group">
+                        <label style="width:120px;">请选择时长:</label>
+                        <select name="select" autofocus required>
+                            <option>1个月</option>
+                            <option>3个月</option>
+                            <option>6个月</option>
+                            <option>12个月</option>
+                        </select>
+                </div>
 
-    <div>
-        <a href="{{ url_for('home') }}">返回</a>
-    </div>
-
-    <form action="/renew" method="post" class="myForm">
-        <h3 class="page-title">登录</h3>
-        <div class="form-container">
-            <div class="form-group">
-                <label style="width:120px;">请选择时长:</label>
-                <select name="select" required>
-                    <option>1个月</option>
-                    <option>3个月</option>
-                    <option>6个月</option>
-                    <option>12个月</option>
-                </select>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="手机号码" name="telephone" required>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit" name="phone" id="sub">点击发送手机验证码</button>
+                </div>
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+                {% endfor %}
             </div>
-
-            <div class="form-group">
-                <input type="number" class="form-control" placeholder="手机号码" name="telephone" required>
-            </div>
-            <div>
-                <button>发送验证码</button>
-            </div>
-            <div class="form-group">
-                <input type="number" class="form-control" placeholder="验证码" name="verification" required>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">登录</button>
-            </div>
-        </div>
-    </form>
-
+        </form>
+<!--</form>-->
 {% endblock %}

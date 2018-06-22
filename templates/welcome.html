@@ -1,0 +1,111 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
+  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+  <link crossorigin="anonymous" media="all" integrity="sha512-PkbtxdWDpLChpxtWQ0KbvJoef4XMYPq5pfd/ZmylYZTzXYpCfGwN9d+bsSKcmOJLwTkfjFkfj5wz3poDrhJoSQ==" rel="stylesheet" href="https://assets-cdn.github.com/assets/frameworks-f6e6ce21346c0d2eb22def1e8534afcb.css" />
+   <link crossorigin="anonymous" media="all" integrity="sha512-zyxweUSm/NG+juywqcMFSS4HbKjLWCZyEM2JjoCqnQUU6RVrHpHMwH66xreiaeMIRoA6vYuk0hm8S1X42r/YWQ==" rel="stylesheet" href="https://assets-cdn.github.com/assets/site-220df28424b63d1e24f3bd909efebe81.css" />
+  <link crossorigin="anonymous" media="all" integrity="sha512-0BWCA/R6u2ObTpfsUgMSBEyTMfOY1V9wGfqpR/U9O9tc/BFc53yM/UKaeK950BOFvlIM0BFc2lrr6CHkg095YA==" rel="stylesheet" href="https://assets-cdn.github.com/assets/github-22f66197d69af5eeca9f48295c52743e.css" />
+  <meta name="viewport" content="width=device-width">
+  <title>股票交易系统·信息发布</title>
+  <meta name="user-login" content="">
+  <meta name="viewport" content="width=device-width">
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+<style>
+      #d4
+        {
+            width = 450px;
+            margin:0 auto;
+            margin-top: 40px;
+            font-size: 40px;
+            text-align:center;
+        }
+
+      #cx
+      {
+        height:94%
+
+      }
+
+      #xin
+      {
+        padding: 0px;
+        margin: 0px;
+      }
+</style>
+ </head>
+
+  <body>
+
+  <nav class="navbar navbar-inverse navbar-static-top" id='xin' role="navigation">
+    <div class="container-fluid" >
+      <div class="navbar-header" >
+        <a class="navbar-brand" href="#" style="color:white"><span class="glyphicon glyphicon-signal"></span> 股票交易系统</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ url_for('register')}}" style="color:white"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+        <li><a href="{{ url_for('login')}}" style="color:white"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+        <li><a href="{{ url_for('retrieve')}}" style="color:white"><span class="glyphicon glyphicon-pencil"></span> 找回密码</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="py-6 py-sm-8 py-lg-10 py-xl-12 jumbotron-codelines" id="cx">
+    <div class="container-lg p-responsive position-relative">
+      <div class="d-md-flex flex-items-center gutter-md-spacious">
+        <div class="col-md-7 text-center text-md-left ">
+          <h1 class="alt-h0 text-white lh-condensed-ultra mb-3"> 股票交易</h1>
+          <p class="alt-lead mb-4">
+          </p>
+        </div>
+
+          <div class="mx-auto col-sm-8 col-md-5 hide-sm">
+            <div class="rounded-1 text-gray bg-gray-light py-4 px-4 px-md-3 px-lg-4">
+              <form class="home-hero-signup js-signup-form" autocomplete="off" action="/login" accept-charset="UTF-8" method="post">
+                <dl class="form-group mt-0">
+                  <dt class="input-label">
+                    <label class="form-label f5" for="username">用户名</label>
+                  </dt>
+                  <dd>
+                      <input type="text" name="username" id="username" class="form-control form-control-lg input-block" placeholder="请输入您的用户名" autofocus required>
+
+                  </dd>
+                <p class="form-control-note">此为必填字段</p>
+                </dl>
+                <dl class="form-group">
+                  <dt class="input-label">
+                    <label class="form-label f5" for="password">密码</label>
+                  </dt>
+                  <dd>
+                      <input type="password" name="password" id="password" class="form-control form-control-lg input-block" placeholder="请输入您的密码" required>
+
+                  </dd>
+                  <p class="form-control-note">此为必填字段</p>
+                </dl>
+                  <button class="btn btn-primary btn-large btn-block" type="submit" >用户登录</button></form>
+              </form>
+           </div>
+          </div>
+      </div>
+    </div>
+  </div>
+      {% for v in get_flashed_messages(category_filter=['err']) %}
+        <div id="d4">
+            <p style="color:red;" class="float-center;"><strong>{{ v }}</strong></p>
+        </div>
+    {% endfor %}
+  </body>
+
+</html>

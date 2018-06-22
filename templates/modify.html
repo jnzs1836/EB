@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-    <title>密码修改</title>
+    <title>信息发布系统·密码修改</title>
 
 
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
@@ -42,46 +42,65 @@
 
 </head>
 <body>
+     <nav class="navbar navbar-default">
+          <div class="container-fluid">
+                <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">
+                          <img src="{{url_for('static',filename='logo.jpg')}}" width="30px">
+                      </a>
+                </div>
 
-    <div>
-        <a href="{{ url_for('home') }}">返回</a>
-    </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                            <li class="{% block c1 %}{% endblock %}"><a href="{{ url_for('home') }}"><span class="glyphicon glyphicon-home"></span> 主界面<span class="sr-only">(current)</span></a></li>
+                            <li class="{% block c2 %}{% endblock %}"><a href="#">预留</a></li>
+                      </ul>
+
+                      <ul class="nav navbar-nav navbar-right">
+                            <li><a id="showtime" href="#"></a></li>
+                            <li class="{% block c3 %}{% endblock %}"><a href="#">预留</a></li>
+                            <li class="{% block c4 %}{% endblock %}"><a href="{{ url_for('renew') }}"><span class="glyphicon glyphicon-user"></span> {{ user_type }}</a></li>
+                            <li class="{% block c5 %}{% endblock %}"><a href="{{ url_for('home') }}"><span class="glyphicon glyphicon-log-in"></span> 返回主页</a></li>
+                            <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-out"></span> 注销</a></li>
+                      </ul>
+                </div>
+          </div>
+    </nav>
 
     <form action="/modify" method="post" class="myForm">
-        <h3 class="page-title">登录</h3>
+        <h1 class="page-title">修改密码</h1>
         <div class="form-container">
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="请输入旧密码" name="password1" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="请输入新密码" name="password2" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="再次输入新密码" name="password3" required>
-            </div>
-            <div class="form-group">
                 <input type="number" class="form-control" placeholder="手机号码" name="telephone" required>
             </div>
-            <div>
-                <button>发送验证码</button>
-            </div>
             <div class="form-group">
-                <input type="number" class="form-control" placeholder="验证码" name="verification" required>
+                <button class="btn btn-primary btn-block" type="submit" name="phone" id="sub">点击发送手机验证码</button>
             </div>
-            <div class="form-group">
-                <button class="btn btn-primary btn-block" type="submit">登录</button>
-            </div>
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
 
+                {{ message }}
+            </div>
+            {% endfor %}
         </div>
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+                {{ message }}
+            </div>
+            {% endfor %}
     </form>
-
-
-    {% for v in get_flashed_messages(category_filter=['err']) %}
-        <div id="d4">
-            <p style="color:red;"><strong>{{ v }}</strong></p>
-        </div>
-    {% endfor %}
-
 
 
 </body>
