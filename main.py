@@ -1324,8 +1324,13 @@ def security_account():
             if result.first() is None:
                 list=[]
                 dict= {"name": "", "num": "", "price": "", "cost": "", "profit": ""}
-                list.append(dict)
-                return jsonify(list)
+               # list.append(dict)
+                response = app.response_class(
+                    response=json.dumps({"stock":list}),
+                    status=200,
+                    mimetype='application/json'
+                )
+                return response
 
             else:
                 list = []
@@ -1339,7 +1344,7 @@ def security_account():
                     profit = price * num - cost
                     dict = {"name": name, "num": num, "price": price, "cost": cost, "profit": profit}
                     list.append(dict)
-                return jsonify(list)
+                return jsonify({"stock":list})
 
 #中央交易系统
 def trade_fund(username,money,operation_type):
