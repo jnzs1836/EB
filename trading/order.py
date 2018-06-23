@@ -59,8 +59,6 @@ class QueueManager():
         print("count "+ str(self.count))
         return self.queues[stock_id]
 
-    def
-
 
 def get_queue_manager():
     queue_manager = getattr(g,'_queues',None)
