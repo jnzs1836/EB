@@ -12,6 +12,20 @@ class PairQueue :
         self.stock_name = stock_name
         self.short_queue = Queue(stock_id,direction=SHORT,r=self.r)
         self.long_queue = Queue(stock_id,direction=LONG,r=self.r)
+        self.gains = 10
+        self.decline = 4
+
+    def set_gains(self,gains):
+        self.gains = gains
+
+    def set_decline(self,decline):
+        self.decline = decline
+
+    def get_gains(self):
+        return self.gains
+
+    def get_decline(self):
+        return self.decline
 
     def get_long_orders(self):
         get = self.long_queue.get_all()

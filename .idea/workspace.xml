@@ -111,11 +111,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="1769" column="32" lean-forward="true" selection-start-line="1769" selection-start-column="32" selection-end-line="1769" selection-end-column="32" />
+            <state relative-caret-position="570">
+              <caret line="1801" column="26" lean-forward="true" selection-start-line="1801" selection-start-column="26" selection-end-line="1801" selection-end-column="26" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -145,6 +145,36 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="create.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql/create.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3255">
+              <caret line="208" selection-start-line="208" selection-end-line="209" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Documents/Tencent Files/714582542/FileRecv/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pair_queue.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/order_queue/pair_queue.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="cancel.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/cancel.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -152,16 +182,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitattributes" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitattributes">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
+            <state relative-caret-position="299">
+              <caret line="184" column="42" lean-forward="true" selection-start-line="184" selection-start-column="42" selection-end-line="184" selection-end-column="42" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -169,26 +194,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deal_server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deal_server.py">
+      <file leaf-file-name="trade.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="21" lean-forward="true" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add_stock.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/add_stock.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="5263">
+              <caret line="277" column="1" selection-start-line="277" selection-start-column="1" selection-end-line="277" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -210,18 +220,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
               <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mobile.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -264,7 +262,10 @@
       <find>123</find>
       <find>account_user_lo</find>
       <find>order_han</find>
+      <find>security_account</find>
       <find>get_user_orders</find>
+      <find>/security_account</find>
+      <find>stock_status</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -313,8 +314,10 @@
         <option value="$PROJECT_DIR$/mobile.py" />
         <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
+        <option value="$PROJECT_DIR$/public/js/trade_js/trade.js" />
       </list>
     </option>
   </component>
@@ -358,6 +361,24 @@
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
               <item name="EB" type="462c0819:PsiDirectoryNode" />
               <item name="order_queue" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EB" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EB" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EB" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="trade_js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
@@ -582,9 +603,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/pyecharts/charts/bar.py" />
-    <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/functools.py" />
-    <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/flask/globals.py" />
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/templates/try.html" />
     <entry file="file://$PROJECT_DIR$/templates/queryTmp.html" />
@@ -770,13 +788,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sql/create.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="662">
-          <caret line="208" selection-start-line="208" selection-end-line="209" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/kline_control.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
@@ -849,13 +860,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
+    <entry file="file://$PROJECT_DIR$/db_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#19#28#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="19">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -864,27 +872,34 @@
         <state relative-caret-position="-57" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_config.py">
+    <entry file="file://$PROJECT_DIR$/order_queue/pair_queue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        <state relative-caret-position="57">
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
+    <entry file="file://$USER_HOME$/Documents/Tencent Files/714582542/FileRecv/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="38">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql/create.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3255">
+          <caret line="208" selection-start-line="208" selection-end-line="209" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="1769" column="32" lean-forward="true" selection-start-line="1769" selection-start-column="32" selection-end-line="1769" selection-end-column="32" />
+        <state relative-caret-position="570">
+          <caret line="1801" column="26" lean-forward="true" selection-start-line="1801" selection-start-column="26" selection-end-line="1801" selection-end-column="26" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />
@@ -910,6 +925,33 @@
             <element signature="e#16393#28693#0" />
             <element signature="e#28749#29054#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#19#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="184" column="42" lean-forward="true" selection-start-line="184" selection-start-column="42" selection-end-line="184" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5263">
+          <caret line="277" column="1" selection-start-line="277" selection-start-column="1" selection-end-line="277" selection-end-column="1" />
         </state>
       </provider>
     </entry>

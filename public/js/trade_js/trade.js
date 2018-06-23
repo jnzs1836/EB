@@ -27,7 +27,7 @@ function render_account_info(data){
 }
 
 function check_trade_form(){
-    $.post("/fund_account", {username:get_current_username()}, function(data){
+    $.post("/fund_account", JSON.stringify({username:get_current_username()}), function(data){
         render_account_info(data);
     })
     //render account info
@@ -75,7 +75,7 @@ function check_trade_form(){
         if (isNaN(amount) == false && isNaN(price) == false){
             if(amount * price > global_vars.fund){
                 $("#trade_amount").val(Math.floor(global_vars.fund / price));
-            } 
+            }
         }
     });
 
@@ -85,7 +85,7 @@ function check_trade_form(){
         if (isNaN(amount) == false && isNaN(price) == false){
             if(amount * price > global_vars.fund){
                 $("#stock_price").val(Math.floor(global_vars.fund / amount));
-            } 
+            }
         }
     });
 }
@@ -108,7 +108,7 @@ function check_confirm_form(){
                 username : username,
                 password : $("#fund_psd").val()
             }
-            $.post("/account_user_login", send_data, function(data){
+            $.post("/account_user_login", JSON.stringify(send_data), function(data){
                 if (data.state == "true"){
                     send_trade($("#trade_form"));
                 }
@@ -130,8 +130,8 @@ function send_trade(form){
         price: $("#stock_price").val(),
         order_type: order_t
     };
-    
-    $.post("/trade_shares", send_data, function(data){
+
+    $.post("/trade_shares", JSON.stringify(send_data), function(data){
         if (data.state == "true"){
             $("#msg_slot").html(create_success_alert(
                 "交易指令发布成功!<strong>该笔交易的交易号为：{}</strong>".replace("{}", data.transaction_id)
@@ -231,7 +231,7 @@ function send_cancel(){
         order_type : 2
         //2 means cancel
     }
-    $.post("/transaction_state", send_data, function(data){
+    $.post("/transaction_state", JSON.stringify( send_data), function(data){
         if (data.state == "false"){
             $("#msg_slot").html(create_error_alert(data.msg));
         }else{
@@ -264,7 +264,7 @@ function check_confirm_cancel(){
                 username : username,
                 password : $("#fund_psd").val()
             }
-            $.post("/account_user_login", send_data, function(data){
+            $.post("/account_user_login", JSON.stringify(send_data), function(data){
                 if (data.state == "true"){
                    send_cancel();
                 }

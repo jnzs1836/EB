@@ -182,3 +182,35 @@ def trade_security(username, security_number,amount,operation_type,db):
         return True
     else:
         return False
+def change_stock_status(stock_id, status):
+    if status is True:
+        start_trading(stock_id)
+    else:
+        stop_trading(stock_id)
+
+def get_buy_sell_items(stock_id, is_buy):
+    if is_buy:
+        direction = LONG
+    else:
+        direction = SHORT
+    return get_stock_orders(stock_id,direction)
+
+
+def get_stock_state(stock_id):
+    get = dict()
+    get['stock_id'] = stock_id
+    queue_manager = get_queue_manager()
+    status = queue_manager.get_stock_status(stock_id)
+    get['status'] = status
+    pair_queue = queue_manager.get_pair_queue(stock_id)
+    get['gains'] = pair_queue.get_gains()
+    get['decline'] = pair_queue.get_decline()
+
+def set_price_limit(stock_id, price, is_gains): # is_gains true设置涨幅 ，false 设置跌幅
+    queue_manager = get_queue_manager()
+    pair_queue = queue_manager.get_pair_queue(stock_id)
+    if is_gains:
+        pair_queue.set_gains(price)
+    else:
+        pair.queue.set_decline(price)
+    return True

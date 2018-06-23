@@ -1309,11 +1309,22 @@ def security_account():
         # post
         else:
             dict = json.loads(request.get_data())
-            username = dict['username']
+            fund_username = dict['username']
+            result = db.session.execute(
+                "select security_account from fund_account_user where username ='" + fund_username + "'")
+            if result.first() is None:
+                data = {"state": "false", "msg": "查询失败"}
+                return jsonify(data)
+            result = db.session.execute(
+                "select security_account from fund_account_user where username ='" + fund_username + "'")
+            username = ""
+            for query_result in result:
+                username = query_result[0]
             result = db.session.execute("select * from security_in_account where username ='" + username + "'")
             if result.first() is None:
                 data = {"state": "false", "msg": "查询失败"}
                 return jsonify(data)
+
             else:
                 list = []
                 result = db.session.execute("select * from security_in_account where username ='" + username + "'")
