@@ -115,8 +115,6 @@ def clean_queue(stock_name):
     pair_queue.clean()
 
 def check_user(username,stock_name,price,volume,direction,db):
-    print(trade_fund(username,volume * price, direction,db))
-    print(trade_security(username,stock_name,volume,direction,db))
     check = False
     if direction is SHORT:
         check = trade_security(username,stock_name,volume,'sell',db)
