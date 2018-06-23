@@ -48,8 +48,8 @@ def get_info_id(stock_id):
     dic = {}
     tmp = get_stock_info(stock_id)
     now = Jiang.qid(stock_id)
-
-    dic["state"] = now["state"]
+    ret = {}
+    ret["state"] = now["state"]
     if now["state"] == "true":
         dic["latest_price"] = tmp["latest_price"]
         dic["buy_highest_price"] = tmp["buy_highest_price"]
@@ -60,7 +60,8 @@ def get_info_id(stock_id):
         dic["month_price"] = {"highest_price": now["month_h_price"], "lowest_price": now["month_l_price"]}
         dic["stock_info"] = now["notice"]
         dic["current_price"] = now["present_price"]
-    return dic
+    ret["stock_price"] = dic
+    return ret
 
 
 # 提供给交易客户端的端口
