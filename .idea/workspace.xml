@@ -114,8 +114,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="1225" column="40" selection-start-line="1225" selection-start-column="23" selection-end-line="1225" selection-end-column="40" />
+            <state relative-caret-position="513">
+              <caret line="1769" column="32" lean-forward="true" selection-start-line="1769" selection-start-column="32" selection-end-line="1769" selection-end-column="32" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -145,6 +145,13 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="cancel.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cancel.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-57" />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name=".gitattributes" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitattributes">
           <provider selected="true" editor-type-id="text-editor" />
@@ -153,21 +160,10 @@
       <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
-              <caret line="76" column="30" lean-forward="true" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="30" />
+            <state relative-caret-position="304">
+              <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1661">
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -212,8 +208,8 @@
       <file leaf-file-name="db_config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db_config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            <state relative-caret-position="19">
+              <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -266,6 +262,9 @@
       <find>db</find>
       <find>db_</find>
       <find>123</find>
+      <find>account_user_lo</find>
+      <find>order_han</find>
+      <find>get_user_orders</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -311,10 +310,10 @@
         <option value="$PROJECT_DIR$/stock_control.py" />
         <option value="$PROJECT_DIR$/add_stock.py" />
         <option value="$PROJECT_DIR$/deal_server.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/mobile.py" />
         <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -364,6 +363,11 @@
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
               <item name="EB" type="462c0819:PsiDirectoryNode" />
               <item name="sql" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EB" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
@@ -578,7 +582,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/flask/app.py" />
     <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/pyecharts/charts/bar.py" />
     <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/functools.py" />
     <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/flask/globals.py" />
@@ -826,16 +829,6 @@
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="76" column="30" lean-forward="true" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mobile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="565">
@@ -866,17 +859,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cancel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-57" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/db_config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        <state relative-caret-position="19">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="1225" column="40" selection-start-line="1225" selection-start-column="23" selection-end-line="1225" selection-end-column="40" />
+        <state relative-caret-position="513">
+          <caret line="1769" column="32" lean-forward="true" selection-start-line="1769" selection-start-column="32" selection-end-line="1769" selection-end-column="32" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />

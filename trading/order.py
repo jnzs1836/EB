@@ -101,11 +101,19 @@ def check_user(username,stock_name,price,volume,direction,db):
             trade_security(username,stock_name,volume,direction,db):
         return True
 
-def get_user_orders(user_id,stock_name):
+def get_user_orders(user_id):
+    cursor = self.db_conn.cursor()
+    cursor.execute('select * from stock_set')
+    result = cursor.fetchall()
+    order_list = []
     queue_manager = get_queue_manager()
-    stock_id = queue_manager.get_stock_id(stock_name)
-    pair_queue = queue_manager.get_pair_queue(stock_id)
-    return pair_queue.user_orders(user_id)
+    for item in result:
+        stock_id = item[0]
+        stock_name = item[1]
+        # stock_list.appe
+        pair_queue = queue_manager.get_pair_queue(stock_id)
+        order_list.extend(pair_queue.user_orders(user_id))
+    return order_list
 
 def get_stock_orders(stock_name,type):
     queue_manager = get_queue_manager()
