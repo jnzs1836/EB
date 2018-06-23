@@ -19,6 +19,7 @@ class Queue :
             return 0
         order.set_id(self.count)
         self.count  = self.count + 1
+        print(self.id)
         self.r.zadd(self.id,order.get_score(),order.get_id())
         # self.r.zadd(self.id,order.get_id(),order.get_score())
         self.r.hmset(order.get_id(),order.get_map())
