@@ -1322,7 +1322,8 @@ def security_account():
                 username = query_result[0]
             result = db.session.execute("select * from security_in_account where username ='" + username + "'")
             if result.first() is None:
-                data = []
+                list=[]
+                dict= {"name": "", "num": "", "price": "", "cost": "", "profit": ""}
                 return jsonify(data)
 
             else:
