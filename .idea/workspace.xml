@@ -193,10 +193,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/order_queue/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
+            <state relative-caret-position="-8">
               <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
@@ -226,11 +226,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="queue.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="queue.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+            <state relative-caret-position="285">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
               <folding>
                 <element signature="e#1#13#0" expanded="true" />
               </folding>
@@ -342,11 +342,11 @@
         <option value="$PROJECT_DIR$/db_config.py" />
         <option value="$PROJECT_DIR$/public/js/trade_js/trade.js" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
-        <option value="$PROJECT_DIR$/order_queue/queue.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/order_queue/constant.py" />
         <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/order_queue/order.py" />
+        <option value="$PROJECT_DIR$/order_queue/queue.py" />
       </list>
     </option>
   </component>
@@ -593,7 +593,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
+    <frame x="-6" y="-6" width="1513" height="973" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32992327" />
@@ -930,16 +930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding>
-            <element signature="e#1#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="745">
@@ -1012,10 +1002,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/order_queue/order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
+        <state relative-caret-position="-8">
           <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#1#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

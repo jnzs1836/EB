@@ -11,6 +11,12 @@ class Queue :
         else:
             self.r = redis.Redis()
         self.count = 0
+        self.direction = direction
+        if self.direction is LONG:
+            self.prefix = 'long'
+        else:
+            self.prefix = 'short'
+        self.key = self.prefix + str(self.id)
 
     def push(self, order):
         if isinstance(order,Order):
@@ -20,8 +26,10 @@ class Queue :
         order.set_id(self.count)
         self.count  = self.count + 1
         print(self.id)
-        self.r.zadd(self.id,order.get_score(),order.get_id())
-        # self.r.zadd(self.id,order.get_id(),order.get_score())
+
+        # key = prefix + str(self.id)
+        # self.r.zadd(self.id,order.get_score(),order.get_id())
+        self.r.zadd(self.key,order.get_id(),order.get_score())
         self.r.hmset(order.get_id(),order.get_map())
         return order.get_id()
 
@@ -30,12 +38,12 @@ class Queue :
             pass
         else:
             return 0
-        self.r.zrem(self.id,order_id)
+        self.r.zrem(self.key,order_id)
         self.r.delete(order_id)
         return 1
 
     def get_all(self):
-        order_ids = self.r.zrangebyscore(self.id, '-inf', 'inf')
+        order_ids = self.r.zrangebyscore(self.key, '-inf', 'inf')
         order_list = []
         for order_id in order_ids:
             order_dict = self.r.hgetall(order_id)
@@ -58,13 +66,13 @@ class Queue :
         return orders
 
     def pop(self):
-        order_list = self.r.zrange(self.id,0,0)
+        order_list = self.r.zrange(self.key,0,0)
         if not order_list:
             return None
         order_id = order_list[0]
         order_dict = self.r.hgetall(order_id)
         self.r.delete(order_id)
-        self.r.zrem(self.id,order_id)
+        self.r.zrem(self.key,order_id)
         print(order_dict)
         if order_dict:
             order = Order(self.id,order_dict['user_id'.encode('utf-8')].decode('utf-8'),
@@ -77,13 +85,13 @@ class Queue :
 
 
     def clean(self):
-        order_ids = self.r.zrangebyscore(self.id, '-inf', 'inf')
+        order_ids = self.r.zrangebyscore(self.key, '-inf', 'inf')
         print(order_ids)
         for order_id in order_ids:
             order = self.r.hkeys(order_id)
             print(order)
             self.r.delete(order_id)
-        self.r.zremrangebyscore(self.id, '-inf', 'inf')
+        self.r.zremrangebyscore(self.key, '-inf', 'inf')
 
 
 def test_queue():
