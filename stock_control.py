@@ -3,11 +3,12 @@ import datetime
 import re
 import random
 import time
+from db_config import *
 
 def stock_change(info):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -47,8 +48,8 @@ def stock_change(info):
 
 def get_yesterdat_info():
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')

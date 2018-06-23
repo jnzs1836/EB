@@ -206,4 +206,4 @@ insert into security_in_account values("222","222","222",11,150.10,10);
 
 
 insert into security_in_account values('111','600001','tencent',100,100,50);
-create table trade_log (id int unsigned not null primary key AUTO_INCREMENT, stock_id varchar(20), buy_id varchar(20), sell_id varchar(20), price integer, volume integer time timestamp not null default current_timestamp)
+create table trade_log (id int unsigned not null primary key AUTO_INCREMENT, stock_id varchar(20), buy_id varchar(20), sell_id varchar(20), price integer, volume integer, create_time timestamp not null default current_timestamp)

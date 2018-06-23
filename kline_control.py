@@ -1,11 +1,11 @@
 import pymysql
 import datetime
-
+from db_config import *
 
 def get_stock_info():
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -30,8 +30,8 @@ def get_stock_info():
 
 def get_end_price(stock_info):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -79,8 +79,8 @@ def cal_pma(pma, stock_info):
         td = td + datetime.timedelta(days=-1)
 
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -112,8 +112,8 @@ def cal_pma(pma, stock_info):
 
 def get_info(pma, stock_id):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')

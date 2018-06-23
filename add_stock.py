@@ -2,10 +2,11 @@ import pymysql
 import datetime
 import random
 
+from db_config import *
 def add_stocks(stocks):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -36,8 +37,8 @@ def add_stocks(stocks):
 
 def add_stocks_previous_price(stocks, py, pm, pd):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -116,8 +117,8 @@ def add_stocks_previous_price(stocks, py, pm, pd):
 
 def add_notice(stocks):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -151,8 +152,8 @@ if __name__ == "__main__":
     stocks = {}  # id: name
     for i in range(40):
         stocks[i+100] = "s" + str(i)
-    # add_stocks(stocks)
-    # add_notice(stocks)
+    add_stocks(stocks)
+    add_notice(stocks)
     py = 2010
     pm = 1
     pd = 1

@@ -6,13 +6,15 @@ from flask import g
 from flask import app
 import redis
 import mysql.connector
+from db_config import *
+
 
 class QueueManager():
     def __init__(self):
         self.queues = {}
         self.count = 0
         self.r = redis.Redis()
-        self.db_conn = mysql.connector.connect(user='root', password='77122100Aa', database='test', use_unicode=True)
+        self.db_conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
         self.set_default_queues()
 
     def set_default_queues(self):
