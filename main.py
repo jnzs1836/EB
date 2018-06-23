@@ -1751,7 +1751,7 @@ def clean_queue_handler():
 #     )
 #     return response
 
-@app.route('/transaction_state')
+@app.route('/transaction_state',methods=['POST'])
 def cancel_order():
     data = request.get_json()
     order_id = data['transaction_id']
