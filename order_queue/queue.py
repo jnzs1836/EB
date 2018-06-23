@@ -58,11 +58,20 @@ class Queue :
         return self.r.hvals(order_id)
 
     def user_orders(self,user_id):
-        pattern = '*' + user_id + '*'
+        pattern = '*' + 'uid' + user_id + '*'
         order_ids = self.r.keys(pattern)
         orders = []
         for order_id in order_ids:
-            orders.append(order_id.decode('utf-8'))
+            order_dict = dict()
+            hash = self.r.hgetall(order_id)
+            print(hash)
+            order_dict['timestamp'] = hash['timestamp'.encode('utf-8')].decode('utf-8')
+            order_dict['order_type'] = hash['direction'.encode('utf-8')].decode('utf-8')
+            order_dict['volume'] = hash["volume".encode('utf-8')].decode('utf-8')
+            order_dict['stock_id'] =self.id
+            order_dict['price'] = hash['price'.encode('utf-8')].decode('utf-8')
+
+            orders.append(order_dict)
         return orders
 
     def pop(self):

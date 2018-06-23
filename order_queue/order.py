@@ -17,7 +17,7 @@ class Order:
 
         }
         segment = '__'
-        self.id = self.stock_id + segment + self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
+        self.id = self.stock_id + segment + 'uid' +self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
 
     def get_string(self):
         return str(self.price) + "xinghong"
@@ -57,4 +57,5 @@ class Order:
             'price':self.price,
             'volume':self.volume,
             'direction':self.direction,
+            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         }

@@ -1292,7 +1292,7 @@ def fund_account():
                     fund = str(query_result[0])
                     freeze_fund = str(query_result[1])
                 # 返回总资金和可用资金
-                data = {'enabled_money': fund, 'freezing_money': freeze_fund}
+                data = {'fund': fund, 'freeze_fund': freeze_fund}
                 return jsonify(data)
 
 
@@ -1767,7 +1767,8 @@ def orders_info():
     user_id = session.get('userid')
     json_data = {
         "state":'true',
-        'orders':get_user_orders(user_id)
+        'message':'Hello World',
+        'data':get_user_orders(user_id)
     }
     response = app.response_class(
         response=json.dumps(json_data),
