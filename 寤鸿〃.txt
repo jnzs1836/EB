@@ -1,0 +1,76 @@
+create database account;
+use account;
+create table fund_account_manager(
+username varchar(10),
+password varchar(100) not null,
+primary key(username)
+);
+create table security_account_manager(
+username varchar(10),
+password varchar(100) not null,
+primary key(username)
+);
+create table security_account_personal_user(
+username varchar(20),
+password varchar(100) not null,
+name varchar(20) not null,
+sex enum('F','M') not null,
+ID_card varchar(20) unique not null,
+address varchar(20) not null,
+profession varchar(20) not null,
+educational_background enum('high_school','college') not null,
+company varchar(20) not null,
+phone varchar(11) not null,
+is_enabled enum('Y','N') not null,
+fund_account varchar(20) not null,
+primary key(username)
+);
+create table security_account_coporate_user(
+username varchar(20),
+password varchar(100) not null,
+registration_number varchar(20) not null,
+business_number varchar(20) not null,
+ID_card varchar(20) unique not null,
+name varchar(20) not null,
+phone varchar(11) not null,
+address varchar(20) not null,
+executor varchar(20) not null,
+executor_ID_card varchar(20) not null,
+executor_phone varchar(20) not null,
+executor_address varchar(20) not null,
+is_enabled enum('Y','N') not null,
+fund_account varchar(20) not null,
+primary key(username)
+);
+
+#资金账户表
+create table fund_account_user(
+username varchar(20),		#账号
+password varchar(100) not null,		#账号的密码
+fund_pwd varchar(6) not null,		#交易密码
+ID_card  varchar(18) not null,		#身份证
+enabled_money decimal(10,2) not null,	#不是可用资金 是总资金
+freezing_money decimal(10,2) not null,	#冻结资金
+is_enabled enum('Y','N') not null,	#账号是够可用
+security_account varchar(20) not null,	#关联的证券账户号码
+primary key(username)
+);
+
+#证券账户下的股票
+create table security_in_account(
+username varchar(20),		#账号
+security_number varchar(6),		#股票的编号
+security_name varchar(10),		#股票名称
+amount int not null,			#持股数量
+total_price decimal(10,2) not null,	#股票的持有成本：sum(每次买入价格*每次买入数量)，如果卖出了就减去卖到的钱？
+freezing_amount int,			#冻结的股票数
+primary key(username, security_number)
+);
+insert into security_in_account values("222","222","222",11,150.10,10);
+
+#下面是两个判断的API，trade_fund为例。参数依次是账号，交易额，交易类型：buy/sell;执行的结果是判断钱够不够执行这次交易，如果是够的，就把扣掉的资金冻结了。股票也是同理。
+def trade_fund(username,money,operation_type):
+#输入账号，股票编号，数量，交易类型：buy/sell;
+def trade_security(username,security_number,amount,operation_type):
+
+insert into security_in_account values('111','600001','tencent',100,100,50);

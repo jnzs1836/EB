@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易客户端</title>
+    <link rel="stylesheet" href={{url_for('modules', filename='bootstrap.min.css')}}>
+    <script src={{url_for('modules', filename='jquery-3.1.1.min.js')}}></script>
+    <script src={{url_for('modules', filename='bootstrap.min.js')}}></script>
+    <script src={{url_for('modules', filename='jquery.validate.min.js')}}></script>
+    <script src={{ url_for('modules', filename='js-cookie.js') }}></script>
+    <script src={{ url_for('public', filename='js/info_js/info.js') }}></script>
+    <script scr={{ url_for('public', filename='js/person_info_js/fund_info.js') }}></script>
+    <script src={{url_for('public', filename="js/trade_js/util.js")}}></script>
+
+    <script>
+        function time() {
+            let time_div = document.getElementById('showtime');
+            let now = new Date();
+            time_div.innerHTML = now.getFullYear()+"年"+(now.getMonth()+1)+"月"+now.getDate()+"日"+now.getHours()+"时"+now.getMinutes()+"分"+now.getSeconds()+"秒";
+            setTimeout(time, 1000);
+        }
+    </script>
+
+    <link rel="stylesheet" href={{url_for('public', filename='css/index.css')}}>
+ <!--   <link rel="stylesheet" type="text/css" href={{url_for('public', filename="trade.css")}}>-->
+
+</head>
+<body onload="time()">
+<div class="wrapper">
+    <nav id="sidebar" class="">
+        <div class="sidebar-header">
+            <h3>功能区</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>选择功能</p>
+            <li class="active">
+                <a href="#accountSubmenu" data-toggle="collapse" aria-expanded="true" class="">账户查询</a>
+                <ul class="list-unstyled collapse in" id="accountSubmenu" aria-expanded="true" style="">
+                    <li><a href="stock_info">证券账户查询</a></li>
+                    <li><a href="#">资金账户查询</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="stock_query">股票查询</a>
+                <a href="#transactionSubmenu" data-toggle="collapse" aria-expanded="true" class="">发起交易</a>
+                <ul class="list-unstyled collapse in" id="transactionSubmenu" aria-expanded="true" style="">
+                    <li><a href={{url_for('buy')}}>购买股票</a></li>
+                    <li><a href={{url_for('sell')}}>出售股票</a></li>
+                    <li><a href={{url_for('cancel')}}>撤销指令</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="info">高级提醒功能</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li><a href="/home" class="article">回到网上信息发布系统</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">主界面</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="showtime" href="#"></a></li>
+                        <li><a href="#">交易客户端</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                属性
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">个人信息</a></li>
+                                <li><a href="change_password">修改密码</a></li>
+                                <li><a href="log_in">登出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </nav>
+
+        <div id="client-main">
+            <div class="msg" id="msg_slot">
+
+            </div>
+
+            <!--这是资金信息加载的内容-->
+            <div class="col-sm-11 account-info" id="personal_fund_info">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--info-->
+<div class="modal fade" id="infoModalPopovers" tabindex="-1" role="dialog" aria-labelledby="infoModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="infoModalPopoversLabel">股票交易提醒</h4>
+            </div>
+            <div class="modal-body">
+                <h5>详细信息显示</h5>
+                <p>股票代码
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_stock_id">
+
+                    </a>
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_info_type">
+
+                    </a>
+                    设定
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_stock_price">
+
+                    </a> 价格</p>
+                <hr>
+                <h5>前往交易</h5>
+                <p>前往 <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers">股票交易系统</a> 发起交易 或 前往 <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers">网上信息发布系统</a> 查看详细信息</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="advance_info.stop_info()">不再提醒</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+        let advance_info = new Info();
+        advance_info.interval_check();
+        show_personal_fund();
+    });
+
+    function show_personal_fund() {
+        info  = {'username': get_current_username()};
+        text = JSON.stringify(info);
+
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST","/fund_account",true);
+        xmlhttp.setRequestHeader("Content-type","application/json");
+        xmlhttp.send(text);
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                var temp = JSON.parse( xmlhttp.responseText );
+                var div = $('#personal_fund_info');
+                var tmp = `
+                        <div style="font-size:20px">
+                            <span class="glyphicon glyphicon-user"></span>账户资金信息
+                        </div><br/><strong>\t用户名：{0}</strong><br/><br/>`.replace('{0}', get_current_username());
+                if(temp.state == "false") {
+                    alert(temp.msg);
+                    tmp += '<strong>账户信息加载失败，请重试。</strong>';
+                }
+                else {
+                    tmp += `
+                <table class="table">
+                    <tr><td><label>可用资金：</label></td><td><strong>{0}</strong></td><tr>
+                    <tr><td><label>冻结资金：</label></td><td><strong>{1}</strong></td><tr>
+                    <tr><td></td><td></td></tr>
+                    <table>
+                        <p>资金显示并非实时刷新。</p>
+                        `.replace('{0}', temp.fund).replace('{1}', temp.freeze_fund);
+                }
+                div.html(tmp);
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

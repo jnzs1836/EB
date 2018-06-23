@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>添加/取出资金界面</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	var error_message = {{ error_message | tojson}};
+	if (error_message=="" || error_message==null){
+	}
+	else{
+		alert(error_message);
+	}
+	</script>
+</head>
+<script type="text/javascript">
+function test(Names){
+    var Name;
+    for (var i=1;i<3;i++){    
+        var tempname="mune_x"+i                                                                            
+        var NewsHot="x"+i    
+        if (Names==tempname){
+            Nnews=document.getElementById(NewsHot)
+            Nnews.style.display='';
+        }else{
+            Nnews=document.getElementById(NewsHot)
+            Nnews.style.display='none';   
+        }
+    }
+}
+</script>
+<script>
+function validateForm1(){
+var username=document.forms["tianjia_form"]["username"].value;
+var password=document.forms["tianjia_form"]["fund_pwd"].value;
+var money=document.forms["tianjia_form"]["money"].value;
+if (username==null || username==""){
+ alert("资金账号必须填写！");
+ return false;
+ }
+if (password==null || password==""){
+  alert("密码必须填写！");
+  return false;
+  }
+if (money==null || money==""){
+	alert("存款金额必须填写！");
+	return false;
+	}
+}
+function validateForm2(){
+	var username=document.forms["qukuan_form"]["username"].value;
+	var password=document.forms["qukuan_form"]["fund_pwd"].value;
+	var money=document.forms["qukuan_form"]["money"].value;
+	if (username==null || username==""){
+	 alert("资金账号必须填写！");
+	 return false;
+	 }
+	if (password==null || password==""){
+	  alert("密码必须填写！");
+	  return false;
+	  }
+	if (money==null || money==""){
+		alert("取款金额必须填写！");
+		return false;
+		}
+	}
+</script>
+<script>
+function Conf(){
+if(confirm("确认操作吗？")){
+	return;
+  }
+  else{
+   alert("操作已撤销")
+   return;
+  }
+}
+</script>
+<body>
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">资金账户管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="fund_main">主页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            账户管理 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li><a href="fund_user_reg">注册资金账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_report_loss">挂失资金账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_logoff">资金账户销户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_search">资金账户查询</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_operate">存入/取出资金</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_change_password">修改资金账户密码</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="fund_main">返回上一级</a></li>
+                    <li><a href="about">关于</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="fund_manager_login">登出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<h1 align="center"><strong>添加/取出资金</strong></h1>
+<hr style="height:1px;border:none;border-top:3px solid #E6E6F2;" />
+<fieldset class="cont">
+    <div class="list">
+        <label><s>*</s>操作类型</label>
+        <select size="1" name="D1" onChange="javascript:test('mune_x'+this.value)">  
+            <option value="1">添加资金</option> 
+            <option value="2">取出资金</option> 
+        </select> 
+    </div>
+        
+    <div class="list" id="x1">
+        <div style="padding: 30px 350px 100px">
+        <form name="tianjia_form" class="form-group" role="form" action="/deposit" method="post" onsubmit="return validateForm1()">
+		<table class="table table-striped">
+		   <tbody>
+		      <tr>
+		         <td class="text-center" width="170px"><strong>资金账户号</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="text" class="form-control" style="border-radius:5px" placeholder="000001" width="200px" name="username">
+		         </div></td>
+		      </tr>
+		      <tr>
+		         <td class="text-center" width="170px"><strong>存款金额</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="text" class="form-control" style="border-radius:5px" placeholder="1000" width="200px" name="money">
+		         </div></td>
+		      </tr>
+		      <tr>
+		         <td class="text-center" width="170px"><strong>取款密码</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="password" class="form-control" style="border-radius:5px" placeholder="password" width="200px" name="fund_pwd">
+		         </div></td>
+		      </tr>
+		      <tr>
+		      	 <td width="170px"></td>
+		      	 <td><div>
+				  	<button type="submit" class="btn btn-success" style="width:75px"onclick="Conf()">提交</button>
+				  	<button type="reset" class="btn btn-Info" style="width:75px">重置</button>
+				  	</div>
+				 </td>
+		      </tr>
+		   </tbody></table>
+	 	</form>
+	 	</div>
+    </div>
+        
+    <div class="list" id="x2" style="display:none">
+         <div style="padding: 30px 350px 100px">
+        <form name="qukuan_form" class="form-group" role="form" action="/withdraw" method="post" onsubmit="return validateForm2()">
+		<table class="table table-striped">
+		   <tbody>
+		      
+		      <tr>
+		         <td class="text-center" width="170px"><strong>资金账户号</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="text" class="form-control" style="border-radius:5px" placeholder="000001" width="200px" name="username">
+		         </div></td>
+		      </tr>
+		      <tr>
+		         <td class="text-center" width="170px"><strong>取款金额</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="text" class="form-control" style="border-radius:5px" placeholder="1000" width="200px" name="money">
+		         </div></td>
+		      </tr>
+		      <tr>
+		         <td class="text-center" width="170px"><strong>取款密码</strong></td>
+		         <td><div class="input-group-right">
+		         	<input type="password" class="form-control" style="border-radius:5px" placeholder="password" width="200px" name="fund_pwd">
+		         </div></td>
+		      </tr>
+		      <tr>
+		      	 <td width="170px"></td>
+		      	 <td><div>
+				  	<button type="submit" class="btn btn-success" style="width:75px" onclick="Conf()">提交</button>
+				  	<button type="reset" class="btn btn-Info" style="width:75px">重置</button>
+				  	</div>
+				 </td>
+		      </tr>
+		   </tbody></table>
+	 	</form>
+	 	</div>
+    </div>
+</fieldset>
+
+</body>
+</html>

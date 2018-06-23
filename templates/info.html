@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易客户端</title>
+
+    <link rel="stylesheet" href={{url_for('modules', filename='bootstrap.min.css')}}>
+    <script src={{url_for('modules', filename='jquery-3.1.1.min.js')}}></script>
+    <script src={{url_for('modules', filename='bootstrap.min.js')}}></script>
+    <script src={{url_for('modules', filename='jquery.validate.min.js')}}></script>
+    <script src={{url_for('modules', filename='js-cookie.js')}}></script>
+    <script src={{url_for('public', filename='js/info_js/info.js') }}></script>
+    <script src={{url_for('public', filename='js/log_in_js/log_in.js')}}></script>
+
+    <script>
+        function time() {
+            let time_div = document.getElementById('showtime');
+            let now = new Date();
+            time_div.innerHTML = now.getFullYear()+"年"+(now.getMonth()+1)+"月"+now.getDate()+"日"+now.getHours()+"时"+now.getMinutes()+"分"+now.getSeconds()+"秒";
+            setTimeout(time, 1000);
+        }
+    </script>
+
+    <link rel="stylesheet" href={{url_for('public', filename='css/index.css')}}>
+
+    <style>
+        .line {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed #ddd;
+            margin: 40px 0;
+        }
+    </style>
+
+</head>
+<body onload="time()">
+<div class="wrapper">
+    <nav id="sidebar" class="">
+        <div class="sidebar-header">
+            <h3>功能区</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>选择功能</p>
+            <li class="active">
+                <a href="#accountSubmenu" data-toggle="collapse" aria-expanded="true" class="">账户查询</a>
+                <ul class="list-unstyled collapse in" id="accountSubmenu" aria-expanded="true" style="">
+                    <li><a href="stock_info">证券账户查询</a></li>
+                    <li><a href="fund_info">资金账户查询</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="stock_query">股票查询</a>
+                <a href="#transactionSubmenu" data-toggle="collapse" aria-expanded="true" class="">发起交易</a>
+                <ul class="list-unstyled collapse in" id="transactionSubmenu" aria-expanded="true" style="">
+                    <li><a href={{url_for('buy')}}>购买股票</a></li>
+                    <li><a href={{url_for('sell')}}>出售股票</a></li>
+                    <li><a href={{url_for('cancel')}}>撤销指令</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">高级提醒功能</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li><a href="/home" class="article">回到网上信息发布系统</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">主界面</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="showtime" href="#"></a></li>
+                        <li><a href="#">交易客户端</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                属性
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="change_password">修改密码</a></li>
+                                <li><a href="log_in">登出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </nav>
+
+        <div id="client-main">
+            <div id="add_info">
+                <p>添加提醒</p>
+                <div class="row">
+                    <div class="col-lg-4 col-lg-offset-1 col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="info_stock_id">股票代码</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="info_stock_price">提醒价格</span>
+                            <input type="text" class="form-control">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">高于/低于价格 <span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a onclick="setType(event.target)">高于价格提醒</a></li>
+                                    <li><a onclick="setType(event.target)">低于价格提醒</a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="btn btn-default" onclick="add_info()">添加提醒</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line"></div>
+            <div id="show_info">
+                <p>提醒事务</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--info-->
+<div class="modal fade" id="infoModalPopovers" tabindex="-1" role="dialog" aria-labelledby="infoModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="infoModalPopoversLabel">股票交易提醒</h4>
+            </div>
+            <div class="modal-body">
+                <h5>详细信息显示</h5>
+                <p>股票代码
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_stock_id">
+
+                    </a>
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_info_type">
+
+                    </a>
+                    设定
+                    <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers" id="infoModalPopovers_stock_price">
+
+                    </a> 价格</p>
+                <hr>
+                <h5>前往交易</h5>
+                <p>前往 <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers">股票交易系统</a> 发起交易 或 前往 <a href="#" role="button" class="btn btn-secondary" data-container="#infoModalPopovers">网上信息发布系统</a> 查看详细信息</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="advance_info.stop_info()">不再提醒</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let advance_info = new Info();
+
+    let info_type = -1;
+
+    let setType = function (e) {
+        console.log(e.innerText);
+        let operate_node = e.parentNode.parentNode.parentNode;
+        operate_node = operate_node.getElementsByTagName('button')[0];
+        if (e.innerText === "高于价格提醒") {
+            info_type = 1;
+            operate_node.innerText = "高于价格提醒";
+        }
+        if (e.innerText === "低于价格提醒") {
+            info_type = -1;
+            operate_node.innerText = "低于价格提醒";
+        }
+    };
+    //add
+    let add_info = function () {
+        let stock_id = $('#add_info input')[0].value;
+        let stock_price = $('#add_info input')[1].value;
+        if (stock_id === "" || stock_price === "") {
+            return;
+        }
+        if (advance_info.check_list.findIndex(element => JSON.stringify(element) === JSON.stringify({stock_id, stock_price, info_type})) < 0) {
+            advance_info.check_list.push({stock_id, stock_price, info_type});
+            Info.set_localStorage("check_list", advance_info.check_list);
+
+            let new_node = document.createElement('div');
+            new_node.setAttribute('class', 'row');
+            new_node.setAttribute('id', `${stock_id}_${stock_price}_${info_type}`);
+            new_node.innerHTML = `<div class="col-lg-4 col-lg-offset-1 col-xs-6"><div class="input-group"><span class="input-group-addon" id="info_stock_id">股票代码</span><input type="text" class="form-control" disabled placeholder=${stock_id}></div></div><div class="col-lg-4 col-xs-6"><div class="input-group"><span class="input-group-addon" id="info_stock_price">提醒价格</span><input type="text" class="form-control" disabled placeholder=${stock_price}><span class="input-group-addon" id="info_stock_type">${info_type === 1 ? "高于价格提醒" : "低于价格提醒"}</span></div></div><div class="col-lg-1"><button type="button" class="btn btn-default" onclick="delete_info(event.target)">撤销提醒</button></div>`;
+
+            $('#show_info')[0].appendChild(new_node);
+
+        }
+    };
+    //delete
+    let delete_info = function (e) {
+        let delete_element = e.parentNode.parentNode;
+        let stock = delete_element.getAttribute('id').split("_");
+
+        advance_info.check_list = advance_info.check_list.filter(x =>
+            !(x.stock_id.toString() === stock[0] &&
+                x.stock_price.toString() === stock[1] &&
+                x.info_type.toString() === stock[2]));
+        Info.set_localStorage("check_list", advance_info.check_list);
+
+        e.parentNode.parentNode.remove();
+    };
+
+    let pre_info = function() {
+        Info.get_localStorage("check_list").map((stock) => {
+            let new_node = document.createElement('div');
+            new_node.setAttribute('class', 'row');
+            new_node.setAttribute('id', `${stock.stock_id}_${stock.stock_price}_${stock.info_type}`);
+            new_node.innerHTML = `<div class="col-lg-4 col-lg-offset-1 col-xs-6"><div class="input-group"><span class="input-group-addon" id="info_stock_id">股票代码</span><input type="text" class="form-control" disabled placeholder=${stock.stock_id}></div></div><div class="col-lg-4 col-xs-6"><div class="input-group"><span class="input-group-addon" id="info_stock_price">提醒价格</span><input type="text" class="form-control" disabled placeholder=${stock.stock_price}><span class="input-group-addon" id="info_stock_type">${info_type === 1 ? "高于价格提醒" : "低于价格提醒"}</span></div></div><div class="col-lg-1"><button type="button" class="btn btn-default" onclick="delete_info(event.target)">撤销提醒</button></div>`;
+
+            $('#show_info')[0].appendChild(new_node);
+        })
+    };
+
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $(this).toggleClass('active');
+        });
+        pre_info();
+        advance_info.interval_check();
+    });
+
+</script>
+
+</body>
+</html>

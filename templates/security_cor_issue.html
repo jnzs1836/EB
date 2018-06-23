@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>法人账户补办界面</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	var error_message = {{ error_message | tojson}};
+	if (error_message=="" || error_message==null){
+	}
+	else{
+		alert(error_message);
+	}
+	</script>
+</head>
+<script>
+function validateForm(){
+var registration_number=document.forms["reg_form"]["registration_number"].value;
+var business_number=document.forms["reg_form"]["business_number"].value;
+var ID_card=document.forms["reg_form"]["ID_card"].value;
+var name=document.forms["reg_form"]["name"].value;
+var phone=document.forms["reg_form"]["phone"].value;
+var address=document.forms["reg_form"]["address"].value;
+var executor=document.forms["reg_form"]["executor"].value;
+var executor_ID_card=document.forms["reg_form"]["executor_ID_card"].value;
+var executor_phone=document.forms["reg_form"]["executor_phone"].value;
+var executor_address=document.forms["reg_form"]["executor_address"].value;
+var password=document.forms["reg_form"]["password"].value;
+var password_again=document.forms["reg_form"]["password_again"].value;
+var old_security_account=document.forms["reg_form"]["old_security_account"].value;
+if (name=="" || registration_number=="" || ID_card=="" || address=="" || business_number=="" || 
+	executor=="" || executor_ID_card=="" || phone=="" || password=="" || executor_phone=="" ||
+	executor_address=="" || old_security_account==""){
+  alert("输入信息不全！");
+  return false;
+  }
+if (password!=password_again){
+  alert("两次输入密码不一致！");
+  return false;
+  }
+}
+</script>
+<body>
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">证券账户管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="security_main">主页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            账户管理 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li><a href="security_personal_user_reg">注册个人证券账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="security_coporate_user_reg">注册法人证券账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="security_report_loss">挂失证券账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="security_logoff">证券账户销户</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="security_main">返回上一级</a></li>
+                    <li><a href="about">关于</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="security_manager_login">登出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<h1 align="center"><strong>补办法人证券账户信息</strong></h1>
+<hr style="height:1px;border:none;border-top:3px solid #E6E6F2;" />
+
+<div style="padding: 10px 350px 100px">
+	<form name="reg_form" class="form-group" role="form" action="" method="post" onsubmit="return validateForm()">
+	<table class="table table-striped">
+	   <tbody>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>法人注册登记号码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="registration_number" placeholder="00001" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>营业执照号码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="business_number"placeholder="00001" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>法人身份证号</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="ID_card"placeholder="ID number" width="200px">
+	         </div></td>
+	      </tr>
+	      	<tr>
+	         <td class="text-center" width="170px"><strong>法人姓名</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="name"placeholder="张三" width="200px">
+	         </div></td>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>法人联系电话</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="phone"placeholder="phone number" width="200px">
+	         </div></td>
+	      </tr>
+	         <tr>
+	         <td class="text-center" width="170px"><strong>法人住址</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="address"placeholder="address" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>授权人</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="executor"placeholder="李四" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>授权人身份证号</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="executor_ID_card"placeholder="ID number" width="200px">
+	         </div></td>
+	      </tr>
+	       <tr>
+	         <td class="text-center" width="170px"><strong>授权人联系电话</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="executor_phone"placeholder="phone number" width="200px">
+	         </div></td>
+	      </tr>
+	         <tr>
+	         <td class="text-center" width="170px"><strong>授权人地址</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="executor_address"placeholder="address" width="200px">
+	         </div></td>
+	      </tr>
+	         <tr>
+	         <td class="text-center" width="170px"><strong>原证券账户号</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="old_security_account"placeholder="00001" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="password"placeholder="password" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>确认密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="password_again" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	      	 <td width="170px"></td>
+	      	 <td><div>
+			  	<input type="submit" class="btn btn-success" style="width:75px" value="提交">
+			  	<input type="reset" class="btn btn-Info" style="width:75px" value="重置">
+			  	</div>
+			 </td>
+	      </tr>
+	   </tbody></table></form>
+ </div>
+ </body>
+ </html>

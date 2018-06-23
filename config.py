@@ -9,7 +9,7 @@ PERMANENT_SESSION_LIFETIME = timedelta(hours=10)  # 设置session内存的东西
 
 # MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 设置请求内容的大小限制，即限制了上传文件的大小
 
-DEBUG = True
+
 
 
 # APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top

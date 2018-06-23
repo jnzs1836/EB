@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>证券管理人员主界面</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	var error_message = {{ error_message | tojson}};
+	if (error_message=="" || error_message==null){
+	}
+	else{
+		alert(error_message);
+	}
+	</script>
+</head>
+<style>
+body
+{
+	background-color: #F0F0F0 ;
+}
+</style>
+
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+	<div class="container-fluid"> 
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#example-navbar-collapse">
+			<span class="sr-only">切换导航</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand">证券账户管理系统</a>
+	</div>
+	<div class="collapse navbar-collapse" id="example-navbar-collapse">
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">主页</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					账户管理 <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="divider"></li>
+					<li><a href="security_personal_user_reg">注册个人证券账户</a></li>
+					<li class="divider"></li>
+					<li><a href="security_coporate_user_reg">注册法人证券账户</a></li>
+					<li class="divider"></li>
+					<li><a href="security_report_loss">挂失证券账户</a></li>
+					<li class="divider"></li>
+					<li><a href="security_logoff">证券账户销户</a></li>
+				</ul>
+			</li>
+			<li><a href="security_manager_login">返回上一级</a></li>
+			<li><a href="about">关于</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+        <li><a href="security_manager_login">登出</a></li>
+        </ul>
+	</div>
+	</div>
+</nav>
+	<div style="padding: 100px 600px 0px;"></div>
+	<div class="jumbotron">
+	<div class="container">
+		<h1 align="center">欢迎！</h1>
+	</div>
+</div>
+</body>
+</html>

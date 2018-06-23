@@ -1,0 +1,6 @@
+import ctypes
+PRICE_UNIT = 0.01
+VOLUME_UNIT = 1
+TIME_UNIT = 0.01
+LONG = 1
+SHORT = 2

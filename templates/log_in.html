@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>交易客户端</title>
+
+    <link rel="stylesheet" href={{url_for('modules', filename='bootstrap.min.css')}}>
+    <script src={{url_for('modules', filename='jquery-3.1.1.min.js')}}></script>
+    <script src={{url_for('modules', filename='bootstrap.min.js')}}></script>
+    <script src={{url_for('modules', filename='jquery.validate.min.js')}}></script>
+
+    <link rel="stylesheet" href={{url_for('public', filename='css/log_in.css')}}>
+
+    <script src={{url_for('public', filename='js/log_in_js/log_in.js')}}></script>
+
+</head>
+<body>
+
+<div class="main">
+    <div class="login">
+        <div class="inset">
+            <div>
+                <h2>账户登录</h2>
+                <hr width="100%" color=#7386D5 size=2 /><br />
+                <span><label>用户名</label></span>
+                <span><input type="text" class="textbox" id="username"></span>
+            </div>
+            <div>
+                <span><label>密码</label></span>
+                <span><input type="password" class="password" id="password"></span>
+            </div>
+            <div align="center">
+                <button class="btn btn-default" style="height:40px; width:60px"
+                        onclick="login()">
+                    <span>登录</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

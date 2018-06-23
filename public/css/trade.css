@@ -1,0 +1,58 @@
+.trade-main{
+	margin-top: 10px;
+	padding-top: 15px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	background: #fff;
+	width: 600px;
+	float: left;
+	margin-right: 15px;
+}
+
+.account-info{
+	margin-top: 10px;
+	margin-right: 15px;
+	padding: 15px 15px 15px 15px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	background: #fff;
+	width: 450px;
+	height: 205px;	
+	float: left;
+}
+
+.trade-cell{
+	margin: 15px 10px 15px 10px;
+	padding: 15px 15px 15px 15px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	background: #fff;
+}
+
+.cell-button{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.msg{
+	margin: 15px 15px 15px 15px;
+}
+
+.stock-info{
+	margin-top: 10px;
+	margin-bottom: 15px;
+	padding: 15px 15px 15px 15px;
+	float: left;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	background: #fff;
+	width: 1070px;
+}
+
+.card-sty{
+	margin: 10px 10px 10px 10px;
+	padding: 15px 15px 15px 15px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	background: #fff;
+}
+
+.all-trans{
+	margin-left: 5%;
+}

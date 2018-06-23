@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>资金账户注册界面</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	var error_message = {{ error_message | tojson}};
+	if (error_message=="" || error_message==null){
+	}
+	else{
+		alert(error_message);
+	}
+	</script>
+</head>
+<script>
+function validateForm(){
+	var security_account=document.forms["reg_form"]["security_account"].value;
+	var ID_card=document.forms["reg_form"]["ID_card"].value;
+	var fund_pwd=document.forms["reg_form"]["fund_pwd"].value;
+	var fund_pwd_again=document.forms["reg_form"]["fund_pwd_again"].value;
+	var password=document.forms["reg_form"]["password"].value;
+	var password_again=document.forms["reg_form"]["password_again"].value;
+	if (security_account=="" || fund_pwd=="" || ID_card=="" || password==""){
+	  alert("输入信息不全！");
+	  return false;
+	  }
+	if (password!=password_again){
+	  alert("资金账户密码不一致！");
+	  return false;
+	  }
+	if (fund_pwd!=fund_pwd_again){
+	  alert("取款密码不一致！");
+	  return false;
+	  }
+}
+</script>
+<body>
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">资金账户管理系统</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="fund_main">主页</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            账户管理 <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li><a href="fund_user_reg">注册资金账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_report_loss">挂失资金账户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_logoff">资金账户销户</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_search">资金账户查询</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_operate">存入/取出资金</a></li>
+                            <li class="divider"></li>
+                            <li><a href="fund_change_password">修改资金账户密码</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="fund_main">返回上一级</a></li>
+                    <li><a href="about">关于</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="fund_manager_login">登出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<h1 align="center"><strong>注册资金账户信息</strong></h1>
+<hr style="height:1px;border:none;border-top:3px solid #E6E6F2;" />
+
+<div style="padding: 10px 350px 100px">
+	<form name="reg_form" class="form-group" role="form" action="" method="post" onsubmit="return validateForm()">
+	<table class="table table-striped">
+	   <tbody>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>证券账户号</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="security_account" placeholder="security_account" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>身份证号</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="text" class="form-control" style="border-radius:5px" name="ID_card"placeholder="ID number" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>资金账户密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="password"placeholder="password" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>确认资金账户密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="password_again" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>取款密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="fund_pwd"placeholder="fund_pwd" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	         <td class="text-center" width="170px"><strong>确认取款密码</strong></td>
+	         <td><div class="input-group-right">
+	         	<input type="password" class="form-control" style="border-radius:5px" name="fund_pwd_again" width="200px">
+	         </div></td>
+	      </tr>
+	      <tr>
+	      	 <td width="170px"></td>
+	      	 <td><div>
+			  	<input type="submit" class="btn btn-success" style="width:75px" value="提交">
+			  	<input type="reset" class="btn btn-Info" style="width:75px" value="重置">
+			  	</div>
+			 </td>
+	      </tr>
+	   </tbody></table></form>
+ </div>
+ </body>
+ </html>

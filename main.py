@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify, send_file
 import DB_Connector as DB
-import config
+# import config
 from urllib.parse import urlencode
 from pager import Pagination
 from pyecharts import Kline, Line, Overlap
@@ -9,10 +9,26 @@ import json
 import kline_control
 import Jiang
 import yuan
+from flask_sqlalchemy import SQLAlchemy
+from decimal import *
+import os
+from datetime import timedelta
 
 app = Flask(__name__)
 
-app.config.from_object(config)  # 配置文件
+# app.config.from_object(config)  # 配置文件
+
+# 配置flask配置对象中键：SQLALCHEMY_DATABASE_URI
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://owner:123456@localhost/account"
+# 配置flask配置对象中键：SQLALCHEMY_COMMIT_TEARDOWN,设置为True,应用会自动在每次请求结束后提交数据库中变动
+app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+# 获取SQLAlchemy实例对象，接下来就可以使用对象调用数据
+db = SQLAlchemy(app)
+app.secret_key = os.urandom(24)
+app.permanent_session_lifetime = timedelta(hours=10)
+app.debug = True
 
 
 # 画图用
@@ -69,14 +85,14 @@ def get_info_id(stock_id):
 def send_stock_info():
     if request.method == 'POST':
         data = json.loads(request.get_data())
-        stock_id = data["code"]
-        stock_name = data["name"]
-        return_data = {}
-        if stock_id and stock_name == "":
-            return_data = get_info_id(stock_id)
-        if stock_name and stock_id == "":
-            return_data = get_info_name(stock_name)
 
+        return_data = {}
+        if "code" in data.keys():
+            stock_id = data["code"]
+            return_data = get_info_id(stock_id)
+        if "name" in data.keys():
+            stock_name = data["name"]
+            return_data = get_info_name(stock_name)
         return jsonify(return_data)
 ##################################################################################################################
 
@@ -122,12 +138,12 @@ def AJAXinfo():
 # 欢迎界面
 @app.route('/', methods=['GET', 'POST'])
 def welcome():
-    if session.get("username"):
-        session.pop("username", None)
+    if session.get("info_username"):
+        session.pop("info_username", None)
 
     if request.method == 'POST':  # 登录
         if DB.Login(request.form['username'], request.form['password']) == 1:  # 列出所有账号密码，再进行查询确定
-            session["username"] = request.form['username']
+            session["info_username"] = request.form['username']
             session.permanent = True
             DB.login_log(request.form['username'], "S")  # 登录成功日志
             return redirect(url_for("home"))
@@ -142,12 +158,12 @@ def welcome():
 # 登录
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if session.get("username"):
-        session.pop("username", None)
+    if session.get("info_username"):
+        session.pop("info_username", None)
 
     if request.method == 'POST':  # 登录
         if DB.Login(request.form['username'], request.form['password']) == 1:  # 列出所有账号密码，再进行查询确定
-            session["username"] = request.form['username']
+            session["info_username"] = request.form['username']
             session.permanent = True
             DB.login_log(request.form['username'], "S")  # 登录成功日志
             return redirect(url_for("home"))
@@ -162,8 +178,8 @@ def login():
 # 注册页面
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if session.get("username"):
-        session.pop("username", None)
+    if session.get("info_username"):
+        session.pop("info_username", None)
 
     if request.method == 'POST':  # 注册
         if request.form['password1'] != request.form['password2']:
@@ -218,8 +234,8 @@ def register_code():
 # 密码找回
 @app.route('/retrieve', methods=['GET', 'POST'])
 def retrieve():
-    if session.get("username"):
-        session.pop("username", None)
+    if session.get("info_username"):
+        session.pop("info_username", None)
 
     if request.method == 'POST':  # 密码找回
         if yuan.check_username_telephone(request.form['username'], request.form['telephone']) == 1:
@@ -272,7 +288,7 @@ def login_required(func):
 
     @wraps(func)
     def judge(*args, **kwargs):
-        if session.get("username"):
+        if session.get("info_username"):
             return func(*args, **kwargs)
         else:
             flash("请先登录！！", 'err')
@@ -315,7 +331,7 @@ def home():
 @app.route('/modify', methods=['GET', 'POST'])
 @login_required
 def modify():
-    username = session.get("username")
+    username = session.get("info_username")
     if request.method == 'POST':  # 修改密码
         if yuan.check_user(username, request.form['password1'], request.form['telephone']) == 1:
             session["m_vno"] = yuan.addVcode(request.form['telephone'])
@@ -363,7 +379,7 @@ def modify_code():
 @app.route('/renew', methods=['GET', 'POST'])
 @login_required
 def renew():
-    username = session.get("username")
+    username = session.get("info_username")
     if request.method == 'POST':  # 账号升级或续费
         if yuan.check_username_telephone(username, request.form['telephone']) == 1:
             session["ren_vno"] = yuan.addVcode(request.form['telephone'])
@@ -456,7 +472,7 @@ def stol(s):
 @app.route('/query', methods=['GET', 'POST'])
 @login_required
 def query():
-    username = session.get("username")
+    username = session.get("info_username")
     if request.method == 'POST':
         user_type = DB.get_type(username)
         name = request.form['optionsRadiosinline']
@@ -732,7 +748,7 @@ def query():
 # 显示用户类型
 @app.context_processor
 def show_type():
-    username = session.get("username")
+    username = session.get("info_username")
     if username:
         user_type = DB.get_type(username)
         if user_type == "H":
@@ -744,6 +760,1021 @@ def show_type():
         return {"user_type": None}
 
 
+###############交易客户端代码##################
+
+@app.route('/index')
+def index():
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
+        return render_template("index.html")
+
+
+@app.route('/image/<path:filename>')
+def image(filename):
+    return send_file('image/%s' % filename)
+
+
+@app.route('/public/<path:filename>')
+def public(filename):
+    return send_file('public/%s' % filename)
+
+
+@app.route('/modules/<path:filename>')
+def modules(filename):
+    return send_file('modules/%s' % filename)
+
+
+@app.route('/fonts/<path:filename>')
+def fonts(filename):
+    return send_file('/public/fonts/%s' % filename)
+
+
+@app.route('/info')
+def info():
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
+        return render_template("info.html")
+
+
+@app.route('/log_in')
+def log_in():
+    return render_template("log_in.html")
+
+
+
+@app.route("/buy")
+def buy():
+    if not session.get('userid'):
+       return render_template("log_in.html")
+    else:
+        return render_template("buy.html")
+
+
+@app.route("/sell")
+def sell():
+    if not session.get('userid'):
+       return render_template("log_in.html")
+    else:
+        return render_template("sell.html")
+
+
+@app.route("/cancel")
+def cancel():
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
+        return render_template("cancel.html")
+
+
+@app.route("/stock_info")
+def stock_info():
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
+        return render_template("stock_info.html")
+
+
+@app.route("/fund_info")
+def fund_info():
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
+        return render_template("fund_info.html")
+
+
+@app.route("/stock_query", methods=['GET', 'POST'])
+def stock_query():
+    # if not session.get('userid'):
+    #     return render_template("log_in.html")
+    # else:
+        return render_template("stock_query.html")
+
+###########################################
+
+####################账户管理系统####################
+
+# 资金主页面
+@app.route('/fund_main')
+def fund_main():
+    if not session.get('username'):
+        return redirect('fund_manager_login')  # 未登录跳回登录界面
+    return render_template('fund_main.html', error_message="")
+
+
+# 资金账户登录
+@app.route('/fund_manager_login', methods=['GET', 'POST'])
+def fund_manager_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        result = db.session.execute(
+            "select * from fund_account_manager where username ='"
+            + username + "'and password='" + password + "';"
+        )
+        if result.first() is None:
+            return render_template('fund_manager_login.html', error_message='账户或密码错误!')
+        else:
+            session['username'] = username
+            return redirect(url_for('fund_main'))
+    return render_template('fund_manager_login.html', error_message="")
+
+
+# 资金账户登出
+@app.route('/fund_manager_logout')
+def fund_manager_logout():
+    session.pop('username', None)
+    return redirect(url_for('fund_manager_login'))
+
+
+# 资金账户销户
+@app.route('/fund_logoff', methods=['GET', 'POST'])
+def fund_logoff():
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+    if request.method == 'POST':
+        ID_card = request.form['ID_card']
+        security_account = request.form['security_account']
+        username = request.form['username']
+        password = request.form['password']
+        result = db.session.execute(
+            "select * from fund_account_user where username = '" + username +
+            "' and password = '" + password +
+            "' and ID_card = '" + ID_card +
+            "' and is_enabled = 'Y' and security_account = '" + security_account + "';"
+        )
+        if result.first() is None:
+            result = db.session.execute(
+                "select * from fund_account_user where username = 'U" + username +
+                "' and password = '" + password +
+                "' and ID_card = '" + ID_card +
+                "' and security_account = '" + security_account + "';"
+            )
+            if result.first() is None:
+                return render_template('fund_logoff.html', error_message='密码错误!')
+            return render_template('fund_logoff.html', error_message='账户已失效!')
+        else:
+            result = db.session.execute(
+                "select * from fund_account_user where username = '" + username +
+                "' and enabled_money <= 0 and freezing_money <= 0;"
+            )
+            if result.first() is None:
+                return render_template('fund_logoff.html', error_message='资金未取出!')
+            db.session.execute(
+                "UPDATE fund_account_user SET is_enabled = 'N' WHERE username = '"
+                + username + "';"
+            )
+            db.session.execute(
+                "UPDATE fund_account_user SET username = 'U"
+                + username + "' WHERE username ='" + username + "';"
+            )
+            return render_template('fund_logoff.html', error_message='销户成功!')
+    return render_template('fund_logoff.html', error_message="")
+
+
+# 资金账户注册
+@app.route('/fund_user_reg', methods=['GET', 'POST'])
+def fund_user_reg():
+    if not session.get('username'):
+        return redirect('fund_manager_login')  # 未登录跳回登录界面
+    if request.method == 'GET':
+        return render_template( 'fund_user_reg.html',error_message="")
+    else:  # 建立资金账户
+        if (request.form['password'] == "" or
+                request.form['fund_pwd'] == "" or request.form['ID_card'] == ""):
+            return render_template('fund_user_reg.html', error_message='必要信息为空')
+        if (request.form['password'] !=
+                request.form['password_again']):
+            return render_template('fund_user_reg.html', error_message='两次密码不同')
+
+        items = db.session.execute("select count(*) from fund_account_user")  # 查找下一编号
+        for data in items:
+            username = "F"+(str)(data[0]+1000000)
+        security_account=request.form['security_account']
+        if security_account[0] =='P':#个人证券账户
+            items=db.session.execute("select username from security_account_personal_user where is_enabled='Y'and fund_account='' and username='"
+                                     +security_account+"'and ID_card='"+request.form['ID_card']+"'")
+            if items.first() is not None:  # 可用账户存在(enabled=Y 且无关联资金账户)
+                items=db.session.execute("update security_account_personal_user set fund_account='"+username+"' where username='"
+                                     +security_account+"'")
+            else:#假的证券账户号
+                return render_template( 'fund_user_reg.html',error_message='错误的证券账户号')
+        else:#法人证券账户
+            items=db.session.execute("select username from security_account_coporate_user where is_enabled='Y'and fund_account='' and username='"
+                                     +security_account+"'and ID_card='"+request.form['ID_card']+"'")
+            if items.first() is not None:#可用账户存在(enabled=Y 且无关联资金账户)
+                items=db.session.execute("update security_account_coporate_user set fund_account='"+username+"' where username='"
+                                     +security_account+"'")
+            else:# 假的证券账户号
+                return render_template( 'fund_user_reg.html',error_message='错误的证券账户号')
+        items=db.session.execute("insert into fund_account_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['fund_pwd']+"','"
+                                     +request.form['ID_card']+"','0','0','Y','"+security_account+"')")
+        return render_template( 'fund_user_reg.html',error_message='注册成功')
+
+
+# 资金账户挂失
+@app.route('/fund_report_loss',methods=['GET','POST'])#资金挂失
+def fund_report_loss():
+    if not session.get('username'):
+        return redirect('fund_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template( 'fund_report_loss.html',error_message="")
+    else:
+        security_account=request.form['security_account']
+        items=db.session.execute("select * from fund_account_user where is_enabled='Y' and username ='"+request.form['username'] +
+                             "'and security_account='"+security_account+"'and ID_card='"+request.form['ID_card']+"'")
+        if items.first() is not None:#找到对应可用账户且身份验证正确
+            db.session.execute("update fund_account_user set is_enabled='N' where username ='"+request.form['username'] +"'")#冻结
+            if security_account[0]=="P":
+                db.session.execute("update security_account_personal_user set is_enabled='N' where username ='"+security_account +"'")#冻结
+            else:
+                db.session.execute("update security_account_coporate_user set is_enabled='N' where username ='"+security_account +"'")#冻结
+            return redirect('fund_issue')
+        else:#账户错误或与身份信息或证券账户不匹配
+            return render_template( 'fund_report_loss.html',error_message='账号错误或与身份信息或证券账户不匹配')
+
+
+# 补办资金账户
+@app.route('/fund_issue',methods=['GET','POST'])#资金补办
+def fund_issue():
+    if not session.get('username'):
+        return redirect('login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template( 'fund_issue.html',error_message="")
+    else:
+        old_fund_account=request.form['old_fund_account']
+        security_account=request.form['security_account']
+        if(security_account[0]=="U" or old_fund_account[0]=="U"):
+            return render_template( 'fund_issue.html',error_message='已经销户的账号')
+        items=db.session.execute("select enabled_money,freezing_money from fund_account_user where is_enabled='N' and username='"+old_fund_account+
+                                  "'and security_account='"+security_account+"' and ID_card='"+request.form['ID_card']+"'")
+        if items.first() is not None:
+            items=db.session.execute("select enabled_money,freezing_money from fund_account_user where is_enabled='N' and username='"+old_fund_account+"'")
+            for data in items:
+                old_enabled_money=str(data[0].quantize(Decimal('0.00')))
+                old_freezing_money=str(data[1].quantize(Decimal('0.00')))
+        else:
+            return render_template( 'fund_issue.html',error_message='账户或身份验证错误')
+        #此处为创建新的资金账户
+        if(request.form['password']=="" or request.form['fund_pwd']=="" or request.form['ID_card']==""):
+            return render_template( 'fund_user_reg.html',error_message='必要信息为空')
+        if(request.form['password']!=request.form['password_again']):
+            return render_template( 'fund_user_reg.html',error_message='两次密码不同')
+
+        items=db.session.execute("select count(*) from fund_account_user")#查找下一编号
+        for data in items:
+            username="F"+(str)(data[0]+1000000)
+        #激活证券账户并与新资金账户关联
+        if security_account[0] =='P':#个人证券账户
+            items=db.session.execute("update security_account_personal_user set fund_account='"+username+"',is_enabled='Y' where username='"
+                                     +security_account+"'")
+        else:#法人证券账户
+            items=db.session.execute("update security_account_coporate_user set fund_account='"+username+"',is_enabled='Y' where username='"
+                                     +security_account+"'")
+        items=db.session.execute("insert into fund_account_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['fund_pwd']+"','"
+                                     +request.form['ID_card']+"','0','0','Y','"+security_account+"')")
+
+        db.session.execute("update fund_account_user set enabled_money='"+old_enabled_money+"',freezing_money='"+old_freezing_money+"' where username ='"+username +"'")#转移资金
+        db.session.execute("update fund_account_user set username='U"+old_fund_account[1:8]+"' where is_enabled='N' and username ='"+old_fund_account +"'")#注销之前的资金账号
+        return render_template('fund_issue.html',error_message='补办成功')
+
+
+# 修改资金账户密码
+@app.route('/fund_change_password', methods=['GET', 'POST'])
+def manager_change_password():
+    # 未登录
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+
+    else:
+        # get
+        if request.method == 'GET':
+            return render_template('fund_change_password.html', error_message="")
+        # post
+        else:
+            username = request.form['username']
+            password = request.form['password']
+            new_pwd1 = request.form['password_new']
+            new_pwd2 = request.form['password_again']
+
+            result = db.session.execute(
+                "select * from fund_account_user where username ='" + username + "' and password='" + password + "'and is_enabled='Y'")
+            if result.first() is None:
+                return render_template('fund_change_password.html', error_message='账号密码错误或账户不存在')
+            if new_pwd1 != new_pwd2:
+                return render_template('fund_change_password.html', error_message='两次输入密码不一致')
+            result = db.session.execute(
+                "update fund_account_user set password='" + new_pwd1 + "'where username='" + username + "'")
+            return render_template('fund_change_password.html', error_message='修改成功')
+
+
+# 修改交易密码
+@app.route('/fund_change_fund_pwd', methods=['GET', 'POST'])
+def manager_change_fund_pwd():
+    # 未登录
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+
+    else:
+        # get
+        if request.method == 'GET':
+            return render_template('fund_change_password.html', error_message="")
+        # post
+        else:
+            username = request.form['username']
+            password = request.form['password']
+            new_pwd1 = request.form['fund_pwd_new']
+            new_pwd2 = request.form['fund_pwd_again']
+            result = db.session.execute(
+                "select * from fund_account_user where username ='" + username + "' and password='" + password + "'and is_enabled='Y'")
+            if result.first() is None:
+                return render_template('fund_change_password.html', error_message="账号密码错误或账号不存在")
+            if new_pwd1 != new_pwd2:
+                return render_template('fund_change_password.html', error_message="两次输入密码不一致")
+            result = db.session.execute(
+                "update fund_account_user set fund_pwd='" + new_pwd1 + "'where username='" + username + "'and is_enabled='Y'")
+            return render_template('fund_change_password.html', error_message="修改成功")
+
+
+@app.route('/fund_operate', methods=['GET'])
+def fund_oprate():
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+    return render_template('fund_operate.html', error_message='')
+
+
+# 存钱
+@app.route('/deposit', methods=['GET', 'POST'])
+def deposit():
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+    else:
+        if request.method == 'GET':
+            return render_template('fund_operate.html', error_message="")
+        else:
+            username = request.form['username']
+            password = request.form['fund_pwd']
+            money = request.form['money']
+            result = db.session.execute(
+                "select enabled_money from fund_account_user where username ='" + username + "'and fund_pwd='" + password + "'and is_enabled='Y'")
+            if result.first() is None:
+                return render_template('fund_operate.html', error_message="账号密码错误或账户不可用")
+            fund = 0
+            result = db.session.execute(
+                "select enabled_money from fund_account_user where username ='" + username + "'and fund_pwd='" + password + "'")
+            for query_result in result:
+                fund = query_result[0] + Decimal.from_float(float(money))
+            fund = str(fund)
+            print(
+                "update fund_account_user set enabled_money=" + fund + "where username ='" + username + "' and fund_pwd='" + password + "'")
+            result = db.session.execute(
+                "update fund_account_user set enabled_money=" + fund + "where username ='" + username + "' and fund_pwd='" + password + "'and is_enabled='Y'")
+            return render_template('fund_operate.html', error_message="存款成功")
+
+
+# 取款
+@app.route('/withdraw', methods=['GET', 'POST'])
+def withdraw():
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+    else:
+        if request.method == 'GET':
+            return render_template('fund_operate.html', error_message="")
+        else:
+            username = request.form['username']
+            password = request.form['fund_pwd']
+            money = request.form['money']
+            result = db.session.execute(
+                "select enabled_money,freezing_money from fund_account_user where username ='" + username + "'and fund_pwd='" + password + "'and is_enabled='Y'")
+            if result.first() is None:
+                return render_template('fund_operate.html', error_message="账号密码错误或账户不可用")
+            total_fund = 0
+            freezing_fund = 0
+            result = db.session.execute(
+                "select enabled_money,freezing_money from fund_account_user where username ='" + username + "'and fund_pwd='" + password + "'and is_enabled='Y'")
+            for query_result in result:
+                total_fund = query_result[0]
+                freezing_fund = query_result[1]
+            fund = total_fund - Decimal.from_float(float(money))
+            if fund - freezing_fund < 0:
+                return render_template('fund_operate.html', error_message="可用资金不足")
+            fund = str(fund)
+            result = db.session.execute(
+                "update fund_account_user set enabled_money=" + fund + "where username ='" + username + "'and fund_pwd='" + password + "'")
+            return render_template('fund_operate.html', error_message="取款成功")
+
+
+# 资金查询
+@app.route('/fund_search', methods=['GET', 'POST'])
+def fund_search():
+    if not session.get('username'):
+        return redirect(url_for('fund_manager_login'))
+    else:
+        if request.method == 'GET':
+            return render_template('fund_search.html', error_message="")
+        else:
+            username = request.form['username']
+            password = request.form['password']
+            result = db.session.execute("select * from fund_account_user where username ='" + username + "'")
+            if result.first() is None:
+                return render_template('fund_search.html', error_message="账号密码错误")
+            else:
+                result = db.session.execute(
+                    "select security_account,ID_card,enabled_money,freezing_money,is_enabled  from fund_account_user where username ='" + username + "'")
+                for query_result in result:
+                    account = query_result[0]
+                    idcard = query_result[1]
+                    fund = str(query_result[2])
+                    freeze_fund = str(query_result[3])
+                    is_enabled = query_result[4]
+                return render_template(
+                    'fund_search_output.html',
+                    username=account,
+                    ID_card=idcard,
+                    enabled_money=fund,
+                    freezing_money=freeze_fund,
+                    is_enabled=is_enabled,
+                    error_message="查询成功"
+                )
+                # 返回总资金和可用资金
+
+
+# 交易客户端登录
+@app.route('/account_user_login', methods=['POST'])
+def account_user_login():
+    dict = json.loads(request.get_data())
+    username = dict['username']
+    password = dict['password']
+    result = db.session.execute(
+        "select * from fund_account_user where username ='" + username + "'and password='" + password + "'")
+    if result.first() is None:
+        data = {"state": "false", "msg": "登录失败"}
+        return jsonify(data)
+    else:
+        session['userid'] = username
+        data = {"state": "true", "security_username": username}
+        return jsonify(data)
+
+
+# 交易客户端修改密码
+@app.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    # 未登录
+    if not session.get('userid'):
+        data = {"state": "false", "msg": "未登录或登录过期"}
+        return jsonify(data)
+    else:
+        # get
+        if request.method == 'GET':
+            if not session.get('userid'):
+                return render_template("log_in.html")
+            else:
+                return render_template("change_password.html")
+        # post
+        else:
+            dict = json.loads(request.get_data())
+            username = dict['username']
+            password = dict['password']
+            new_pwd = dict['new_password']
+            result = db.session.execute(
+                "select * from fund_account_user where username ='" + username + "'and password='" + password + "'and is_enabled='Y'")
+            if result.first() is None:
+                data = {"state": "false", "msg": "账号密码错误或账户不可用"}
+                return jsonify(data)
+            print("update fund_account_user set password='" + new_pwd + "where username='" + username + "'")
+            result = db.session.execute(
+                "update fund_account_user set password='" + new_pwd + "'where username='" + username + "'")
+            data = {"state": "true", "msg": "修改成功"}
+            return jsonify(data)
+
+
+# 交易客户端查询资金
+@app.route('/fund_account', methods=['POST'])
+def fund_account():
+    if not session.get('userid'):
+        data = {"state": "false", "msg": "未登录或登录过期"}
+        return jsonify(data)
+    else:
+        # get
+        if request.method == 'GET':
+            pass
+        # post
+        else:
+            dict = json.loads(request.get_data())
+            username = dict['username']
+            result = db.session.execute("select * from fund_account_user where username ='" + username + "'")
+            if result.first() is None:
+                data = {"state": "false", "msg": "查询失败"}
+                return jsonify(data)
+            else:
+                result = db.session.execute(
+                    "select enabled_money,freezing_money from fund_account_user where username ='" + username + "'")
+                for query_result in result:
+                    fund = str(query_result[0])
+                    freeze_fund = str(query_result[1])
+                # 返回总资金和可用资金
+                data = {'enabled_money': fund, 'freezing_money': freeze_fund}
+                return jsonify(data)
+
+
+# 交易客户端证券账户查询
+@app.route('/security_account', methods=['GET', 'POST'])
+def security_account():
+    if not session.get('userid'):
+        data = {"state": "false", "msg": "未登录或登录过期"}
+        return jsonify(data)
+    else:
+        # get
+        if request.method == 'GET':
+            pass
+        # post
+        else:
+            dict = json.loads(request.get_data())
+            username = dict['username']
+            result = db.session.execute("select * from security_in_account where username ='" + username + "'")
+            if result.first() is None:
+                data = {"state": "false", "msg": "查询失败"}
+                return jsonify(data)
+            else:
+                list = []
+                result = db.session.execute("select * from security_in_account where username ='" + username + "'")
+                for query_result in result:
+                    name = query_result[2]
+                    num = query_result[3]
+                    price = 1  # 调用信息发布api
+                    cost = float(str(query_result[4]))
+                    profit = price * num - cost
+                    dict = {"name": name, "num": num, "price": price, "cost": cost, "profit": profit}
+                    list.append(dict)
+                return jsonify(list)
+
+#中央交易系统
+def trade_fund(username,money,operation_type):
+    result=db.session.execute("select * from fund_account_user where username ='"+username +"'")
+    if result.first() is None:
+        return False
+    result=db.session.execute("select enabled_money,freezing_money from fund_account_user where username ='"+username +"'")
+    fund=0
+    freeze_fund=0
+    new_fund=0
+    new_freeze_fund=0
+    for query_result in result:
+        fund=float(str(query_result[0]))
+        freeze_fund=float(str(query_result[1]))
+    if operation_type=="buy":
+        new_fund=fund
+        new_freeze_fund=freeze_fund+money
+    elif operation_type=="sell":
+        new_fund=fund+money
+        new_freeze_fund=freeze_fund
+    if new_fund>=new_freeze_fund:
+        new_fund=str(new_fund)
+        new_freeze_fund=str(new_freeze_fund)
+        result=db.session.execute("update fund_account_user set enabled_money="+new_fund
+                                  +",freezing_money="+new_freeze_fund+" where username ='"+username +"'")
+        return True
+    else:
+        return False
+
+def trade_security(username,security_number,amount,operation_type):
+    result=db.session.execute("select * from security_in_account where username ='"
+                              +username +"' and security_number='"+security_number+"'")
+    if result.first() is None:
+        return False
+    result=db.session.execute("select amount,freezing_amount from security_in_account where username ='"
+                              +username +"' and security_number='"+security_number+"'")
+    security=0
+    freeze_security=0
+    new_security=0
+    new_freeze_security=0
+    for query_result in result:
+        security=query_result[0]
+        freeze_security=query_result[1]
+    if operation_type=="sell":
+        new_security=security
+        new_freeze_security=freeze_security+amount
+    elif operation_type=="buy":
+        new_security=security+amount
+        new_freeze_security=freeze_security
+    if new_security>=new_freeze_security:
+        new_security=str(new_security)
+        new_freeze_security=str(new_freeze_security)
+        result=db.session.execute("update security_in_account set amount="+new_security
+                                  +",freezing_amount="+new_freeze_security+" where username ='"+username
+                                  +"' and security_number='"+security_number+"'")
+        return True
+    else:
+        return False
+
+
+# 主页面
+@app.route('/security_main')
+def security_main():
+    if not session.get('username'):
+        return redirect('fund_manager_login')  # 未登录跳回登录界面
+    return render_template('security_main.html', error_message="")
+
+
+# 登出
+@app.route('/security_manager_logout')
+def manager_logout():
+    session.pop('username', None)
+    return redirect(url_for('security_manager_login'))
+
+
+# 登录
+@app.route('/security_manager_login', methods=['GET', 'POST'])
+def security_manager_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        result = db.session.execute(
+            "select * from security_account_manager where username ='" + username + "'and password='" + password + "';"
+        )
+        if result.first() is None:
+            return render_template('security_manager_login.html', error_message='密码错误!')
+        else:
+            session['username'] = username
+            return redirect(url_for('security_main'))
+    return render_template('security_manager_login.html', error_message="")
+
+
+# 个人销户
+@app.route('/security_logoff', methods=['GET', 'POST'])
+def security_logoff():
+    if not session.get('username'):
+        return redirect(url_for('manager_login'))
+    if request.method == 'POST':
+        id_card = request.form['ID_card']
+        username = request.form['username']
+        result = db.session.execute(
+            "select * from security_account_personal_user where username = '" + username +
+            "'and ID_card = '" + id_card + "'and is_enabled = 'Y';"
+        )
+        if result.first() is None:
+            result = db.session.execute(
+                "select * from security_account_personal_user where username = 'U" + username +
+                "'and ID_card = '" + id_card + "';"
+            )
+            if result.first() is None:
+                return render_template('security_logoff.html', error_message='密码错误!')
+            else:
+                return render_template('security_logoff.html', error_message='证券账户已销户!')
+        else:
+            result = db.session.execute(
+                "select * from security_in_account where username = '" + username + "'"
+            )
+            if result.first() is not None:
+                return render_template('security_logoff.html', error_message='证券未售出!')
+            db.session.execute(
+                "UPDATE security_account_personal_user SET is_enabled = 'N' WHERE username = '"
+                + username + "';"
+            )
+            db.session.execute(
+                "UPDATE security_account_personal_user SET username = 'U"
+                + username + "' WHERE username ='" + username + "';"
+            )
+            db.session.execute(
+                "UPDATE security_account_personal_user SET fund_account = '' WHERE username ='U" + username + "';"
+            )
+            return render_template('security_logoff.html', error_message='销户成功!')
+    return render_template('security_logoff.html', error_message="")
+
+
+# 法人销户
+@app.route('/security_logoff_agent', methods=['GET', 'POST'])
+def security_logoff_agent():
+    print("in")
+    if not session.get('username'):
+        return redirect(url_for('manager_login'))
+    if request.method == 'POST':
+        registration_number = request.form['registration_number']
+        username = request.form['username']
+        result = db.session.execute(
+            "select * from security_account_coporate_user where username = '" + username +
+            "' and registration_number = '" + registration_number + "' and is_enabled = 'Y';"
+        )
+        if result.first() is None:
+            result = db.session.execute(
+                "select * from security_account_coporate_user where username = 'U" + username +
+                "' and registration_number = '" + registration_number + "';"
+            )
+            if result.first() is None:
+                return render_template('security_logoff.html', error_message='密码错误!')
+            else:
+                return render_template('security_logoff.html', error_message='证券账户已销户!')
+        else:
+            result = db.session.execute(
+                "select * from security_in_account where username = '" + username + "'"
+            )
+            if result.first() is not None:
+                return render_template('security_logoff.html', error_message='证券未售出!')
+            db.session.execute(
+                "UPDATE security_account_coporate_user SET is_enabled = 'N' WHERE username ='"
+                + username + "';"
+            )
+            db.session.execute(
+                "UPDATE security_account_coporate_user SET username = 'U"
+                + username + "' WHERE username ='" + username + "';"
+            )
+            db.session.execute(
+                "UPDATE security_account_coporate_user SET fund_account = '' WHERE username ='U" + username + "';"
+            )
+            return render_template('security_logoff.html', error_message='销户成功!')
+    # return redirect(url_for('security_logoff'))
+    return render_template('security_logoff.html', error_message="")
+
+
+# 法人注册
+@app.route('/security_coporate_user_reg',methods=['GET','POST'])
+def security_coporate_user_reg():
+    if not session.get('username'):
+        return redirect('security_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template( 'security_coporate_user_reg.html',error_message='')
+
+    if(request.form['password']=="" or request.form['name']=="" or request.form['ID_card']=="" or
+    request.form['address']==""  or request.form['phone']=="" or request.form['registration_number']==""
+    or request.form['business_number']=="" or request.form['executor']=="" or request.form['executor_ID_card']==""
+    or request.form['executor_phone']=="" or request.form['executor_address']==""):
+        return render_template( 'security_coporate_user_reg.html',error_message='必要信息为空')
+
+    if(request.form['password']!=request.form['password_again']):
+        return render_template( 'security_coporate_user_reg.html',error_message='两次密码不同')
+    items=db.session.execute("select count(*) from security_account_coporate_user")#查找下一编号
+    for data in items:
+        username="C"+(str)(data[0]+1000000)
+    items=db.session.execute("insert into security_account_coporate_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['registration_number']+"','"
+                                     +request.form['business_number']+"','"+request.form['ID_card']+"','"+request.form['name']
+                                     +"','"+request.form['phone']+"','"+request.form['address']+"','"+request.form['executor']
+                                     +"','"+request.form['executor_ID_card']+"','"+request.form['executor_phone']+"','"+request.form['executor_address']
+                                     +"','Y',''"+")")
+    return render_template( 'security_coporate_user_reg.html',error_message='注册成功，您的账号是：'+username)
+
+
+# 个人注册
+@app.route('/security_personal_user_reg',methods=['GET','POST'])
+def security_personal_user_reg():
+    if not session.get('username'):
+        return redirect('security_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template( 'security_personal_user_reg.html',error_message='')
+    else:
+        if(request.form['password']=="" or request.form['name']=="" or request.form['ID_card']=="" or
+        request.form['address']==""  or request.form['phone']=="" or request.form['profession']==""
+        or request.form['educational_background']=="" or request.form['company']==""):
+            return render_template( 'security_personal_user_reg.html',error_message='必要信息为空')
+        if(request.form['password']!=request.form['password_again']):
+            return render_template( 'security_personal_user_reg.html',error_message='两次密码不同')
+
+        items=db.session.execute("select count(*) from security_account_personal_user")#查找下一编号
+        for data in items:
+            username="P"+(str)(data[0]+1000000)
+        items=db.session.execute("insert into security_account_personal_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['name']+"','"
+                                     +request.form['sex']+"','"+request.form['ID_card']+"','"+request.form['address']+
+                                     "','"+request.form['profession']+"','"+request.form['educational_background']
+                                     +"','"+request.form['company']+"','"+request.form['phone']+"','Y',''"+")")
+
+        return render_template( 'security_personal_user_reg.html',error_message='注册成功,您的账号是：'+username)
+
+
+# 证券挂失
+@app.route('/security_report_loss',methods=['GET','POST'])
+def security_report_loss():
+    if not session.get('username'):
+        return redirect('security_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template( 'security_report_loss.html',error_message='')
+    else:
+        username=request.form['username']
+        if username[0] =="P":#个人证券账户
+            items=db.session.execute("select * from security_account_personal_user where is_enabled='Y' and username ='"+ username +
+                             "'and ID_card='"+request.form['ID_card']+"'")
+            if items.first() is not None:#找到对应可用账户且身份验证正确
+                db.session.execute("update security_account_personal_user set is_enabled='N' where username ='"+username +"'")#冻结
+                return redirect('security_per_issue')#跳转补办
+            else:#账户错误或与身份证不匹配
+                return render_template( 'security_report_loss.html',error_message='账户错误或与身份证不匹配')
+        else:#法人证券账户
+            items=db.session.execute("select * from security_account_coporate_user where is_enabled='Y' and username ='"+username +
+                             "'and registration_number='"+request.form['registration_number']+"'")
+            if items.first() is not None:#找到对应账户且身份验证正确
+                db.session.execute("update security_account_coporate_user set is_enabled='N' where username ='"+username +"'")#冻结
+                return redirect('security_cor_issue')#跳转补办
+            else:#账户错误或与法人注册登记号不匹配
+                return render_template( 'security_report_loss.html',error_message='账户错误或与法人注册登记号不匹配')
+
+
+# 个人证券补办
+@app.route('/security_per_issue',methods=['GET','POST'])
+def security_per_issue():
+    if not session.get('username'):
+        return redirect('security_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template('security_per_issue.html',error_message='')
+    else:
+        old_security_account=request.form['old_security_account']
+        if(old_security_account[0]=="U"):
+            return render_template( 'security_per_issue.html',error_message='已经销户的账号')
+        items=db.session.execute("select fund_account from security_account_personal_user where is_enabled='N' and username='"+old_security_account+
+                                  "'and ID_card='"+request.form['ID_card']+"'")
+        if items.first() is not None:
+            items=db.session.execute("select fund_account from security_account_personal_user where username='"+old_security_account+"'")
+            for data in items:
+                fund_account=data[0]
+        else:
+            return render_template( 'security_per_issue.html',error_message='账户或身份验证错误')
+        #注册新个人证券账户
+        if(request.form['password']=="" or request.form['name']=="" or request.form['ID_card']=="" or
+        request.form['address']==""  or request.form['phone']=="" or request.form['profession']==""
+        or request.form['educational_background']=="" or request.form['company']==""):
+            return render_template( 'security_personal_user_reg.html',error_message='必要信息为空')
+        if(request.form['password']!=request.form['password_again']):
+            return render_template( 'security_personal_user_reg.html',error_message='两次密码不同')
+
+        items=db.session.execute("select count(*) from security_account_personal_user")#查找下一编号
+        for data in items:
+            username="P"+(str)(data[0]+1000000)
+        items=db.session.execute("insert into security_account_personal_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['name']+"','"
+                                     +request.form['sex']+"','"+request.form['ID_card']+"','"+request.form['address']+
+                                     "','"+request.form['profession']+"','"+request.form['educational_background']
+                                     +"','"+request.form['company']+"','"+request.form['phone']+"','Y','"+fund_account+"')")
+        db.session.execute("update security_in_account set username='"+username+"' where username='"+old_security_account+"'")#转移证券
+        db.session.execute("update security_account_personal_user set username='U"+old_security_account[1:8]+"' where is_enabled='N' and username='"+old_security_account+"'")#注销原证券账户
+        db.session.execute("update fund_account_user set security_account='"+username+"' where username ='"+fund_account +"'")#资金账户关联新证券
+        return render_template('security_per_issue.html',error_message='补办成功,新的的账号是：'+username)
+
+
+# 法人证券补办
+@app.route('/security_cor_issue',methods=['GET','POST'])
+def security_cor_issue():
+    if not session.get('username'):
+        return redirect('security_manager_login')#未登录跳回登录界面
+    if request.method=='GET':
+        return render_template('security_cor_issue.html',error_message='')
+    else:
+        old_security_account=request.form['old_security_account']
+        if(old_security_account[0]=="U"):
+            return render_template('security_cor_issue.html',error_message='已经销户的账号')
+        items=db.session.execute("select fund_account from security_account_coporate_user where is_enabled='N' and username='"+
+                                  old_security_account+"'and registration_number='"+request.form['registration_number']+"'")
+        if items.first() is not None:
+            items=db.session.execute("select fund_account from security_account_coporate_user where username='"+old_security_account+"'")
+            for data in items:
+                fund_account=data[0]
+        else:
+            return render_template( 'security_cor_issue.html',error_message='账户或身份验证错误')
+        #注册新法人证券账户
+        if(request.form['password']=="" or request.form['name']=="" or request.form['ID_card']=="" or
+                request.form['address']==""  or request.form['phone']=="" or request.form['registration_number']==""
+                or request.form['business_number']=="" or request.form['executor']=="" or request.form['executor_ID_card']==""
+                or request.form['executor_phone']=="" or request.form['executor_address']==""):
+            return render_template( 'security_coporate_user_reg.html',error_message='必要信息为空')
+
+        if(request.form['password']!=request.form['password_again']):
+            return render_template( 'security_coporate_user_reg.html',error_message='两次密码不同')
+        items=db.session.execute("select count(*) from security_account_coporate_user")#查找下一编号
+        for data in items:
+            username="C"+(str)(data[0]+1000000)
+        items=db.session.execute("insert into security_account_coporate_user values('"+username
+                                     +"','"+request.form['password']+"','"+request.form['registration_number']+"','"
+                                     +request.form['business_number']+"','"+request.form['ID_card']+"','"+request.form['name']
+                                     +"','"+request.form['phone']+"','"+request.form['address']+"','"+request.form['executor']
+                                     +"','"+request.form['executor_ID_card']+"','"+request.form['executor_phone']+"','"+request.form['executor_address']
+                                     +"','Y','"+fund_account+"'"+")")
+        db.session.execute("update security_in_account set username='"+username+"' where username='"+old_security_account+"'")#转移证券
+        db.session.execute("update security_account_coporate_user set username='U"+old_security_account[1:8]+"' where is_enabled='N' and username='"+old_security_account+"'")#注销原证券账户
+        db.session.execute("update fund_account_user set security_account='"+username+"' where username ='"+fund_account +"'")#资金账户关联新证券
+
+        return render_template('security_cor_issue.html',error_message='注册成功,新的账号是：'+username)
+
+
+@app.route('/trade/order',methods=['POST','GET'])
+def order_handler():
+    if request.method == 'POST':
+        data = request.get_json()
+        # user_id = session.get('userid')
+        user_id = 'uid001'
+        order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'])
+        msg = {
+            'state':'true',
+            'transaction_id':order_id
+        }
+        response = app.response_class(
+            response=json.dumps(msg),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+    else:
+        return 'HELLO'
+
+@app.route('/admin/trade/clean',methods=['POST'])
+def clean_queue_handler():
+    # ctx = app.app_context()
+    # ctx.push()
+    data = request.get_json()
+    stock_id = data['stock_id']
+    clean_queue(stock_id)
+    json_data = {
+        "state": 'true',
+    }
+    response = app.response_class(
+        response=json.dumps(json_data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+#
+# @app.route('/admin/trade/start',methods=['POST'])
+# def start_stock():
+#     data = request.get_json()
+#     stock_id = data['stock_id']
+#     start_trading(stock_id)
+#     json_data = {
+#         "state": 'true',
+#     }
+#     response = app.response_class(
+#         response=json.dumps(json_data),
+#         status=200,
+#         mimetype='application/json'
+#     )
+#     return response
+
+
+# @app.route('/admin/trade/stop',methods=['POST'])
+# def start_stock():
+#     data = request.get_json()
+#     stock_id = data['stock_id']
+#     stop_trading(stock_id)
+#     json_data = {
+#         "state": 'true',
+#     }
+#     response = app.response_class(
+#         response=json.dumps(json_data),
+#         status=200,
+#         mimetype='application/json'
+#     )
+#     return response
+#
+# @app.route('/admin/trade/price',methods=['POST'])
+# def start_stock():
+#     data = request.get_json()
+#     stock_id = data['stock_id']
+#     stop_trading(stock_id)
+#     json_data = {
+#         "state": 'true',
+#         "data" : 3,
+#     }
+#     response = app.response_class(
+#         response=json.dumps(json_data),
+#         status=200,
+#         mimetype='application/json'
+#     )
+#     return response
+@app.route('/admin/orders_info',methods=['GET','POST'])
+def stock_orders_info():
+    data = request.get_json()
+    # user_id = 'test'
+    data_get = get_stock_orders(data['stock_id'],data['type'])
+
+    json_data = data_get
+    response = app.response_class(
+        response=json.dumps(json_data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+@app.route('/trade/all_transaction',methods=['GET','POST'])
+def orders_info():
+    data = request.get_json()
+    user_id = 'test'
+    data_get = get_user_orders(user_id,data['stock_id'])
+    print(data_get)
+
+    json_data = {
+        "state":'true',
+        'orders':get_user_orders(user_id,data['stock_id'])
+    }
+    response = app.response_class(
+        response=json.dumps(json_data),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
+
+
+####################################################################################
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
     # app.run(host="0.0.0.0", ssl_context='adhoc')

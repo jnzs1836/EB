@@ -1,7 +1,10 @@
 import pymysql
 import datetime
 
-
+def ftof2(f):
+    f = int(f * 100)
+    f = f / 100
+    return f
 
 # 主页显示所有股票价格
 def query_all():
@@ -122,48 +125,48 @@ def qid(name):
     args = [name, name]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["start_price"] = results[0][0]
+    fres["start_price"] = ftof2(float(results[0][0]))
 
     sql = "select end_price from previous_stock where stock_id = %s and date >= %s and date < %s"
     args = [name, ydate, tdate]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["end_price"] = results[0][0]
+    fres["end_price"] = ftof2(float(results[0][0]))
     
     sql = "select price from today_stock where stock_id = %s and date = (select max(date) from today_stock where stock_id = %s)"
     args = [name, name]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["present_price"] = results[0][0]
-    fres["rise"] = fres["present_price"] - fres["end_price"]
+    fres["present_price"] = ftof2(float(results[0][0]))
+    fres["rise"] = ftof2(fres["present_price"] - fres["end_price"])
     fres["rise_rate"] = round(fres["rise"] / fres["end_price"] * 100, 2)
 
     sql = "select max(price),min(price) from today_stock where stock_id = %s"
     args = [name]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["day_h_price"] = results[0][0]
-    fres["day_l_price"] = results[0][1]
+    fres["day_h_price"] = ftof2(float(results[0][0]))
+    fres["day_l_price"] = ftof2(float(results[0][1]))
 
     sql = "select max(max_price),min(min_price) from previous_stock where stock_id = %s and date >= %s and date < %s"
     args = [name, wdate, tdate]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["week_h_price"] = results[0][0] if results[0][0] > fres["day_h_price"] else fres["day_h_price"]
-    fres["week_l_price"] = results[0][1] if results[0][1] < fres["day_l_price"] else fres["day_l_price"]
+    fres["week_h_price"] = ftof2(float(results[0][0])) if float(results[0][0]) > fres["day_h_price"] else fres["day_h_price"]
+    fres["week_l_price"] = ftof2(float(results[0][1])) if float(results[0][1]) < fres["day_l_price"] else fres["day_l_price"]
 
     sql = "select max(max_price),min(min_price) from previous_stock where stock_id = %s and date >= %s and date < %s"
     args = [name, mdate, tdate]
     cur.execute(sql, args)
     results = cur.fetchall()
-    fres["month_h_price"] = results[0][0] if results[0][0] > fres["day_h_price"] else fres["day_h_price"]
-    fres["month_l_price"] = results[0][1] if results[0][1] < fres["day_l_price"] else fres["day_l_price"]
+    fres["month_h_price"] = ftof2(float(results[0][0])) if float(results[0][0]) > fres["day_h_price"] else fres["day_h_price"]
+    fres["month_l_price"] = ftof2(float(results[0][1])) if float(results[0][1]) < fres["day_l_price"] else fres["day_l_price"]
 
     sql = "select stock_notice from notice where stock_id = %s"
     args = [name]
     cur.execute(sql, args)
     results = cur.fetchall()
-    if(results):
+    if results:
         fres["notice"] = results[0][0]
     else:
         fres["notice"] = ""
@@ -210,7 +213,7 @@ def dayk(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd = [nd.strftime("%Y-%m-%d"), float(results[0][0]), float(results[0][1]), float(results[0][2]), float(results[0][3])]
+        fadd = [nd.strftime("%Y-%m-%d"), ftof2(float(results[0][0])), ftof2(float(results[0][1])), ftof2(float(results[0][2])), ftof2(float(results[0][3]))]
         fres.append(fadd)
         nd += datetime.timedelta(days = -1)
         cnt += 1
@@ -258,7 +261,7 @@ def monthk(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select end_price from previous_stock where stock_id = %s and date = %s"
         pars = [id, d2.strftime("%Y-%m-%d")]
@@ -266,7 +269,7 @@ def monthk(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select min(min_price) from previous_stock where stock_id = %s and date >= %s and date <= %s"
         pars = [id, d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d")]
@@ -274,7 +277,7 @@ def monthk(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select max(max_price) from previous_stock where stock_id = %s and date >= %s and date <= %s"
         pars = [id, d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d")]
@@ -282,7 +285,7 @@ def monthk(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
         
         fres.append(fadd)
         nd = d1
@@ -332,7 +335,7 @@ def yeark(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select end_price from previous_stock where stock_id = %s and date = %s"
         pars = [id, d2.strftime("%Y-%m-%d")]
@@ -340,7 +343,7 @@ def yeark(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select min(min_price) from previous_stock where stock_id = %s and date >= %s and date <= %s"
         pars = [id, d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d")]
@@ -348,7 +351,7 @@ def yeark(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
 
         sql = "select max(max_price) from previous_stock where stock_id = %s and date >= %s and date <= %s"
         pars = [id, d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d")]
@@ -356,7 +359,7 @@ def yeark(id):
         results = cur.fetchall()
         if not results:
             break
-        fadd.append(float(results[0][0]))
+        fadd.append(ftof2(float(results[0][0])))
         
         fres.append(fadd)
         nd = d1
