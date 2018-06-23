@@ -1,6 +1,6 @@
 
 import redis
-from order_queue.order import Order
+from order_queue.order import Order,segment
 from order_queue.constant import *
 # import random
 class Queue :
@@ -58,7 +58,7 @@ class Queue :
         return self.r.hvals(order_id)
 
     def user_orders(self,user_id):
-        pattern = '*' + 'uid' + user_id + '*'
+        pattern = '*' + self.key + segment + + segment + 'uid' + user_id + '*'
         order_ids = self.r.keys(pattern)
         orders = []
         for order_id in order_ids:

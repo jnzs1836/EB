@@ -114,8 +114,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="669">
-              <caret line="1295" column="36" lean-forward="true" selection-start-line="1295" selection-start-column="36" selection-end-line="1295" selection-end-column="36" />
+            <state relative-caret-position="536">
+              <caret line="1786" column="42" selection-start-line="1786" selection-start-column="42" selection-end-line="1786" selection-end-column="42" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -181,11 +181,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/order_queue/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="399">
+              <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="49" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
               </folding>
@@ -226,11 +226,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="queue.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="queue.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+            <state relative-caret-position="437">
+              <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
               <folding>
                 <element signature="e#1#13#0" expanded="true" />
               </folding>
@@ -331,10 +331,10 @@
         <option value="$PROJECT_DIR$/public/js/trade_js/trade.js" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
         <option value="$PROJECT_DIR$/order_queue/constant.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/order_queue/queue.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/order_queue/order.py" />
+        <option value="$PROJECT_DIR$/order_queue/queue.py" />
       </list>
     </option>
   </component>
@@ -900,61 +900,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order_queue/constant.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="669">
-          <caret line="1295" column="36" lean-forward="true" selection-start-line="1295" selection-start-column="36" selection-end-line="1295" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-            <element signature="e#1250#1372#0" />
-            <element signature="e#1589#1708#0" />
-            <element signature="e#1755#2527#0" />
-            <element signature="e#3282#3333#0" />
-            <element signature="e#3406#3908#0" />
-            <element signature="e#4766#5485#0" />
-            <element signature="e#5564#6464#0" />
-            <element signature="e#6561#7741#0" />
-            <element signature="e#7820#8443#0" />
-            <element signature="e#8542#9909#0" />
-            <element signature="e#9960#10199#0" />
-            <element signature="e#10285#11314#0" />
-            <element signature="e#11405#11962#0" />
-            <element signature="e#12057#13214#0" />
-            <element signature="e#13306#14202#0" />
-            <element signature="e#14298#15290#0" />
-            <element signature="e#15364#15404#0" />
-            <element signature="e#15459#15656#0" />
-            <element signature="e#15679#15800#0" />
-            <element signature="e#15819#16307#0" />
-            <element signature="e#16393#28693#0" />
-            <element signature="e#28749#29054#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-114">
           <caret line="71" column="14" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="14" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="102" column="17" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -988,22 +939,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
+    <entry file="file://$PROJECT_DIR$/order_queue/constant.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="35" column="30" lean-forward="true" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+        <state relative-caret-position="95">
+          <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1672">
+          <caret line="88" column="31" lean-forward="true" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
           <folding>
-            <element signature="e#1#13#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="1786" column="42" selection-start-line="1786" selection-start-column="42" selection-end-line="1786" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#104#0" expanded="true" />
+            <element signature="e#1250#1372#0" />
+            <element signature="e#1589#1708#0" />
+            <element signature="e#1755#2527#0" />
+            <element signature="e#3282#3333#0" />
+            <element signature="e#3406#3908#0" />
+            <element signature="e#4766#5485#0" />
+            <element signature="e#5564#6464#0" />
+            <element signature="e#6561#7741#0" />
+            <element signature="e#7820#8443#0" />
+            <element signature="e#8542#9909#0" />
+            <element signature="e#9960#10199#0" />
+            <element signature="e#10285#11314#0" />
+            <element signature="e#11405#11962#0" />
+            <element signature="e#12057#13214#0" />
+            <element signature="e#13306#14202#0" />
+            <element signature="e#14298#15290#0" />
+            <element signature="e#15364#15404#0" />
+            <element signature="e#15459#15656#0" />
+            <element signature="e#15679#15800#0" />
+            <element signature="e#15819#16307#0" />
+            <element signature="e#16393#28693#0" />
+            <element signature="e#28749#29054#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/order_queue/order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="399">
+          <caret line="21" column="49" lean-forward="true" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="49" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+          <folding>
+            <element signature="e#1#13#0" expanded="true" />
           </folding>
         </state>
       </provider>

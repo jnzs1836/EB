@@ -1,5 +1,8 @@
 from order_queue.constant import *
 import time
+# segment = '__'
+segment = '__'
+
 class Order:
     def __init__(self, stock_id, user_id, price, volume, direction):
         self.stock_id = stock_id
@@ -10,14 +13,13 @@ class Order:
         self._time = time.localtime(time.time())
         self.id = None
 
-    def set_id(self, order_id):
+    def set_id(self, order_id, stock_key):
         direction_map = {
             LONG:'LONG',
             SHORT:'SHORT'
 
         }
-        segment = '__'
-        self.id = self.stock_id + segment + 'uid' +self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
+        self.id = 'order' + stock_key + segment + 'uid' +self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
 
     def get_string(self):
         return str(self.price) + "xinghong"

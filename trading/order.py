@@ -81,7 +81,6 @@ def start_trading(stock_name):
     queue_manager.set_stock_on(stock_name)
 
 def create_order( user_id, stock_id, direction, price, volume,db):
-
     queue_manager = get_queue_manager()
     if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
         return -1
