@@ -61,7 +61,7 @@ class Queue :
     def user_orders(self,user_id):
         pattern = '*' + self.key + segment  + 'uid' + user_id + '*'
         order_ids = self.r.keys(pattern)
-        orders = []
+        orders = dict()
         for order_id in order_ids:
             order_dict = dict()
             hash = self.r.hgetall(order_id)
@@ -71,8 +71,9 @@ class Queue :
             order_dict['volume'] = hash["volume".encode('utf-8')].decode('utf-8')
             order_dict['stock_id'] =self.id
             order_dict['price'] = hash['price'.encode('utf-8')].decode('utf-8')
-
-            orders.append(order_dict)
+            # order_map = dict()
+            orders[order_id.decode('utf-8')] = order_dict
+            # orders.append(order_map)
         return orders
 
     def pop(self):

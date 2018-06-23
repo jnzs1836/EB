@@ -50,9 +50,10 @@ class PairQueue :
             self.short_queue.remove(order_id)
 
     def user_orders(self,user_id):
-        orders = []
-        orders.extend(self.long_queue.user_orders(user_id))
-        orders.extend(self.short_queue.user_orders(user_id))
+        orders = dict()
+        long_orders = self.long_queue.user_orders(user_id)
+        short_orders = self.short_queue.user_orders(user_id)
+        orders = dict(long_orders,**short_orders)
         return orders
 
     def clean(self):

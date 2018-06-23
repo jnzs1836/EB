@@ -1322,7 +1322,7 @@ def security_account():
                 username = query_result[0]
             result = db.session.execute("select * from security_in_account where username ='" + username + "'")
             if result.first() is None:
-                data = {"state": "false", "msg": "查询失败"}
+                data = []
                 return jsonify(data)
 
             else:

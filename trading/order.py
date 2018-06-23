@@ -133,15 +133,17 @@ def get_user_orders(user_id):
     # cursor = self.db_conn.cursor()
     cursor.execute('select * from stock_set')
     result = cursor.fetchall()
-    order_list = []
+    # order_list = []
     queue_manager = get_queue_manager()
+    order_dict = {}
     for item in result:
         stock_id = item[0]
         stock_name = item[1]
         # stock_list.appe
         pair_queue = queue_manager.get_pair_queue(stock_id)
-        order_list.extend(pair_queue.user_orders(user_id))
-    return order_list
+        order_d = pair_queue.user_orders(user_id)
+        order_dict = dict(order_dict,**order_d)
+    return order_dict
 
 def get_stock_orders(stock_id,type):
     queue_manager = get_queue_manager()
