@@ -111,11 +111,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="688">
-              <caret line="1349" column="39" selection-start-line="1349" selection-start-column="39" selection-end-line="1349" selection-end-column="39" />
+            <state relative-caret-position="2997">
+              <caret line="1372" column="16" selection-start-line="1372" selection-start-column="16" selection-end-line="1372" selection-end-column="16" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -190,11 +190,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="136" column="20" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
+            <state relative-caret-position="384">
+              <caret line="123" column="56" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -259,7 +259,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>order_han</find>
       <find>security_account</find>
       <find>get_user_orders</find>
       <find>stock_status</find>
@@ -289,6 +288,7 @@
       <find>/fund_is</find>
       <find>/secu</find>
       <find>ch</find>
+      <find>/SECURITY_ACCOUNT</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -343,8 +343,8 @@
         <option value="$PROJECT_DIR$/templates/security_per_issue.html" />
         <option value="$PROJECT_DIR$/order_queue/queue.py" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
       </list>
     </option>
   </component>
@@ -982,20 +982,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="136" column="20" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="1349" column="39" selection-start-line="1349" selection-start-column="39" selection-end-line="1349" selection-end-column="39" />
+        <state relative-caret-position="2997">
+          <caret line="1372" column="16" selection-start-line="1372" selection-start-column="16" selection-end-line="1372" selection-end-column="16" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />
@@ -1020,6 +1010,16 @@
             <element signature="e#15819#16307#0" />
             <element signature="e#16393#28693#0" />
             <element signature="e#28749#29054#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="123" column="56" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

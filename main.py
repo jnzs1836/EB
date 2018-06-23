@@ -1344,7 +1344,12 @@ def security_account():
                     profit = price * num - cost
                     dict = {"name": name, "num": num, "price": price, "cost": cost, "profit": profit}
                     list.append(dict)
-                return jsonify({"stock":list})
+                    response = app.response_class(
+                        response=json.dumps({"stock": list}),
+                        status=200,
+                        mimetype='application/json'
+                    )
+                return response
 
 #中央交易系统
 def trade_fund(username,money,operation_type):
@@ -1368,6 +1373,7 @@ def trade_fund(username,money,operation_type):
     if new_fund>=new_freeze_fund:
         new_fund=str(new_fund)
         new_freeze_fund=str(new_freeze_fund)
+        print(new_fund)
         result=db.session.execute("update fund_account_user set enabled_money="+new_fund
                                   +",freezing_money="+new_freeze_fund+" where username ='"+username +"'")
         return True
