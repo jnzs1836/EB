@@ -74,7 +74,7 @@ def cal_pma(pma, stock_info):
         for i in range(pma):
             d = (td + datetime.timedelta(days=-(i+1))).strftime("%Y-%m-%d")
             sum = sum + float(dic[d])
-        avg = sum / 5
+        avg = sum / pma
         argsList.append([stock_info[0], td.strftime("%Y-%m-%d"), avg])
         td = td + datetime.timedelta(days=-1)
 
