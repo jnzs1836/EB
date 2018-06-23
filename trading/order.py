@@ -169,6 +169,10 @@ def trade_fund(username, money, operation_type,db):
     for query_result in result:
         fund = float(str(query_result[0]))
         freeze_fund = float(str(query_result[1]))
+    print(fund)
+    print(freeze_fund)
+    print(money)
+
     if operation_type == "buy":
         new_fund = fund
         new_freeze_fund = freeze_fund + money
