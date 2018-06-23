@@ -98,9 +98,17 @@ def clean_queue(stock_name):
     pair_queue.clean()
 
 def check_user(username,stock_name,price,volume,direction,db):
-    if trade_fund(username,volume * price, direction,db) and \
-            trade_security(username,stock_name,volume,direction,db):
-        return True
+    print(trade_fund(username,volume * price, direction,db))
+    print(trade_security(username,stock_name,volume,direction,db))
+    check = False
+    if direction is SHORT:
+        check = trade_security(username,stock_name,volume,direction,db)
+    else:
+        check = trade_fund(username,volume * price, direction,db)
+    return check
+    # if trade_fund(username,volume * price, direction,db) and \
+    #         trade_security(username,stock_name,volume,direction,db):
+    #     return True
 
 def get_user_orders(user_id):
     queue_manager = get_queue_manager()
