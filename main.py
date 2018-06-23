@@ -1466,6 +1466,8 @@ def security_logoff():
                 + username + "' WHERE username ='" + username + "';"
             )
             db.session.execute(
+                "update fund_account_user set is_enabled = 'N' where security_account ='" + username + "'")
+            db.session.execute(
                 "UPDATE security_account_personal_user SET fund_account = '' WHERE username ='U" + username + "';"
             )
             return render_template('security_logoff.html', error_message='销户成功!')
@@ -1508,6 +1510,8 @@ def security_logoff_agent():
                 "UPDATE security_account_coporate_user SET username = 'U"
                 + username + "' WHERE username ='" + username + "';"
             )
+            db.session.execute(
+                "update fund_account_user set is_enabled = 'N' where security_account ='" + username + "'")
             db.session.execute(
                 "UPDATE security_account_coporate_user SET fund_account = '' WHERE username ='U" + username + "';"
             )
@@ -1746,6 +1750,46 @@ def clean_queue_handler():
 #         mimetype='application/json'
 #     )
 #     return response
+
+@app.route('/transaction_state')
+def cancel_order():
+    data = request.get_json()
+    order_id = data['transaction_id']
+    order_type = data['type']
+    if order_type == 2:
+        remove_order(order_id)
+        json_data = {
+            "status":True,
+            'msg':'删除成功'
+        }
+        response = app.response_class(
+            response=json.dumps(json_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+    else:
+        status = get_order_status(order_id)
+        if status:
+            json_data = {
+                "status":True,
+                'msg':"订单存在"
+            }
+        else:
+            json_data = {
+                "status":False,
+                'msg':"订单不存在或已完成"
+            }
+        response = app.response_class(
+            response=json.dumps(json_data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
+
+
+
 @app.route('/admin/orders_info',methods=['GET','POST'])
 def stock_orders_info():
     data = request.get_json()

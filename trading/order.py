@@ -59,6 +59,8 @@ class QueueManager():
         print("count "+ str(self.count))
         return self.queues[stock_id]
 
+    def
+
 
 def get_queue_manager():
     queue_manager = getattr(g,'_queues',None)
@@ -89,6 +91,24 @@ def create_order( user_id, stock_id, direction, price, volume,db):
     pair_queue = queue_manager.get_pair_queue(stock_id)
     order_id = pair_queue.push(order)
     return order_id
+
+
+
+def get_order_status(order_id):
+    try:
+        queue_manager = get_queue_manager()
+        queue_manager.r.hget(order_id,'stock_id')
+        return True
+    except:
+        return False
+
+def remove_order(order_id):
+    queue_manager = get_queue_manager()
+    stock_id = queue_manager.r.hget(order_id,'stock_id').decode('utf-8')
+    direction = int(queue_manager.r.hget(order_id,'direction').decode('utf-8'))
+    pair_queue = queue_manager.get_pair_queue(stock_id)
+    pair_queue.remove(order_id,direction)
+
 
 def clean_queue(stock_name):
     queue_manager = get_queue_manager()

@@ -16,6 +16,7 @@ class Queue :
             self.prefix = 'long'
         else:
             self.prefix = 'short'
+
         self.key = self.prefix + str(self.id)
 
     def push(self, order):

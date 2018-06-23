@@ -56,6 +56,7 @@ class Order:
     def get_map(self):
         return {
             'user_id':self.user_id,
+            'stock_id':self.stock_id,
             'price':self.price,
             'volume':self.volume,
             'direction':self.direction,
