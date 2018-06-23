@@ -80,10 +80,10 @@ def start_trading(stock_name):
     stock_id = queue_manager.get_stock_id(stock_name)
     queue_manager.set_stock_on(stock_name)
 
-def create_order( user_id, stock_id, direction, price, volume):
+def create_order( user_id, stock_id, direction, price, volume,db):
 
     queue_manager = get_queue_manager()
-    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),queue_manager.db_conn):
+    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
         return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
@@ -129,6 +129,7 @@ def get_stock_orders(stock_id,type):
 
 
 def trade_fund(username, money, operation_type,db):
+    # db =
     result = db.session.execute("select * from fund_account_user where username ='" + username + "'")
     if result.first() is None:
         return False
