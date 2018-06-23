@@ -1748,7 +1748,7 @@ def stock_orders_info():
     return response
 
 
-@app.route('/trade/all_transaction',methods=['GET','POST'])
+@app.route('/all_transaction',methods=['GET','POST'])
 def orders_info():
     data = request.get_json()
     user_id = 'test'
@@ -1765,6 +1765,26 @@ def orders_info():
         mimetype='application/json'
     )
     return response
+
+@app.route('/order',methods=['POST','GET'])
+def order_handler():
+    if request.method == 'POST':
+        data = request.get_json()
+        # user_id = session.get('userid')
+        user_id = 'uid001'
+        order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'])
+        msg = {
+            'state':'true',
+            'transaction_id':order_id
+        }
+        response = app.response_class(
+            response=json.dumps(msg),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+    else:
+        return 'HELLO'
 
 ####################################################################################
 

@@ -1,2 +1,2 @@
 db_user = 'root'
-db_secret = 'yu777'
+db_secret = 'Aa27268910'
