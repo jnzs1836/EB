@@ -83,7 +83,7 @@ def start_trading(stock_name):
 def create_order( user_id, stock_id, direction, price, volume):
 
     queue_manager = get_queue_manager()
-    if not check_user(user_id,stock_id,price,volume,direction,queue_manager.db_conn):
+    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),queue_manager.db_conn):
         return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
