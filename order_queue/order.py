@@ -23,7 +23,7 @@ class Order:
         return str(self.price) + "xinghong"
 
     def get_score(self):
-        return self.price
+        return float(self.price)
 
     def get_price(self):
         return self.price
