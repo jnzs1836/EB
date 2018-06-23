@@ -23,8 +23,9 @@ class QueueManager():
         result = cursor.fetchall()
         for item in result:
             stock_id = item[0]
+            print(stock_id)
             stock_name = item[1]
-            self.queues[stock_name] = PairQueue(stock_id, item, self.r)
+            self.queues[stock_id] = PairQueue(stock_id, stock_name, self.r)
             mapping = {
                 'stock_id': stock_id,
                 'status': True,
@@ -79,7 +80,7 @@ def start_trading(stock_name):
     stock_id = queue_manager.get_stock_id(stock_name)
     queue_manager.set_stock_on(stock_name)
 
-def create_order( user_id, stock_name, direction, price, volume):
+def create_order( user_id, stock_id, direction, price, volume):
 
     queue_manager = get_queue_manager()
     if not check_user(user_id,stock_id,price,volume,direction,queue_manager.db_conn):
