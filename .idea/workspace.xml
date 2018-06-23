@@ -185,15 +185,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sql/create.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="662">
-              <caret line="208" selection-start-line="208" selection-end-line="209" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="add_stock.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/add_stock.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -206,13 +197,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mobile.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mobile.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mobile.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="565">
               <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jiang.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Jiang.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="187" column="17" selection-start-line="187" selection-start-column="17" selection-end-line="187" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -265,6 +268,7 @@
       <find>owner&quot;</find>
       <find>db</find>
       <find>123</find>
+      <find>db_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -305,7 +309,6 @@
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
         <option value="$PROJECT_DIR$/DB_Connector.py" />
-        <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$PROJECT_DIR$/yuan.py" />
         <option value="$PROJECT_DIR$/sql/create.sql" />
         <option value="$PROJECT_DIR$/kline_control.py" />
@@ -315,6 +318,7 @@
         <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/mobile.py" />
+        <option value="$PROJECT_DIR$/Jiang.py" />
       </list>
     </option>
   </component>
@@ -773,16 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jiang.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/yuan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="422">
@@ -900,6 +894,16 @@
           <caret line="60" column="24" lean-forward="true" selection-start-line="60" selection-start-column="24" selection-end-line="60" selection-end-column="24" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jiang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="187" column="17" selection-start-line="187" selection-start-column="17" selection-end-line="187" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>

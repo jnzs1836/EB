@@ -178,8 +178,8 @@ def qid(name):
 def dayk(id):
 
     db = pymysql.connect(
-        user=db_,
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
