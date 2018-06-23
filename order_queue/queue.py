@@ -2,6 +2,7 @@
 import redis
 from order_queue.order import Order
 from order_queue.constant import *
+# import random
 class Queue :
     def __init__(self, stock_id, direction = LONG, r = None):
         self.id  = stock_id
@@ -9,8 +10,7 @@ class Queue :
             self.r = r
         else:
             self.r = redis.Redis()
-        print(self.id)
-        self.count = self.r.zcard(self.id)
+        self.count = 0
 
     def push(self, order):
         if isinstance(order,Order):

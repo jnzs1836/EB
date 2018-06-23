@@ -27,9 +27,9 @@ function render_account_info(data){
 }
 
 function check_trade_form(){
-    $.post("/fund_account", JSON.stringify({username:get_current_username()}), function(data){
+    $.ajax({url:"/fund_account", type:"POST", data:JSON.stringify({username:get_current_username()}), contentType:"application/json;charset=utf-8",success:function(data){
         render_account_info(data);
-    })
+    }});
     //render account info
     $("#trade-form").validate({
         rules:{
@@ -108,14 +108,14 @@ function check_confirm_form(){
                 username : username,
                 password : $("#fund_psd").val()
             }
-            $.post("/account_user_login", JSON.stringify(send_data), function(data){
+            $.ajax({url:"/account_user_login", type:"POST", data:JSON.stringify(send_data), contentType:"application/json;charset=utf-8",success:function(data){
                 if (data.state == "true"){
                     send_trade($("#trade_form"));
                 }
                 else{
                     $("#msg_slot").html(create_error_alert("资金密码输入错误！"));
                 }
-            });
+            }});
             $("#confirm_trade").modal("hide");
         }
     });
@@ -131,15 +131,22 @@ function send_trade(form){
         order_type: order_t
     };
 
-    $.post("/trade_shares", JSON.stringify(send_data), function(data){
-        if (data.state == "true"){
-            $("#msg_slot").html(create_success_alert(
-                "交易指令发布成功!<strong>该笔交易的交易号为：{}</strong>".replace("{}", data.transaction_id)
-            ));
-            $("#trade-form")[0].reset();
-        }
-        else{
-            $("#msg_slot").html(create_error_alert("交易指令发布失败，请检查输入！"));
+    $.ajax({
+        url: "/trade_shares",
+        type: "POST",
+        data: JSON.stringify(send_data),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data.state == "true") {
+                $("#msg_slot").html(create_success_alert(
+                    "交易指令发布成功!<strong>该笔交易的交易号为：{}</strong>".replace("{}", data.transaction_id)
+                ));
+                $("#trade-form")[0].reset();
+            }
+            else {
+                $("#msg_slot").html(create_error_alert("交易指令发布失败，请检查输入！"));
+            }
         }
     })
 }
@@ -231,14 +238,14 @@ function send_cancel(){
         order_type : 2
         //2 means cancel
     }
-    $.post("/transaction_state", JSON.stringify( send_data), function(data){
+    $.ajax({url:"/transaction_state", type:"POST", data:JSON.stringify( send_data), contentType:"application/json;charset=utf-8", success: function(data){
         if (data.state == "false"){
             $("#msg_slot").html(create_error_alert(data.msg));
         }else{
             $("#msg_slot").html(create_success_alert("交易撤销成功！"));
             reload_transactions();
         }
-    });
+    }});
 }
 
 function reload_transactions(){
@@ -263,15 +270,15 @@ function check_confirm_cancel(){
             send_data = {
                 username : username,
                 password : $("#fund_psd").val()
-            }
-            $.post("/account_user_login", JSON.stringify(send_data), function(data){
+            };
+            $.ajax({url:"/account_user_login", type:"POST", data:JSON.stringify(send_data), contentType:"application/json;charset=utf-8", success:function(data){
                 if (data.state == "true"){
                    send_cancel();
                 }
                 else{
                     $("#msg_slot").html(create_error_alert("资金密码输入错误！"));
                 }
-            });
+            }});
             $("#confirm_cancel").modal("hide");
         }
     });
