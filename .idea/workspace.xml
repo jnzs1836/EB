@@ -114,8 +114,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="1814" column="26" selection-start-line="1814" selection-start-column="26" selection-end-line="1814" selection-end-column="26" />
+            <state relative-caret-position="498">
+              <caret line="1333" column="40" lean-forward="true" selection-start-line="1333" selection-start-column="40" selection-end-line="1333" selection-end-column="40" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -341,10 +341,10 @@
         <option value="$PROJECT_DIR$/order_queue/constant.py" />
         <option value="$PROJECT_DIR$/order_queue/order.py" />
         <option value="$PROJECT_DIR$/templates/security_per_issue.html" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/order_queue/queue.py" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
         <option value="$PROJECT_DIR$/trading/order.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -994,8 +994,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="1814" column="26" selection-start-line="1814" selection-start-column="26" selection-end-line="1814" selection-end-column="26" />
+        <state relative-caret-position="498">
+          <caret line="1333" column="40" lean-forward="true" selection-start-line="1333" selection-start-column="40" selection-end-line="1333" selection-end-column="40" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />

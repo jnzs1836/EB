@@ -1324,7 +1324,8 @@ def security_account():
             if result.first() is None:
                 list=[]
                 dict= {"name": "", "num": "", "price": "", "cost": "", "profit": ""}
-                return jsonify(data)
+                list.append(dict)
+                return jsonify(list)
 
             else:
                 list = []
