@@ -1776,7 +1776,7 @@ def orders_info():
     )
     return response
 
-@app.route('/order',methods=['POST','GET'])
+@app.route('/trade_shares',methods=['POST','GET'])
 def order_handler():
     if request.method == 'POST':
         data = request.get_json()
