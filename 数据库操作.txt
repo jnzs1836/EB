@@ -137,6 +137,21 @@ create index p10_index on pma10(date);
 create index p30_index on pma30(date);
 
 
+
+
+create index ts_si on today_stock(stock_id);
+
+create index ps_si on previous_stock(stock_id);
+
+create index p5_si on pma5(stock_id);
+
+create index p10_si on pma10(stock_id);
+
+create index p30_si on pma30(stock_id);
+
+create index n_si on notice(stock_id);
+
+
 ####################################################################
 和交易客户端交互
 

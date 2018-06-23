@@ -20,10 +20,11 @@ def stock_change(info):
         args = []
         args.append(info[i][0])
         args.append(info[i][1])
-        yesterday_price = int(info[i][3])
+        yesterday_price = float(info[i][3])
         today_price = yesterday_price + yesterday_price * random.uniform(-0.1, 0.1)
         while today_price < 4.0:
-            today_price = yesterday_price + yesterday_price * random.uniform(0, 0.05)
+            print("here")
+            today_price = yesterday_price + yesterday_price * random.uniform(0, 0.1)
         args.append(today_price)
         args.append(present_time)
         args_list.append(args)

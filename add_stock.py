@@ -43,6 +43,7 @@ def add_stocks_previous_price(stocks, py, pm, pd):
                                  charset='utf8mb4')
 
     today = datetime.datetime.now()
+    today = today + datetime.timedelta(days=-1)
 
     p_day = datetime.datetime(py, pm, pd)
 
@@ -59,8 +60,8 @@ def add_stocks_previous_price(stocks, py, pm, pd):
             args = []
             args.append(i)
             args.append(stocks[i])
-            max = random.uniform(5.0, 200)
-            min = max * (1 - random.uniform(0, 0.2 / 1.1))
+            max = random.uniform(20.0, 200.0)
+            min = max * (1 - random.uniform(0, 0.1 / 1.1))
             start = random.uniform(min, max)
             end = random.uniform(min, max)
             args.append(start)
@@ -77,10 +78,15 @@ def add_stocks_previous_price(stocks, py, pm, pd):
                 args = []
                 args.append(i)
                 args.append(stocks[i])
-                max = args_list[j+t][3] * (1 + random.uniform(0, 0.2) - 0.1)
-                if max < 5.0:
-                    max = args_list[j+t][3] * (1 + random.uniform(0, 0.1))
-                min = max * (1 - random.uniform(0, 0.2/1.1))
+                max = args_list[j+t][3] * (1 + random.uniform(-0.05, 0.1))
+                if max < 15.0:
+                    max = args_list[j+t][3] * (1 + random.uniform(0.08, 0.1))
+                    min = max * (1 - random.uniform(0, 0.05/1.1))
+                elif max > 200:
+                    max = args_list[j + t][3] * (1 + random.uniform(-0.05, -0.01))
+                    min = max * (1 - random.uniform(0, 0.2 / 1.1))
+                else:
+                    min = max * (1 - random.uniform(0, 0.1/1.1))
                 start = random.uniform(min, max)
                 end = random.uniform(min, max)
                 args.append(start)
