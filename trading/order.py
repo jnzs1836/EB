@@ -30,20 +30,20 @@ class QueueManager():
                 'status': True,
                 'last_price': 0,
             }
-            self.r.hmset(item, mapping)
+            self.r.hmset(item[0], mapping)
 
     def clean(self):
         self.r.flushall()
     def get_stock_id(self, stock_name):
         return self.r.hget(stock_name,'stock_id').decode('utf-8')
-    def get_stock_status(self,stock_name):
-        return self.r.hget(stock_name,'status').decode('utf-8')
+    def get_stock_status(self,stock_id):
+        return self.r.hget(stock_id,'status').decode('utf-8')
 
-    def set_stock_off(self,stock_name):
-        self.r.hset(stock_name,'status',False)
+    def set_stock_off(self,stock_id):
+        self.r.hset(stock_id,'status',False)
 
-    def set_stock_on(self,stock_name):
-        self.r.hset(stock_name,'status',True)
+    def set_stock_on(self,stock_id):
+        self.r.hset(stock_id,'status',True)
 
 
     def add_queue(self):
@@ -82,9 +82,9 @@ def start_trading(stock_name):
 def create_order( user_id, stock_name, direction, price, volume):
 
     queue_manager = get_queue_manager()
-    if not check_user(user_id,stock_name,price,volume,direction,queue_manager.db_conn):
+    if not check_user(user_id,stock_id,price,volume,direction,queue_manager.db_conn):
         return -1
-    stock_id = queue_manager.get_stock_id(stock_name)
+    # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
     pair_queue = queue_manager.get_pair_queue(stock_id)
     order_id = pair_queue.push(order)
@@ -102,7 +102,9 @@ def check_user(username,stock_name,price,volume,direction,db):
         return True
 
 def get_user_orders(user_id):
-    cursor = self.db_conn.cursor()
+    queue_manager = get_queue_manager()
+    cursor = queue_manager.db_conn.cursor()
+    # cursor = self.db_conn.cursor()
     cursor.execute('select * from stock_set')
     result = cursor.fetchall()
     order_list = []
@@ -115,9 +117,9 @@ def get_user_orders(user_id):
         order_list.extend(pair_queue.user_orders(user_id))
     return order_list
 
-def get_stock_orders(stock_name,type):
+def get_stock_orders(stock_id,type):
     queue_manager = get_queue_manager()
-    stock_id = queue_manager.get_stock_id(stock_name)
+    # stock_id = queue_manager.get_stock_id(stock_name)
     pair_queue = queue_manager.get_pair_queue(stock_id)
     if type == SHORT:
         return pair_queue.get_short_orders()

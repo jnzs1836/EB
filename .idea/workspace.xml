@@ -114,8 +114,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="316" column="18" lean-forward="true" selection-start-line="316" selection-start-column="18" selection-end-line="316" selection-end-column="18" />
+            <state relative-caret-position="213">
+              <caret line="1782" column="19" selection-start-line="1782" selection-start-column="19" selection-end-line="1782" selection-end-column="19" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -129,6 +129,7 @@
                 <element signature="e#7820#8443#0" />
                 <element signature="e#8542#9909#0" />
                 <element signature="e#9960#10199#0" />
+                <element signature="e#10285#11314#0" />
                 <element signature="e#11405#11962#0" />
                 <element signature="e#12057#13214#0" />
                 <element signature="e#13306#14202#0" />
@@ -144,46 +145,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trading/order.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="184" column="42" lean-forward="true" selection-start-line="184" selection-start-column="42" selection-end-line="184" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#44#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="trade.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
+            <state relative-caret-position="356">
+              <caret line="138" column="23" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
+      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="505">
+              <caret line="90" column="12" lean-forward="true" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
               <folding>
-                <element signature="e#19#28#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Jiang.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jiang.py">
+      <file leaf-file-name="deal.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deal/deal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="121" column="9" lean-forward="true" selection-start-line="121" selection-start-column="9" selection-end-line="121" selection-end-column="9" />
+            <state relative-caret-position="-27">
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/trading/order.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="49" column="12" lean-forward="true" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -234,10 +234,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_stock.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="add_stock.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/add_stock.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2103">
+            <state relative-caret-position="266">
               <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -281,6 +281,10 @@
       <find>end</find>
       <find>end_price</find>
       <find>[&quot;end_price</find>
+      <find>/order</find>
+      <find>create_order</find>
+      <find>trade_shares</find>
+      <find>,stock_name</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -329,10 +333,10 @@
         <option value="$PROJECT_DIR$/mobile.py" />
         <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/public/js/trade_js/trade.js" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
       </list>
     </option>
   </component>
@@ -618,7 +622,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/templates/try.html" />
     <entry file="file://$PROJECT_DIR$/templates/queryTmp.html" />
     <entry file="file://$PROJECT_DIR$/render.html" />
@@ -795,15 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1661">
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -863,54 +857,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="184" column="42" lean-forward="true" selection-start-line="184" selection-start-column="42" selection-end-line="184" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="316" column="18" lean-forward="true" selection-start-line="316" selection-start-column="18" selection-end-line="316" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-            <element signature="e#1250#1372#0" />
-            <element signature="e#1589#1708#0" />
-            <element signature="e#1755#2527#0" />
-            <element signature="e#3282#3333#0" />
-            <element signature="e#3406#3908#0" />
-            <element signature="e#4766#5485#0" />
-            <element signature="e#5564#6464#0" />
-            <element signature="e#6561#7741#0" />
-            <element signature="e#7820#8443#0" />
-            <element signature="e#8542#9909#0" />
-            <element signature="e#9960#10199#0" />
-            <element signature="e#11405#11962#0" />
-            <element signature="e#12057#13214#0" />
-            <element signature="e#13306#14202#0" />
-            <element signature="e#14298#15290#0" />
-            <element signature="e#15364#15404#0" />
-            <element signature="e#15459#15656#0" />
-            <element signature="e#15679#15800#0" />
-            <element signature="e#15819#16307#0" />
-            <element signature="e#16393#28693#0" />
-            <element signature="e#28749#29054#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jiang.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -960,10 +906,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/add_stock.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2103">
+        <state relative-caret-position="266">
           <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="1782" column="19" selection-start-line="1782" selection-start-column="19" selection-end-line="1782" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#104#0" expanded="true" />
+            <element signature="e#1250#1372#0" />
+            <element signature="e#1589#1708#0" />
+            <element signature="e#1755#2527#0" />
+            <element signature="e#3282#3333#0" />
+            <element signature="e#3406#3908#0" />
+            <element signature="e#4766#5485#0" />
+            <element signature="e#5564#6464#0" />
+            <element signature="e#6561#7741#0" />
+            <element signature="e#7820#8443#0" />
+            <element signature="e#8542#9909#0" />
+            <element signature="e#9960#10199#0" />
+            <element signature="e#10285#11314#0" />
+            <element signature="e#11405#11962#0" />
+            <element signature="e#12057#13214#0" />
+            <element signature="e#13306#14202#0" />
+            <element signature="e#14298#15290#0" />
+            <element signature="e#15364#15404#0" />
+            <element signature="e#15459#15656#0" />
+            <element signature="e#15679#15800#0" />
+            <element signature="e#15819#16307#0" />
+            <element signature="e#16393#28693#0" />
+            <element signature="e#28749#29054#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="138" column="23" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="90" column="12" lean-forward="true" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deal/deal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-27">
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="49" column="12" lean-forward="true" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
