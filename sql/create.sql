@@ -1,7 +1,3 @@
-create user owner@localhost identified with mysql_native_password by "123456";
-grant all privileges on *.* to owner@localhost;
-flush privileges;
-
 create database EB;
 
 create table user(
