@@ -2,14 +2,15 @@ from flask import Flask, render_template, request
 import pymysql
 import config
 
+from db_config import *
 app = Flask(__name__)
 
 app.config.from_object(config)
 
 
 def get_vcode(telephone):
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
