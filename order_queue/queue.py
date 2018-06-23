@@ -23,7 +23,7 @@ class Queue :
             pass
         else:
             return 0
-        order.set_id(self.count)
+        order.set_id(self.count,self.key)
         self.count  = self.count + 1
         print(self.id)
 
