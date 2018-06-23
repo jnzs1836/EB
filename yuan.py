@@ -2,12 +2,13 @@ import pymysql
 import hashlib
 import datetime
 import random
+from db_config import *
 
 # 登录
 def Login(user_name, user_password):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -37,8 +38,8 @@ def Login(user_name, user_password):
 # 注册
 def Register(user_name, user_password, telephone):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -67,8 +68,8 @@ def Register(user_name, user_password, telephone):
 #判断用户名与手机号是否一致
 def check_username_telephone(username, telephone):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -94,8 +95,8 @@ def check_username_telephone(username, telephone):
 
 #判断用户名密码与手机号是否一致
 def check_user(username,password, telephone):
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -125,8 +126,8 @@ def check_user(username,password, telephone):
 #验证用户名是否存在
 def isExisted(username):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -150,8 +151,8 @@ def isExisted(username):
         return flag
 
 def addVcode(tel):
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -183,8 +184,8 @@ def addVcode(tel):
 
 # 验证码
 def Verificate(code, no):
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -211,8 +212,8 @@ def Verificate(code, no):
 # 修改密码
 def Modify(user_name, user_password):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -240,8 +241,8 @@ def Modify(user_name, user_password):
 # 续费升级
 def Renew(user_name, duration):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -281,8 +282,8 @@ def Renew(user_name, duration):
 
 def get_type(user_name):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -311,8 +312,8 @@ def get_type(user_name):
 
 def login_log(user_name, state): # 输入用户名以及登录状态
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')

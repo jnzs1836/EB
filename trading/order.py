@@ -16,17 +16,20 @@ class QueueManager():
         self.set_default_queues()
 
     def set_default_queues(self):
-        default = ['BABA']
-        i = 0
-        for item in default:
-            stock_id = i
-            self.queues[str(i)] = PairQueue(stock_id,item,self.r)
+        cursor = self.db_conn.cursor()
+        cursor.execute('select * from stock_set')
+        result = cursor.fetchall()
+        for item in result:
+            stock_id = item[0]
+            stock_name = item[1]
+            self.queues[stock_name] = PairQueue(stock_id, item, self.r)
             mapping = {
-                'stock_id':stock_id,
-                'status':True,
-                'last_price':0,
+                'stock_id': stock_id,
+                'status': True,
+                'last_price': 0,
             }
-            self.r.hmset(item,mapping)
+            self.r.hmset(item, mapping)
+
     def clean(self):
         self.r.flushall()
     def get_stock_id(self, stock_name):

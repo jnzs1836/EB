@@ -1,12 +1,12 @@
 import pymysql
 import hashlib
 import datetime
-
+from db_config import *
 # 登录
 def Login(user_name, user_password):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -132,8 +132,8 @@ def Login(user_name, user_password):
 
 def get_type(user_name):
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -169,8 +169,8 @@ def get_type(user_name):
 
 def login_log(user_name, state): # 输入用户名以及登录状态
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')
@@ -197,8 +197,8 @@ def login_log(user_name, state): # 输入用户名以及登录状态
 
 def vip_log(user_name, duration): # 输入用户名以及登录状态
     # 打开数据库连接
-    dbForOwner = pymysql.connect(user="owner",
-                                 password="123456",
+    dbForOwner = pymysql.connect(user=db_user,
+                                 password=db_secret,
                                  db="EB",
                                  host="localhost",
                                  charset='utf8mb4')

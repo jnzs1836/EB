@@ -1,7 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+  <link rel="dns-prefetch" href="https://assets-cdn.github.com">
+  <link rel="dns-prefetch" href="https://avatars0.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars1.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars2.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://avatars3.githubusercontent.com">
+  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com">
+  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
+  <link crossorigin="anonymous" media="all" integrity="sha512-PkbtxdWDpLChpxtWQ0KbvJoef4XMYPq5pfd/ZmylYZTzXYpCfGwN9d+bsSKcmOJLwTkfjFkfj5wz3poDrhJoSQ==" rel="stylesheet" href="https://assets-cdn.github.com/assets/frameworks-f6e6ce21346c0d2eb22def1e8534afcb.css" />
+   <link crossorigin="anonymous" media="all" integrity="sha512-zyxweUSm/NG+juywqcMFSS4HbKjLWCZyEM2JjoCqnQUU6RVrHpHMwH66xreiaeMIRoA6vYuk0hm8S1X42r/YWQ==" rel="stylesheet" href="https://assets-cdn.github.com/assets/site-220df28424b63d1e24f3bd909efebe81.css" />
+  <link crossorigin="anonymous" media="all" integrity="sha512-0BWCA/R6u2ObTpfsUgMSBEyTMfOY1V9wGfqpR/U9O9tc/BFc53yM/UKaeK950BOFvlIM0BFc2lrr6CHkg095YA==" rel="stylesheet" href="https://assets-cdn.github.com/assets/github-22f66197d69af5eeca9f48295c52743e.css" />
+  <meta name="viewport" content="width=device-width">
+  <title>账号注册</title>
+  <meta name="user-login" content="">
+  <meta name="viewport" content="width=device-width">
     <title>验证码</title>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -13,50 +27,43 @@
             crossorigin="anonymous"></script>
 
     <style>
-        .form-container{
-            width: 300px;
-            margin: 0 auto;
-        }
-        .page-title{
-            text-align: center;
-        }
-        #d4
-        {
-            width = 450px;
-            margin:0 auto;
-            margin-top: 40px;
-            font-size: 40px;
-            text-align:center;
-        }
-    </style>
-    <script>
-        function agree() {
-            alert("test");
-        }
-    </script>
 
+      #cx
+      {
+        height:94%
+
+      }
+
+      #xin
+      {
+        padding: 0px;
+        margin: 0px;
+      }
+    </style>
 
 </head>
 <body>
-    <form action="/register/verification" method="post" class="myForm">
-        <nav class="navbar navbar-inverse" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-        <a class="navbar-brand" href="#" style="color:white"><span class="glyphicon glyphicon-signal"></span> 信息发布系统</a>
-    </div>
-        <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url_for('retrieve') }}" style="color:white"><span class="glyphicon glyphicon-pencil"></span> 密码找回</a></li>
-		 <li><a href="{{ url_for('login') }}" style="color:white"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
-		 <li><a href="{{last_url}}" style="color:white"><span class="glyphicon glyphicon-log-out"></span> 返回</a></li>
-        </ul>
-    </div>
+    <nav class="navbar navbar-inverse navbar-static-top" id='xin' role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="color:white"><span class="glyphicon glyphicon-signal"></span> 信息发布系统</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('retrieve') }}" style="color:white"><span class="glyphicon glyphicon-pencil"></span> 密码找回</a></li>
+		        <li><a href="{{ url_for('login') }}" style="color:white"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+		        <li><a href="{{last_url}}" style="color:white"><span class="glyphicon glyphicon-log-out"></span> 返回</a></li>
+            </ul>
+        </div>
     </nav>
-        <h1 class="page-title">输入手机验证码</h1>
-     <div class="form-container">
-            <div class="form-group">
-                <!-- 未完成 -->
-                    <button class="btn btn-default btn-block" type="button"  name="phone"  onclick="resend();time(this)" id="sub">点击重新发送手机验证码</button>
-                </div>
+<div class="py-6 py-sm-8 py-lg-10 py-xl-12 jumbotron-codelines" id="cx">
+    <div class="container-lg p-responsive position-relative">
+        <div class="d-md-flex flex-items-center gutter-md-spacious">
+            <div class="mx-auto col-sm-8 col-md-5 hide-sm">
+                <div class="rounded-1 text-gray bg-gray-light py-4 px-4 px-md-3 px-lg-4">
+                <div style="text-align:center"><h2>输入验证码</h2></div><br/>
+                <form class="home-hero-signup js-signup-form" autocomplete="off" action="/register/verification" accept-charset="UTF-8" method="post">
+
+                    <button class="btn btn-default btn-block" type="button"  name="phone"  onclick="resend();time(this)" id="sub">点击重新发送手机验证码</button></br>
                 <div>
                 <script language="javascript" type="text/javascript">
                     function resend() {
@@ -72,21 +79,11 @@
                         }
                     }
                 </script>
-                <div class="form-group">
                     <input type="text" class="form-control"  name="vno" id = "vno"  value="{{vno}}"  style="display:none">
-                </div>
-                <div class="form-group">
                     <input type="text" class="form-control"  name="_username" id = "_username"  value="{{user_name}}" style="display:none">
-                </div>
-                <div class="form-group">
                      <input type="text" class="form-control"  name="_password" id="_password"  value="{{password}}" style="display:none">
-                </div>
-                <div class="form-group">
                     <input type="number" class="form-control" name="_telephone" id="_telephone"  value="{{telephone}}" style="display:none">
-                </div>
-                <div class="form-group">
                     <input type="number" class="form-control" name="_time" id="_time"  value="{{time}}" style="display:none">
-                </div>
                 <script language="javascript" type="text/javascript">
                     var wait=document.getElementById("_time").value;
                     function time(o) {
@@ -114,19 +111,27 @@
 
 
             </div>
-     </div>
-        <div class="form-container">
-
-
-            <div class="form-group">
-                <input id="code" type="number" class="form-control" placeholder="验证码" name="verification" required>
-            </div>
-             <div>
+            <dl class="form-group mt-0">
+                <dt class="input-label">
+                  <label class="form-label f5" for="code">验证码</label>
+                </dt>
+                <dd>
+                    <input id="code" type="number" class="form-control form-control-lg input-block" placeholder="验证码" name="verification" autofocus required>
+                </dd>
+              <p class="form-control-note">此为必填字段</p>
+            </dl>
+            <dl class="form-group mt-0">
+                <dt class="input-label">
+                  <label class="form-label f5" for="checkbox"></label>
+                </dt>
+                <dd>
                     <label>
                         <input id="checkbox" type="checkbox" name="check" style="float:left" required >我已阅读并同意
                         <a href="/agreement"  target="_blank">用户注册协议</a>
                     </label>
-            </div>
+                    <p class="form-control-note">此为必填字段</p>
+                </dd>
+            </dl>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit" name="confirm" id="ok" >确认注册</button>
             </div>
@@ -138,6 +143,10 @@
             </div>
             {% endfor %}
         </div>
-</form>
+          </div>
+        </div>
+  </div>
+</div>
+
 </body>
 </html>

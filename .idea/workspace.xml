@@ -2,12 +2,105 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1149b1b7-b65a-4c00-bc55-814f0f63e79b" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/create.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/EB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EB.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB_Connector.py" beforeDir="false" afterPath="$PROJECT_DIR$/DB_Connector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Jiang.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jiang.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/add_stock.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deal/deal.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deal/deal.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deal/deal_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deal_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/everyday.py" beforeDir="false" afterPath="$PROJECT_DIR$/everyday.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kline_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/kline_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/log/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/log/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile.py" beforeDir="false" afterPath="$PROJECT_DIR$/mobile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/modules/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/modules/bootstrap.min.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/bootstrap.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jquery-3.1.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jquery-3.1.1.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/jquery.validate.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/jquery.validate.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/js-cookie.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/js-cookie.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_queue/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_queue/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_queue/constant.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_queue/constant.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_queue/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_queue/order.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_queue/pair_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_queue/pair_queue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order_queue/queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/order_queue/queue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pager.py" beforeDir="false" afterPath="$PROJECT_DIR$/pager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/log_in.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/log_in.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/trade.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/trade.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.eot" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.eot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.woff" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/public/fonts/glyphicons-halflings-regular.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/info_js/info.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/info_js/info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/log_in_js/log_in.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/log_in_js/log_in.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/trade_js/trade.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/trade_js/trade.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/trade_js/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/trade_js/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock_control.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/agreement.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/agreement.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/buy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/buy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cancel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cancel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/change_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_change_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_issue.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_issue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_logoff.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_logoff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_manager_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_manager_login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_operate.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_operate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_report_loss.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_report_loss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_search_output.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_search_output.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fund_user_reg.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fund_user_reg.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/log_in.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/log_in.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mobile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mobile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/modify_code.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modify_code.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/query.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/query.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register_code.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register_code.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/renew.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/renew.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/renew_code.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/renew_code.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/retrieve.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/retrieve.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/retrieve_code.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/retrieve_code.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_coporate_user_reg.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_coporate_user_reg.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_cor_issue.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_cor_issue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_logoff.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_logoff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_manager_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_manager_login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_per_issue.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_per_issue.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_personal_user_reg.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_personal_user_reg.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security_report_loss.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security_report_loss.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/sell.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sell.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/stock_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/stock_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/stock_query.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/stock_query.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trading/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/trading/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trading/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/trading/order.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yuan.py" beforeDir="false" afterPath="$PROJECT_DIR$/yuan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/数据库操作.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/寤鸿〃.txt" beforeDir="false" afterPath="$PROJECT_DIR$/寤鸿〃.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,11 +111,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="1772" lean-forward="true" selection-start-line="1772" selection-end-line="1772" />
+            <state relative-caret-position="270">
+              <caret line="307" column="24" lean-forward="true" selection-start-line="307" selection-start-column="24" selection-end-line="307" selection-end-column="24" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -36,7 +129,6 @@
                 <element signature="e#7820#8443#0" />
                 <element signature="e#8542#9909#0" />
                 <element signature="e#9960#10199#0" />
-                <element signature="e#10285#11314#0" />
                 <element signature="e#11405#11962#0" />
                 <element signature="e#12057#13214#0" />
                 <element signature="e#13306#14202#0" />
@@ -47,52 +139,46 @@
                 <element signature="e#15819#16307#0" />
                 <element signature="e#16393#28693#0" />
                 <element signature="e#28749#29054#0" />
-                <element signature="e#31192#31345#0" />
-                <element signature="e#31446#32039#0" />
-                <element signature="e#32117#32197#0" />
-                <element signature="e#32284#34261#0" />
-                <element signature="e#34352#36842#0" />
-                <element signature="e#36942#38139#0" />
-                <element signature="e#38227#41122#0" />
-                <element signature="e#41232#42385#0" />
-                <element signature="e#42493#43663#0" />
-                <element signature="e#43734#43886#0" />
-                <element signature="e#43961#45408#0" />
-                <element signature="e#45485#47046#0" />
-                <element signature="e#47131#48562#0" />
-                <element signature="e#49247#50467#0" />
-                <element signature="e#50552#51573#0" />
-                <element signature="e#51675#52839#0" />
-                <element signature="e#52900#53902#0" />
-                <element signature="e#53976#55260#0" />
-                <element signature="e#55553#55637#0" />
-                <element signature="e#55742#56336#0" />
-                <element signature="e#56429#58269#0" />
-                <element signature="e#58374#60354#0" />
-                <element signature="e#60467#62250#0" />
-                <element signature="e#62363#63945#0" />
-                <element signature="e#64046#65552#0" />
-                <element signature="e#65651#68470#0" />
-                <element signature="e#68569#71697#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log_in.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/log_in_js/log_in.js">
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
+            <state relative-caret-position="266">
+              <caret line="17" column="33" lean-forward="true" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#44#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log_in.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/log_in.html">
+      <file leaf-file-name="create.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql/create.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+            <state relative-caret-position="520">
+              <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="寤鸿〃.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/寤鸿〃.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" selection-start-line="7" selection-end-line="11" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -100,8 +186,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="209">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="e#19#28#0" expanded="true" />
               </folding>
@@ -109,11 +195,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mobile.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile.py">
+      <file leaf-file-name="db_config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db_config.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
-              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+              <caret line="1" column="19" lean-forward="true" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DB_Connector.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB_Connector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="135" column="51" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#93#888#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,35 +220,23 @@
       <file leaf-file-name="Jiang.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Jiang.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2736">
-              <caret line="145" column="26" selection-start-line="145" selection-start-column="26" selection-end-line="145" selection-end-column="26" />
+            <state relative-caret-position="266">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stock_info.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/stock_info.html">
+      <file leaf-file-name="yuan.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/yuan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3192">
-              <caret line="168" selection-start-line="168" selection-end-line="168" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stock_query.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/stock_query.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4256">
-              <caret line="224" column="43" selection-start-line="224" selection-start-column="43" selection-end-line="224" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stock_control.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stock_control.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1444">
-              <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+            <state relative-caret-position="422">
+              <caret line="195" column="8" lean-forward="true" selection-start-line="195" selection-start-column="8" selection-end-line="195" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,6 +258,9 @@
       <find>change</find>
       <find>change_password</find>
       <find>username</find>
+      <find>replace</find>
+      <find>&quot;owner&quot;</find>
+      <find>123</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -200,9 +290,7 @@
         <option value="$PROJECT_DIR$/templates/home.html" />
         <option value="$PROJECT_DIR$/templates/renew.html" />
         <option value="$PROJECT_DIR$/mobile.py" />
-        <option value="$PROJECT_DIR$/DB_Connector.py" />
         <option value="$PROJECT_DIR$/everyday.py" />
-        <option value="$PROJECT_DIR$/yuan.py" />
         <option value="$PROJECT_DIR$/templates/mobile.html" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/数据库操作.txt" />
@@ -212,10 +300,14 @@
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/modify.html" />
         <option value="$PROJECT_DIR$/templates/modify_code.html" />
-        <option value="$PROJECT_DIR$/Jiang.py" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/templates/stock_query.html" />
         <option value="$PROJECT_DIR$/public/js/log_in_js/log_in.js" />
+        <option value="$PROJECT_DIR$/sql/create.sql" />
+        <option value="$PROJECT_DIR$/config.py" />
+        <option value="$PROJECT_DIR$/db_config.py" />
+        <option value="$PROJECT_DIR$/DB_Connector.py" />
+        <option value="$PROJECT_DIR$/Jiang.py" />
+        <option value="$PROJECT_DIR$/yuan.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -243,6 +335,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -253,31 +346,17 @@
             <path>
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
               <item name="EB" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="EB" type="b2602c69:ProjectViewProjectNode" />
               <item name="EB" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="EB" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="log_in_js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EB" type="b2602c69:ProjectViewProjectNode" />
-              <item name="EB" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="trading" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -448,26 +527,26 @@
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32992327" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5025381" side_tool="true" weight="0.27877238" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.27621484" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32992327" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32992327" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.27621484" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49746192" weight="0.27877238" />
-      <window_info anchor="right" id="Remote Host" />
+      <window_info anchor="right" id="Remote Host" order="3" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20146765" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="SciView" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32992327" />
+      <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24945612" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39897698" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39897698" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32992327" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,9 +561,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/test2.html" />
-    <entry file="file://$PROJECT_DIR$/templates/test3.html" />
-    <entry file="file:///anaconda3/lib/python3.6/site-packages/flask/templating.py" />
     <entry file="file://$PROJECT_DIR$/templates/test.html" />
     <entry file="file://$PROJECT_DIR$/decorations.py" />
     <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/werkzeug/serving.py" />
@@ -495,9 +571,6 @@
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/templates/try.html" />
     <entry file="file://$PROJECT_DIR$/templates/queryTmp.html" />
-    <entry file="file://$PROJECT_DIR$/pager.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/render.html" />
     <entry file="file://$PROJECT_DIR$/emmmm.py" />
     <entry file="file://$PROJECT_DIR$/static/kline_control.py" />
@@ -558,27 +631,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/logo.jpg" />
-    <entry file="file://$PROJECT_DIR$/DB_Connector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="208" column="46" selection-start-line="208" selection-start-column="46" selection-end-line="208" selection-end-column="46" />
-          <folding>
-            <element signature="e#93#888#0" />
-            <element signature="e#3894#4569#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/yuan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4590">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
-          <folding>
-            <element signature="e#0#14#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/everyday.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -590,13 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
           <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
@@ -672,28 +717,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jiang.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2736">
-          <caret line="145" column="26" selection-start-line="145" selection-start-column="26" selection-end-line="145" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///anaconda3/python.app/Contents/lib/python3.6/site-packages/pymysql/cursors.py" />
     <entry file="file://$PROJECT_DIR$/templates/log_in.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
           <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#19#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -713,15 +741,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
+        <state relative-caret-position="323">
           <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/寤鸿〃.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" selection-start-line="7" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql/create.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="203" column="22" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#19#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="19" lean-forward="true" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB_Connector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="135" column="51" selection-start-line="135" selection-start-column="51" selection-end-line="135" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#93#888#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jiang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yuan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="195" column="8" lean-forward="true" selection-start-line="195" selection-start-column="8" selection-end-line="195" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="1772" lean-forward="true" selection-start-line="1772" selection-end-line="1772" />
+        <state relative-caret-position="270">
+          <caret line="307" column="24" lean-forward="true" selection-start-line="307" selection-start-column="24" selection-end-line="307" selection-end-column="24" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />
@@ -735,7 +832,6 @@
             <element signature="e#7820#8443#0" />
             <element signature="e#8542#9909#0" />
             <element signature="e#9960#10199#0" />
-            <element signature="e#10285#11314#0" />
             <element signature="e#11405#11962#0" />
             <element signature="e#12057#13214#0" />
             <element signature="e#13306#14202#0" />
@@ -746,33 +842,16 @@
             <element signature="e#15819#16307#0" />
             <element signature="e#16393#28693#0" />
             <element signature="e#28749#29054#0" />
-            <element signature="e#31192#31345#0" />
-            <element signature="e#31446#32039#0" />
-            <element signature="e#32117#32197#0" />
-            <element signature="e#32284#34261#0" />
-            <element signature="e#34352#36842#0" />
-            <element signature="e#36942#38139#0" />
-            <element signature="e#38227#41122#0" />
-            <element signature="e#41232#42385#0" />
-            <element signature="e#42493#43663#0" />
-            <element signature="e#43734#43886#0" />
-            <element signature="e#43961#45408#0" />
-            <element signature="e#45485#47046#0" />
-            <element signature="e#47131#48562#0" />
-            <element signature="e#49247#50467#0" />
-            <element signature="e#50552#51573#0" />
-            <element signature="e#51675#52839#0" />
-            <element signature="e#52900#53902#0" />
-            <element signature="e#53976#55260#0" />
-            <element signature="e#55553#55637#0" />
-            <element signature="e#55742#56336#0" />
-            <element signature="e#56429#58269#0" />
-            <element signature="e#58374#60354#0" />
-            <element signature="e#60467#62250#0" />
-            <element signature="e#62363#63945#0" />
-            <element signature="e#64046#65552#0" />
-            <element signature="e#65651#68470#0" />
-            <element signature="e#68569#71697#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="17" column="33" lean-forward="true" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

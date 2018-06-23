@@ -13,13 +13,14 @@ from flask_sqlalchemy import SQLAlchemy
 from decimal import *
 import os
 from datetime import timedelta
+from db_config import *
 
 app = Flask(__name__)
 
 # app.config.from_object(config)  # 配置文件
 
 # 配置flask配置对象中键：SQLALCHEMY_DATABASE_URI
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://owner:123456@localhost/account"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://%s:%s@localhost/account" % (db_user,db_secret)
 # 配置flask配置对象中键：SQLALCHEMY_COMMIT_TEARDOWN,设置为True,应用会自动在每次请求结束后提交数据库中变动
 app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -763,6 +764,7 @@ def show_type():
 ###############交易客户端代码##################
 
 @app.route('/index')
+@login_required
 def index():
     if not session.get('userid'):
         return render_template("log_in.html")
@@ -771,26 +773,31 @@ def index():
 
 
 @app.route('/image/<path:filename>')
+@login_required
 def image(filename):
     return send_file('image/%s' % filename)
 
 
 @app.route('/public/<path:filename>')
+@login_required
 def public(filename):
     return send_file('public/%s' % filename)
 
 
 @app.route('/modules/<path:filename>')
+@login_required
 def modules(filename):
     return send_file('modules/%s' % filename)
 
 
 @app.route('/fonts/<path:filename>')
+@login_required
 def fonts(filename):
     return send_file('/public/fonts/%s' % filename)
 
 
 @app.route('/info')
+@login_required
 def info():
     if not session.get('userid'):
         return render_template("log_in.html")
@@ -799,12 +806,14 @@ def info():
 
 
 @app.route('/log_in')
+@login_required
 def log_in():
     return render_template("log_in.html")
 
 
 
 @app.route("/buy")
+@login_required
 def buy():
     if not session.get('userid'):
        return render_template("log_in.html")
@@ -813,6 +822,7 @@ def buy():
 
 
 @app.route("/sell")
+@login_required
 def sell():
     if not session.get('userid'):
        return render_template("log_in.html")
@@ -821,6 +831,7 @@ def sell():
 
 
 @app.route("/cancel")
+@login_required
 def cancel():
     if not session.get('userid'):
         return render_template("log_in.html")
@@ -829,6 +840,7 @@ def cancel():
 
 
 @app.route("/stock_info")
+@login_required
 def stock_info():
     if not session.get('userid'):
         return render_template("log_in.html")
@@ -837,6 +849,7 @@ def stock_info():
 
 
 @app.route("/fund_info")
+@login_required
 def fund_info():
     if not session.get('userid'):
         return render_template("log_in.html")
@@ -845,10 +858,11 @@ def fund_info():
 
 
 @app.route("/stock_query", methods=['GET', 'POST'])
+@login_required
 def stock_query():
-    # if not session.get('userid'):
-    #     return render_template("log_in.html")
-    # else:
+    if not session.get('userid'):
+        return render_template("log_in.html")
+    else:
         return render_template("stock_query.html")
 
 ###########################################
@@ -1302,9 +1316,10 @@ def security_account():
                 list = []
                 result = db.session.execute("select * from security_in_account where username ='" + username + "'")
                 for query_result in result:
+                    id = query_result[1]
                     name = query_result[2]
                     num = query_result[3]
-                    price = 1  # 调用信息发布api
+                    price = get_info_id(id)  # 调用信息发布api
                     cost = float(str(query_result[4]))
                     profit = price * num - cost
                     dict = {"name": name, "num": num, "price": price, "cost": cost, "profit": profit}
@@ -1655,26 +1670,6 @@ def security_cor_issue():
         return render_template('security_cor_issue.html',error_message='注册成功,新的账号是：'+username)
 
 
-@app.route('/trade/order',methods=['POST','GET'])
-def order_handler():
-    if request.method == 'POST':
-        data = request.get_json()
-        # user_id = session.get('userid')
-        user_id = 'uid001'
-        order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'])
-        msg = {
-            'state':'true',
-            'transaction_id':order_id
-        }
-        response = app.response_class(
-            response=json.dumps(msg),
-            status=200,
-            mimetype='application/json'
-        )
-        return response
-    else:
-        return 'HELLO'
-
 @app.route('/admin/trade/clean',methods=['POST'])
 def clean_queue_handler():
     # ctx = app.app_context()
@@ -1770,7 +1765,6 @@ def orders_info():
         mimetype='application/json'
     )
     return response
-
 
 ####################################################################################
 

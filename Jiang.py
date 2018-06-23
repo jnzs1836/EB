@@ -1,5 +1,6 @@
 import pymysql
 import datetime
+from db_config import *
 
 def ftof2(f):
     f = int(f * 100)
@@ -10,8 +11,8 @@ def ftof2(f):
 def query_all():
 
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
@@ -37,8 +38,8 @@ def query_all():
 def query(name, option):
 
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
@@ -72,8 +73,8 @@ def query(name, option):
 # 用名称换id(精确)
 def changename(name):
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
@@ -93,8 +94,8 @@ def changename(name):
 def qid(name):
 
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
@@ -177,7 +178,7 @@ def qid(name):
 def dayk(id):
 
     db = pymysql.connect(
-        user="owner",
+        user=db_,
         password="123456",
         db="EB",
         host="localhost",
@@ -224,8 +225,8 @@ def dayk(id):
 def monthk(id):
 
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
@@ -298,8 +299,8 @@ def monthk(id):
 def yeark(id):
 
     db = pymysql.connect(
-        user="owner",
-        password="123456",
+        user=db_user,
+        password=db_secret,
         db="EB",
         host="localhost",
         charset='utf8mb4'
