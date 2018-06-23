@@ -1055,7 +1055,7 @@ def fund_issue():
 
         db.session.execute("update fund_account_user set enabled_money='"+old_enabled_money+"',freezing_money='"+old_freezing_money+"' where username ='"+username +"'")#转移资金
         db.session.execute("update fund_account_user set username='U"+old_fund_account[1:8]+"' where is_enabled='N' and username ='"+old_fund_account +"'")#注销之前的资金账号
-        return render_template('fund_issue.html',error_message='补办成功')
+        return render_template('fund_issue.html',error_message='补办成功,新的资金账户是'+username)
 
 
 # 修改资金账户密码
@@ -1755,7 +1755,7 @@ def clean_queue_handler():
 def cancel_order():
     data = request.get_json()
     order_id = data['transaction_id']
-    order_type = data['type']
+    order_type = data['order_type']
     if order_type == 2:
         remove_order(order_id)
         json_data = {

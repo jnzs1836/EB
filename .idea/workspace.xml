@@ -114,8 +114,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="1753" column="48" selection-start-line="1753" selection-start-column="48" selection-end-line="1753" selection-end-column="48" />
+            <state relative-caret-position="356">
+              <caret line="1057" column="86" selection-start-line="1057" selection-start-column="86" selection-end-line="1057" selection-end-column="86" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
                 <element signature="e#1250#1372#0" />
@@ -145,6 +145,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="security_per_issue.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/security_per_issue.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="126" column="25" lean-forward="true" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="trade.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/trade_js/trade.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -153,18 +162,6 @@
               <folding>
                 <element signature="e#128#135#1" expanded="true" />
                 <element signature="e#127#134#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-114">
-              <caret line="71" column="14" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="14" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -262,7 +259,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>123</find>
       <find>account_user_lo</find>
       <find>order_han</find>
       <find>security_account</find>
@@ -292,6 +288,7 @@
       <find>trade_shares</find>
       <find>crea</find>
       <find>ch</find>
+      <find>/fund_is</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -347,6 +344,7 @@
         <option value="$PROJECT_DIR$/order_queue/order.py" />
         <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/templates/security_per_issue.html" />
       </list>
     </option>
   </component>
@@ -594,7 +592,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32992327" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5025381" side_tool="true" weight="0.27877238" />
@@ -632,7 +629,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/emmmm.py" />
     <entry file="file://$PROJECT_DIR$/static/kline_control.py" />
     <entry file="file://$PROJECT_DIR$/templates/query.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -988,10 +984,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/security_per_issue.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="126" column="25" lean-forward="true" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="1753" column="48" selection-start-line="1753" selection-start-column="48" selection-end-line="1753" selection-end-column="48" />
+        <state relative-caret-position="356">
+          <caret line="1057" column="86" selection-start-line="1057" selection-start-column="86" selection-end-line="1057" selection-end-column="86" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
             <element signature="e#1250#1372#0" />
