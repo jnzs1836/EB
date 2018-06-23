@@ -58,7 +58,7 @@ class Queue :
         return self.r.hvals(order_id)
 
     def user_orders(self,user_id):
-        pattern = '*' + self.key + segment + segment + 'uid' + user_id + '*'
+        pattern = '*' + self.key + segment  + 'uid' + user_id + '*'
         order_ids = self.r.keys(pattern)
         orders = []
         for order_id in order_ids:
