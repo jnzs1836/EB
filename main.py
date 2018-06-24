@@ -1557,7 +1557,7 @@ def security_account():
                     id = query_result[1]
                     name = query_result[2]
                     num = query_result[3]
-                    price = get_info_id(id)  # 调用信息发布api
+                    price = get_stock_price(id)  # 调用信息发布api
                     cost = float(str(query_result[4]))
                     profit = price * num - cost
                     dict = {"name": name, "num": num, "price": price, "cost": cost, "profit": profit}
