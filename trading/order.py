@@ -156,7 +156,10 @@ def clean_queue(stock_name):
 def check_user(username,stock_name,price,volume,direction,db):
     check = False
     if direction is SHORT:
-        check = trade_security(username,stock_name,volume,'sell',db)
+        result = db.session.execute("select security_account from fund_account_user where username ='"+ username )
+        security_account = result.first()[0]
+        print(security_account)
+        check = trade_security(security_account,stock_name,volume,'sell',db)
     else:
         check = trade_fund(username,volume * price, 'buy',db)
     return check
