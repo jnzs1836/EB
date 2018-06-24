@@ -170,11 +170,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1847">
-              <caret line="1989" column="23" lean-forward="true" selection-start-line="1989" selection-start-column="23" selection-end-line="1989" selection-end-column="23" />
+            <state relative-caret-position="365">
+              <caret line="312" column="37" selection-start-line="312" selection-start-column="26" selection-end-line="312" selection-end-column="37" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
               </folding>
@@ -182,7 +182,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db_config.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="db_config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db_config.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="19">
@@ -290,7 +290,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_volu</find>
       <find>CHECK_US</find>
       <find>USE</find>
       <find>USE</find>
@@ -320,6 +319,7 @@
       <find>creat_</find>
       <find>create_</find>
       <find>order_hand</find>
+      <find>get_info_id</find>
     </findStrings>
     <replaceStrings>
       <replace>admin_user</replace>
@@ -382,9 +382,9 @@
         <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/sql/stock.sql" />
         <option value="$PROJECT_DIR$/sql/drop_stock.sql" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/deal/deal_engine.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -1067,16 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1847">
-          <caret line="1989" column="23" lean-forward="true" selection-start-line="1989" selection-start-column="23" selection-end-line="1989" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
@@ -1091,6 +1081,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="312" column="37" selection-start-line="312" selection-start-column="26" selection-end-line="312" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#104#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

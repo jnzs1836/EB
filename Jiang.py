@@ -66,7 +66,8 @@ def query(name, option):
                 now = qid(i[0])
                 fadd = [now["id"], now["name"], now["present_price"], now["rise_rate"], now["rise"], now["end_price"], now["start_price"], now["day_h_price"], now["day_l_price"]]
                 fres.append(fadd)
-        
+        if not fres:
+            fres.append([])
         return fres
 
 

@@ -122,8 +122,9 @@ function check_confirm_form(){
 }
 
 function send_trade(form){
+    order_t = 2;
     if ($("#sub").val() == "确认买入")
-    order_t = 1;
+        order_t = 1;
     send_data = {
         stock_id : $("#stock_id").val(),
         volume : $("#trade_amount").val(),
