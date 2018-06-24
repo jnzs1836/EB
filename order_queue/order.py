@@ -66,5 +66,5 @@ class Order:
             'price':self.price,
             'volume':self.volume,
             'direction':self.direction,
-            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
         }
