@@ -28,6 +28,8 @@ class DealEngine:
         except:
             self.on = False
             print( str(stock_id) +" is stop")
+        self.last_price = 10
+        self.limit = 1000
 
 
         # self.last_price = 4
