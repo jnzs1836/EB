@@ -1,0 +1,201 @@
+{% extends "template.html" %}
+{% block title %}HomePage{% endblock %}
+{% block body %}
+    <div class="am-g">
+        <div class="am-u-sm-12">
+            <br/>
+            <div class="am-form">
+                <table class="am-table am-table-striped am-table-hover table-main" id="data-table">
+                    <thead>
+                    <tr>
+                        <th class="table-id">ID</th>
+                        <th class="table-type">STOCK ID</th>
+                        <th class="table-title">STOCK NAME</th>
+                        <th class="table-author">NEWEST PRICE</th>
+                        <th class="table-author">NEWEST COUNT</th>
+                        <th class="table-set">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+                <div id="item-count" class="am-cf">
+                </div>
+                <hr/>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            show_stock();
+
+        })
+        {#    查询本管理员权限下的股票列表#}
+
+        function set_event() {
+            $(".price-limit-btn").click(function () {
+                var btn = $(this);
+                var formData = {stock_id: btn.attr("stock-id")};
+                try {
+                    btn.parent().find("input").each(function (index, element) {
+                        if ($(element).attr('name') == 'gains') {
+                            formData.gains = Number($(element).val());
+                        } else if ($(element).attr('name') == 'decline') {
+                            formData.decline = Number($(element).val());
+                        }
+                    });
+                    console.log(JSON.stringify(formData));
+                } catch (e) {
+                    console.log(e);
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/manage/api/set-price-limit",
+                    headers: {'token': $.cookie('geeky-token')},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        console.log("data:", data);
+                        console.log($("#my-alert").text());
+                        $("#my-alert").modal("open");
+                        $("#my-alert-hd").text(data.msg);
+                        $(this).parent().parent().dropdown('close');
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+                return false;
+            });
+            $(".stock-setting-btn").click(function () {
+                var btn = $(this);
+                var status = (btn.attr("status") == "1");
+                var next_status = (btn.attr("status") == "0");
+                var stock_id = btn.attr("stock-id");
+                var formData = {
+                    stock_id: stock_id,
+                    status: next_status
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/manage/api/change-stock-status",
+                    headers: {'token': $.cookie('geeky-token')},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        console.log(data);
+                        if (status) {
+                            btn.attr("status", "0");
+                            btn.empty();
+                            btn.append("<span class=\"am-icon-power-off\"></span>重启");
+                            {#btn.text("重启");#}
+                            $("#my-alert-hd").text(stock_id + ' 交易已暂停');
+                        } else {
+                            btn.attr("status", "1");
+                            btn.empty();
+                            btn.append("<span class=\"am-icon-power-off\"></span>暂停");
+                            $("#my-alert-hd").text(stock_id + ' 交易已启动');
+                        }
+                        $("#my-alert").modal('open');
+
+                    }
+                })
+
+            });
+            $(".stock-detail-btn").click(function () {
+                var stock_id = $(this).attr("stock-id");
+                window.location.href = "stock-info?stock-id=" + stock_id;
+            });
+        }
+
+        function show_stock() {
+            $.ajax({
+                type: "POST",
+                url: "/manage/api/stock",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: {'token': $.cookie('geeky-token')},
+                success: function (data) {
+                    console.log(data);
+                    var tableBody = $("#table-body");
+                    tableBody.empty();
+                    if (data && data.msg) {
+                        alert(data.msg)
+                    } else if (data && data.stock_list) {
+                        for (i = 0; i < data.stock_list.length; i++) {
+                            var stock = data.stock_list[i];
+                            var template = "                            <tr>\n" +
+                                "                                <td>" +
+                                i +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.stock_id +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.stock_name +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.newest_price +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.newest +
+                                "<td class=\" \">\n" +
+                                "                            <div class=\"am-btn-toolbar\">\n" +
+                                "                                <div class=\"am-btn-group am-btn-group-xs\">\n" +
+                                "                                    <button class=\"am-btn am-btn-default am-btn-xs am-text-primary stock-detail-btn\"\n" +
+                                "                                            stock-id=\"" + stock.stock_id + "\">\n" +
+                                "                                        <span class=\"am-icon-area-chart\"></span>查看\n" +
+                                "                                    </button>\n" +
+                                "                                    <div class=\"am-dropdown\" data-am-dropdown=\"\">\n" +
+                                "                                        <button class=\"am-btn am-btn-default am-btn-xs am-text-success am-dropdown-toggle\">\n" +
+                                "                                            <span class=\"am-icon-line-chart\"></span>涨跌幅\n" +
+                                "                                            <span class=\"am-icon-caret-down\"></span></button>\n" +
+                                "                                        <div class=\"am-dropdown-content\">\n" +
+                                "                                            <div class=\"am-form-group gains-group\">\n" +
+                                "                                                <label>最大涨幅</label>\n" +
+                                "                                                <input type=\"number\" name=\"gains\" required\n" +
+                                "                                                       value=\"" + stock.gains + "\"/>\n" +
+                                "                                            </div>\n" +
+                                "                                            <div class=\"am-form-group decline-group\">\n" +
+                                "                                                <label>最大跌幅：</label>\n" +
+                                "                                                <input type=\"number\" name=\"decline\" required\n" +
+                                "                                                       value=\"" + stock.decline + "\"/>\n" +
+                                "                                            </div>\n" +
+                                "                                            <button class=\"am-btn am-btn-secondary am-btn-success am-btn-block price-limit-btn\"\n" +
+                                "                                                    stock-id=\"" + stock.stock_id + "\"\n" +
+                                "                                                    style=\"background: #5eb95e\">提交\n" +
+                                "                                            </button>\n" +
+                                "                                        </div>\n" +
+                                "                                    </div>\n" +
+                                "                                    <button class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only stock-setting-btn\"\n" +
+                                "                                            bno=\"" + stock.stock_id + "\" status=\"" + (stock.status ? "1" : "0") + "\" stock-id=\"" + stock.stock_id + "\">" +
+                                "<span class=\"am-icon-power-off\"></span>" + (stock.status ? "暂停" : "重启") + "\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </td>" +
+                                "                            </tr>";
+                            tableBody.append(template);
+                        }
+                        $('#data-table').DataTable();
+                        $('#data-table').on('draw.dt', function () {
+                            set_event();
+                        });
+                        $('.am-dropdown').dropdown({justify: '#doc-dropdown-justify-js'});
+                        set_event();
+                    } else {
+                        alert("something error")
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}

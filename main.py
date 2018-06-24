@@ -15,6 +15,8 @@ import os
 from datetime import timedelta
 from db_config import *
 from order_queue.queue import Queue,test_queue
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
+import datetime
 from trading.order import *
 
 app = Flask(__name__)
@@ -28,11 +30,227 @@ app.config['SQLALCHEMY_COMMIT_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 # 获取SQLAlchemy实例对象，接下来就可以使用对象调用数据
-db = SQLAlchemy(app)
 app.secret_key = os.urandom(24)
 app.permanent_session_lifetime = timedelta(hours=10)
 app.debug = True
+db = SQLAlchemy(app)
 
+# from manage.manage import *
+
+
+class User(db.Model):
+    __tablename__ = 'admin_user'
+    user_id = db.Column(db.String(10), primary_key=True)
+    user_password = db.Column(db.String(32))
+    super = db.Column(db.Boolean)
+
+
+class StockState(db.Model):
+    __tablename__ = 'stock_state'
+    stock_id = db.Column(db.String(10), primary_key=True)
+    status = db.Column(db.Boolean)
+    gains = db.Column(db.Float(10, 2))
+    decline = db.Column(db.Float(10, 2))
+
+
+class StockInfo(db.Model):
+    __tablename__ = 'stock_info'
+    stock_id = db.Column(db.String(10), primary_key=True)
+    stock_name = db.Column(db.String(32))
+    newest_price = db.Column(db.Float(10, 2))
+    newest = db.Column(db.Integer)
+
+
+class UserStock(db.Model):
+    __tablename__ = 'user_stock'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(10))
+    stock_id = db.Column(db.String(10))
+
+
+class Buy(db.Model):
+    __tablename__ = 'buy'
+    id = db.Column(db.Integer, primary_key=True)
+    stock_id = db.Column(db.String(10))
+    stock_name = db.Column(db.String(32))
+    price = db.Column(db.Float(10, 2))
+    time = db.Column(db.DateTime)
+    share = db.Column(db.Integer)
+
+
+class Sell(db.Model):
+    __tablename__ = 'sell'
+    id = db.Column(db.Integer, primary_key=True)
+    stock_id = db.Column(db.String(10))
+    stock_name = db.Column(db.String(32))
+    price = db.Column(db.Float(10, 2))
+    time = db.Column(db.DateTime)
+    share = db.Column(db.Integer)
+
+
+class Manager:
+    def __init__(self, app, db):
+        self.app = app
+        self.db = db
+
+    def get_token(self, id):
+        config = self.app.config
+        secret_key = config.setdefault('SECRET_KEY')
+        salt = config.setdefault('SECURITY_PASSWORD_SALT')
+        serializer = URLSafeTimedSerializer(secret_key)
+        token = serializer.dumps(id, salt=salt)
+        return token
+
+    def check_token(self, token, max_age=86400):
+        if token is None:
+            return False
+        config = self.app.config
+        secret_key = config.setdefault('SECRET_KEY')
+        salt = config.setdefault('SECURITY_PASSWORD_SALT')
+        serializer = URLSafeTimedSerializer(secret_key)
+        try:
+            id = serializer.loads(token, salt=salt, max_age=max_age)
+        except BadSignature:
+            return False
+        except SignatureExpired:
+            return False
+        user = User.query.filter_by(user_id=id).first()
+        if user is None:
+            return False
+        return True
+
+    def parse_token(self, token, max_age=86400):
+        config = self.app.config
+        secret_key = config.setdefault('SECRET_KEY')
+        salt = config.setdefault('SECURITY_PASSWORD_SALT')
+        serializer = URLSafeTimedSerializer(secret_key)
+        id = serializer.loads(token, salt=salt, max_age=max_age)
+        return id
+
+    def check_password(self, user_id, old_password, new_password="12345678", confirm_password="12345678"):
+        if new_password != confirm_password:
+            return {'result': False, 'msg': 'confirm password fail!', 'code': 1}
+        if len(new_password) > 20 or len(new_password) < 6:
+            return {'result': False, 'msg': 'new password is too long or too short!', 'code': 2}
+        user = User.query.filter_by(user_id=user_id).first()
+        if user is None:
+            return {'result': False, 'msg': 'user doesn\'t exist', 'code': 3}
+        if user.user_password != old_password:
+            return {'result': False, 'msg': 'wrong password', 'code': 4}
+        return {'result': True, 'msg': 'reset successfully'}
+
+    def reset_password(self, user_id, new_password):
+        try:
+            user = User.query.filter_by(user_id=user_id).first()
+            user.user_password = new_password
+            db.session.commit()
+        except:
+            return False
+        return True
+
+    def user_stock_auth(self, user_id, stock_id):
+        user_stock = UserStock.query.filter_by(user_id=user_id, stock_id=stock_id).first()
+        if user_stock is None:
+            return False
+        else:
+            return True
+
+    # def get_stock_info(stock_id):
+    #     stock_info = StockInfo.query.filter_by(stock_id=stock_id).first()
+    #     stock_state = get_stock_state(stock_id)
+    #     if stock_info is None or stock_state is None:
+    #         return {}
+    #     dict = {'stock_id': stock_info.stock_id, 'stock_name': stock_info.stock_name,
+    #             'newest_price': float(stock_info.newest_price), 'newest': float(stock_info.newest),
+    #             'status': stock_state['status'], 'gains': stock_state['gains'], 'decline': stock_state['decline']}
+    #     return dict
+
+    # def change_stock_status(stock_id, status):
+    #     stock_state = StockState.query.filter_by(stock_id=stock_id).first()
+    #     if stock_state is None:
+    #         return False
+    #     try:
+    #         stock_state.status = status
+    #         app.db.session.commit()
+    #     except:
+    #         return False
+    #     return True
+
+    # def set_price_limit(stock_id, price, is_gains):
+    #     # 这里需要一些对price的检查
+    #     stock_state = StockState.query.filter_by(stock_id=stock_id).first()
+    #     if stock_state is None:
+    #         return False
+    #     try:
+    #         if is_gains:
+    #             stock_state.gains = price
+    #         else:
+    #             stock_state.decline = price
+    #         app.db.session.commit()
+    #     except:
+    #         return False
+    #     return True
+
+    # def get_buy_sell_items(stock_id, is_buy):
+    #     try:
+    #         if is_buy:
+    #             slist = Buy.query.filter_by(stock_id=stock_id).all()
+    #         else:
+    #             slist = Sell.query.filter_by(stock_id=stock_id).all()
+    #         return_list = []
+    #         for item in slist:
+    #             item_dict = {
+    #                 'stock_id': item.stock_id,
+    #                 'stock_name': item.stock_name,
+    #                 'price': float(item.price),
+    #                 'time': str(item.time),
+    #                 'share': item.share
+    #             }
+    #             return_list.append(item_dict)
+    #         return return_list
+    #     except Exception as e:
+    #         print(e)
+    #         return []
+
+    def add_authorization(self, user_id, stock_id):
+        try:
+            user = User.query.filter_by(user_id=user_id).first()
+            if user is None:
+                return {'code': 0, 'msg': 'user does not exist'}
+            stock = StockInfo.query.filter_by(stock_id=stock_id).first()
+            if stock is None:
+                return {'code': 0, 'msg': 'stock does not exist'}
+            user_stock = UserStock.query.filter_by(user_id=user_id, stock_id=stock_id).first()
+            if user_stock is not None:
+                return {'code': 0, 'msg': 'authorization exist'}
+            user_stock = UserStock(user_id=user_id, stock_id=stock_id)
+            db.session.add(user_stock)
+            db.session.commit()
+            return {'code': 1, 'msg': 'success'}
+        except Exception as e:
+            print(e)
+            return {'code': 0, 'msg': "error"}
+
+    def delete_authorization(self, user_id, stock_id):
+        try:
+            user = User.query.filter_by(user_id=user_id).first()
+            if user is None:
+                return {'code': 0, 'msg': 'user does not exist'}
+            stock = StockInfo.query.filter_by(stock_id=stock_id).first()
+            if stock_id is None:
+                return {'code': 0, 'msg': 'stock does not exist'}
+            user_stock = UserStock.query.filter_by(user_id=user_id, stock_id=stock_id).first()
+            if user_stock is None:
+                return {'code': 0, 'msg': 'authorization does not exist'}
+            db.session.delete(user_stock)
+            db.session.commit()
+            return {'code': 1, 'msg': 'success'}
+        except Exception as e:
+            print(e)
+            return {'code': 0, 'msg': "error"}
+
+
+manager = Manager(app, db)
 
 # 画图用
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
@@ -49,9 +267,9 @@ def get_stock_price(stock_id):
         return None
 
 # 中央交易系统给我们提供的函数，我这里随便模拟数据
-def get_stock_info(stock_id):
-    dic = {"latest_price": "1.11", "buy_highest_price": "2.22", "sale_lowest_price": "3.33"}
-    return dic
+# def get_stock_info(stock_id):
+#     dic = {"latest_price": "1.11", "buy_highest_price": "2.22", "sale_lowest_price": "3.33"}
+#     return dic
 
 
 # 输入股票名字模糊查找
@@ -1839,6 +2057,7 @@ def order_handler():
     if request.method == 'POST':
         data = request.get_json()
         user_id = session.get('userid')
+        # user_id = 'F111'
         # print(user_id)
         # user_id = 'uid001'
         order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'],db)
@@ -1854,6 +2073,292 @@ def order_handler():
         return response
     else:
         return 'HELLO'
+
+@app.route('/manage/api/login', methods=['POST'])
+def login_api():
+    response_dict = {}
+    print(request.get_data())
+    data = request.get_json()
+    print(data)
+    input_id = data['username']
+    input_password = data['password']
+    if input_id is None or input_password is None:
+        response_dict['msg'] = 'no username or password'
+        response_dict['code'] = 0
+    else:
+        user = User.query.filter_by(user_id=input_id).first()
+        if user is not None and user.user_password == input_password:
+            response_dict['token'] = manager.get_token(input_id)
+            response_dict['code'] = 1
+        elif user is not None:
+            response_dict['code'] = 2
+            response_dict['msg'] = 'wrong password'
+        else:
+            response_dict['code'] = 3
+            response_dict['msg'] = "the user doesn't exist"
+    return jsonify(response_dict)
+
+
+@app.route('/manage/api/check-token', methods=['POST', 'GET'])
+def check_token_api():
+    response_dict = {}
+    try:
+        token = request.headers.get('token')
+        if token is None or token == 'null':
+            token = request.cookies.get('geeky-token')
+        if manager.check_token(token):
+            user_id = manager.parse_token(token)
+            return jsonify({'code': 1, 'user_id': user_id, 'msg': 'successful'})
+    except Exception as e:
+        return jsonify({'code': 0, 'msg': str(e)})
+    return jsonify({'code': 0, 'msg': 'error'})
+
+
+@app.route('/manage/api/stock', methods=['POST', 'GET'])
+def get_stock_list_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return "{'msg':'login fail'}"
+    try:
+        user_id = manager.parse_token(token)
+        user_stock_list = UserStock.query.filter_by(user_id=user_id).all()
+        stock_list = []
+        for stock in user_stock_list:
+            stock_dict = {}
+            stock_info = get_stock_info_manage(stock.stock_id)
+            stock_list.append(stock_info)
+        response_dict = {'user_id': user_id, 'stock_list': stock_list}
+        return jsonify(response_dict)
+    except Exception as e:
+        print(e)
+        return jsonify({'msg': 'error'})
+
+
+@app.route('/manage/api/super-stock', methods=['POST', 'GET'])
+def get_super_stock_list_api():
+    token = request.headers.get('token')
+    data = request.get_json()
+    if not manager.check_token(token):
+        return "{'msg':'login fail'}"
+    try:
+        user_id = manager.parse_token(token)
+        user = User.query.filter_by(user_id=user_id).first()
+        if user is None or not user.super:
+            return jsonify({'msg': 'error'})
+        user_id = data['user_id']
+        user_stock_list = UserStock.query.filter_by(user_id=user_id).all()
+        stock_list = []
+        for stock in user_stock_list:
+            stock_dict = get_stock_info_manage(stock.stock_id)
+            stock_list.append(stock_dict)
+        response_dict = {'user_id': user_id, 'stock_list': stock_list}
+        return jsonify(response_dict)
+    except Exception as e:
+        print(e)
+        return jsonify({'msg': 'error'})
+
+
+@app.route('/manage/api/reset-password', methods=['POST', 'GET'])
+def reset_password_api():
+    token = request.headers.get('token')
+    print(token)
+    if not manager.check_token(token):
+        return jsonify({'msg': 'login fail'})
+    user_id = manager.parse_token(token)
+    data = request.get_json()
+    print(data)
+    try:
+        old_password = data['old_password']
+        new_password = data['new_password']
+        confirm_password = data['confirm_password']
+        check_password_result = manager.check_password(user_id, old_password, new_password, confirm_password)
+        if not check_password_result['result']:
+            return check_password_result
+        if not manager.reset_password(user_id, new_password):
+            return jsonify({'msg': 'resetting error!', 'code': 0})
+    except Exception as e:
+        return jsonify({'msg': e})
+    return jsonify({'msg': 'reset successfully', 'result': True})
+
+@app.route('/manage/api/change-stock-status', methods=['POST', 'GET'])
+def restart_stock_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return "{'msg':'login fail'}"
+    user_id = manager.parse_token(token)
+    data = request.get_json()
+    try:
+        stock_id = data['stock_id']
+        status = data['status']
+        if not manager.user_stock_auth(user_id, stock_id):
+            return jsonify({'msg': 'error'})
+        if not change_stock_status(stock_id, status):
+            return jsonify({'msg': 'error'})
+        return jsonify({'msg': 'restart successfully'})
+    except Exception as e:
+        print(e)
+        return jsonify({'msg': 'error'})
+
+
+@app.route('/manage/api/set-price-limit', methods=['POST', 'GET'])
+def set_price_limit_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return jsonify({'msg': 'error'})
+    user_id = manager.parse_token(token)
+    data = request.get_json()
+    print(data)
+    try:
+        stock_id = data['stock_id']
+        gains = data['gains']
+        decline = data['decline']
+        if not manager.user_stock_auth(user_id, stock_id):
+            return jsonify({'msg': 'error'})
+        if not set_price_limit(stock_id, gains, True):
+            return jsonify({'msg': 'error'})
+        if not set_price_limit(stock_id, decline, False):
+            return jsonify({'msg': 'error'})
+        return jsonify({'msg': 'reset successfully'})
+    except Exception as e:
+        print(e)
+        return jsonify({'msg': 'error'})
+
+
+@app.route('/manage/api/stock-info', methods=['POST', 'GET'])
+def get_buy_sell_items_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return jsonify([])
+    user_id = manager.parse_token(token)
+    data = request.get_json()
+    try:
+        stock_id = data['stock_id']
+        if not manager.user_stock_auth(user_id, stock_id):
+            return jsonify([])
+        stock_info = StockInfo.query.filter_by(stock_id=stock_id).first()
+
+        if stock_info is None:
+            return jsonify({'msg': 'error'})
+        sell_list = get_buy_sell_items(stock_id, False)
+        buy_list = get_buy_sell_items(stock_id, True)
+        print(sell_list)
+        print(buy_list)
+        response_json = {'stock_id': stock_id, 'stock_name': stock_info.stock_name,
+                         'newest_price': float(stock_info.newest_price),
+                         'newest': stock_info.newest, 'sell_list': sell_list, 'buy_list': buy_list}
+        print(response_json)
+        return jsonify(response_json)
+    except Exception as e:
+        print(e)
+        return jsonify({'msg': 'error'})
+
+
+@app.route('/manage/api/add-auth', methods=['POST', 'GET'])
+def add_authorization_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return jsonify({'code': 0, 'msg': 'error'})
+    super_id = manager.parse_token(token)
+    data = request.get_json()
+    super_user = User.query.filter_by(user_id=super_id).first()
+    if not super_user.super:
+        return jsonify({'code': 0, 'msg': 'not super user'})
+    try:
+        user_id = data['user_id']
+        stock_id = data['stock_id']
+        return jsonify(manager.add_authorization(user_id, stock_id))
+    except Exception as e:
+        print(e)
+        return jsonify({'code': 0, 'msg': 'error'})
+
+
+@app.route('/manage/api/delete-auth', methods=['POST', 'GET'])
+def delete_authorization_api():
+    token = request.headers.get('token')
+    if not manager.check_token(token):
+        return jsonify({'code': 0, 'msg': 'error'})
+    super_id = manager.parse_token(token)
+    data = request.get_json()
+    super_user = User.query.filter_by(user_id=super_id).first()
+    if not super_user.super:
+        return jsonify({'code': 0, 'msg': 'not super user'})
+    try:
+        user_id = data['user_id']
+        stock_id = data['stock_id']
+        return jsonify(manager.delete_authorization(user_id, stock_id))
+    except Exception as e:
+        print(e)
+        return jsonify({'code': 0, 'msg': 'error'})
+
+
+@app.route('/manage/homepage', methods=['GET'])
+def homepage():
+    return render_template('homepage.html')
+
+
+@app.route('/manage/template', methods=['GET'])
+def template():
+    return render_template('template.html')
+
+
+# @app.route('/manage/stock-info', methods=['GET'])
+# def show_stock_info():
+#     token = request.cookies.get('geeky-token')
+#     if not manager.check_token(token):
+#         return "{'msg':'login fail'}"
+#     try:
+#         user_id = manager.parse_token(token)
+#         stock_id = request.args['stock-id']
+#         if not manager.user_stock_auth(user_id, stock_id):
+#             return jsonify({'msg': 'error'})
+#         stock_info = manager.get_stock_info(stock_id)
+#         buy_list = get_buy_sell_items(stock_id, True)
+#         sell_list = get_buy_sell_items(stock_id, False)
+#         now_time = datetime.datetime.now()
+#         sell_monthly = 0
+#         sell_weekly = 0
+#         sell_daily = 0
+#         for sell in sell_list:
+#             seconds = time.mktime(time.strptime(sell['time'], '%Y-%m-%d %H:%M:%S'))
+#             date_time = datetime.datetime.utcfromtimestamp(seconds)
+#             if now_time - date_time < datetime.timedelta(days=7):
+#                 sell_weekly += 1
+#             if now_time - date_time < datetime.timedelta(days=30):
+#                 sell_monthly += 1
+#             if now_time - date_time < datetime.timedelta(days=1):
+#                 sell_daily += 1
+#         buy_monthly = 0
+#         buy_weekly = 0
+#         buy_daily = 0
+#         for buy in buy_list:
+#             seconds = time.mktime(time.strptime(buy['time'], '%Y-%m-%d %H:%M:%S'))
+#             date_time = datetime.datetime.utcfromtimestamp(seconds)
+#             if now_time - date_time < datetime.timedelta(days=7):
+#                 buy_weekly += 1
+#             if now_time - date_time < datetime.timedelta(days=30):
+#                 buy_monthly += 1
+#             if now_time - date_time < datetime.timedelta(days=1):
+#                 buy_daily += 1
+#         statistics = {'buy': {'daily': buy_daily, 'weekly': buy_weekly, 'monthly': buy_monthly},
+#                       'sell': {'daily': sell_daily, 'weekly': sell_weekly}, 'monthly': sell_monthly}
+#         print(buy_list)
+#         print(sell_list)
+#         return render_template("stock-info-1.html", stock_info=stock_info, buy_list=buy_list, sell_list=sell_list,
+#                                statistics=statistics)
+#     except Exception as e:
+#         print(e)
+#         return "error"
+
+
+@app.route('/manage/auth-manage', methods=['GET'])
+def auth_manage():
+    return render_template("auth-manage.html")
+
+
+@app.route('/manage/stock-info', methods=['GET'])
+def stock_info_2():
+    stock_id = request.args.get('stock-id');
+    return render_template('stock-info.html', stock_id=stock_id);
 
 ####################################################################################
 

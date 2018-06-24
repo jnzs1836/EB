@@ -10,8 +10,8 @@ class PairQueue :
             self.r = redis.Redis()
         self.stock_id = stock_id
         self.stock_name = stock_name
-        self.short_queue = Queue(stock_id,direction=SHORT,r=self.r)
-        self.long_queue = Queue(stock_id,direction=LONG,r=self.r)
+        self.short_queue = Queue(stock_id,direction=SHORT,r=self.r,stock_name = stock_name)
+        self.long_queue = Queue(stock_id,direction=LONG,r=self.r,stock_name=stock_name)
         self.gains = 10
         self.decline = 4
 

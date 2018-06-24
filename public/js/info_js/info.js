@@ -9,7 +9,7 @@ class Info {
         setInterval(
             () => this.check_list.map(stock => {
             Info.check_price(stock);
-        }), 20000);
+        }), 10000);
     }
 
     static get_localStorage(name) {

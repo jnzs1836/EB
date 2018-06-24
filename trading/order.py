@@ -26,12 +26,21 @@ class QueueManager():
             print(stock_id)
             stock_name = item[1]
             self.queues[stock_id] = PairQueue(stock_id, stock_name, self.r)
+
             mapping = {
                 'stock_id': stock_id,
+                'stock_name':stock_name,
                 'status': True,
                 'last_price': 0,
+                'newest_price':0,
+                'newest':0,
+                'gains':100000000,
+                'decline':0,
             }
             self.r.hmset(item[0], mapping)
+
+
+
 
     def clean(self):
         self.r.flushall()
@@ -60,6 +69,27 @@ class QueueManager():
         return self.queues[stock_id]
 
 
+def get_stock_info_manage(stock_id):
+    queue_manager = get_queue_manager()
+    print(stock_id)
+    stock_hash = queue_manager.r.hgetall(stock_id)
+    stock_dict = dict()
+    try:
+        print(stock_hash)
+        for key,value in stock_hash.items():
+            stock_dict[key.decode('utf-8')] = value.decode('utf-8')
+
+        return stock_dict
+    except :
+        return {}
+        # stock_info = StockInfo.query.filter_by(stock_id=stock_id).first()
+    # stock_state = get_stock_state(stock_id)
+    # if stock_info is None or stock_state is None:
+    #     return {}
+    # dict = {'stock_id': stock_info.stock_id, 'stock_name': stock_info.stock_name,
+    #         'newest_price': float(stock_info.newest_price), 'newest': float(stock_info.newest),
+    #         'status': stock_state['status'], 'gains': float(stock_state['gains']),
+    #         'decline': float(stock_state['decline'])}
 def get_queue_manager():
     queue_manager = getattr(g,'_queues',None)
     if queue_manager is None:
@@ -82,10 +112,11 @@ def start_trading(stock_name):
 
 def create_order( user_id, stock_id, direction, price, volume,db):
     queue_manager = get_queue_manager()
-    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
-        return -1
+    # if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
+    #     return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
+    print('here')
     pair_queue = queue_manager.get_pair_queue(stock_id)
     order_id = pair_queue.push(order)
     return order_id
@@ -231,13 +262,16 @@ def get_buy_sell_items(stock_id, is_buy):
 
 def get_stock_state(stock_id):
     get = dict()
-    get['stock_id'] = stock_id
-    queue_manager = get_queue_manager()
-    status = queue_manager.get_stock_status(stock_id)
-    get['status'] = status
-    pair_queue = queue_manager.get_pair_queue(stock_id)
-    get['gains'] = pair_queue.get_gains()
-    get['decline'] = pair_queue.get_decline()
+    try:
+        get['stock_id'] = stock_id
+        queue_manager = get_queue_manager()
+        status = queue_manager.get_stock_status(stock_id)
+        get['status'] = status
+        pair_queue = queue_manager.get_pair_queue(stock_id)
+        get['gains'] = pair_queue.get_gains()
+        get['decline'] = pair_queue.get_decline()
+    except:
+        return {}
 
 def set_price_limit(stock_id, price, is_gains): # is_gains true设置涨幅 ，false 设置跌幅
     queue_manager = get_queue_manager()

@@ -1,0 +1,167 @@
+{% extends "template.html" %}
+{% block title %}股票详情{% endblock %}
+{% block body %}
+    <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
+        <li>
+            <p class="am-text-success"><span
+                    class="am-icon-btn am-icon-money"></span><br/><span id="stock-id"></span><br/>
+                <span id="stock-name"></span>
+            </p>
+        </li>
+        <li><p class="am-text-warning"><span class="am-icon-btn am-icon-check-circle"></span><br/>交易状态<br/>
+            <span id="stock-status"></span>
+        </p>
+        </li>
+        <li><p class="am-text-danger"><span
+                class="am-icon-btn am-icon-sign-out"></span><br/>最新成交价<br/>
+            <span id="newest-pirce"></span></p>
+        </li>
+        <li><p class="am-text-secondary"><span
+                class="am-icon-btn am-icon-shopping-cart"></span><br/>最新成交量<br/>
+            <span id="newest"></span></p>
+        </li>
+    </ul>
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-12">
+            <div class="am-panel am-panel-secondary">
+                <div class="am-panel-hd am-cf">
+                    <h4 class="am-panel-title"
+                        data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">
+                        股票买入列表<span class="am-icon-chevron-down am-fr"></span>
+                    </h4>
+                </div>
+                <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+                    <div class="am-panel-bd">
+                        <div>
+                            <div class="am-form">
+                                <table class="am-table am-table-striped am-table-hover table-main"
+                                       id="buy-data-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="table-id">ID</th>
+                                        <th class="table-type">股票代码</th>
+                                        <th class="table-title">股票名称</th>
+                                        <th class="table-author">买入价格</th>
+                                        <th class="table-author">买入时间</th>
+                                        <th class="table-set">股数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="buy-table-body">
+                                    </tbody>
+                                </table>
+                                <div id="item-count" class="am-cf">
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12">
+            <div class="am-panel am-panel-secondary">
+                <div class="am-panel-hd">
+                    <h4 class="am-panel-title"
+                        data-am-collapse="{parent: '#accordion', target: '#do-not-say-2'}">
+                        股票卖出列表<span class="am-icon-chevron-down am-fr"></span>
+                    </h4>
+                </div>
+                <div id="do-not-say-2" class="am-panel-collapse am-collapse am-in">
+                    <div class="am-panel-bd">
+                        <div>
+                            <div class="am-form">
+                                <table class="am-table am-table-striped am-table-hover table-main"
+                                       id="sell-data-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="table-id">ID</th>
+                                        <th class="table-type">股票代码</th>
+                                        <th class="table-title">股票名称</th>
+                                        <th class="table-author">卖出价格</th>
+                                        <th class="table-author">卖出时间</th>
+                                        <th class="table-set">股数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="sell-table-body">
+
+                                    </tbody>
+                                </table>
+                                <div id="item-count" class="am-cf">
+                                </div>
+                                <hr/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            var stock_id = "{{ stock_id }}";
+            var formData = {'stock_id': stock_id};
+            $.ajax({
+                type: "POST",
+                url: "/manage/api/stock-info",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(formData),
+                headers: {'token': $.cookie('geeky-token')},
+                success: function (data) {
+                    if (data && !data.stock_id) {
+                        $("#my-alert-hd").text(data.msg);
+                        $("#my-alert").modal('open');
+                        return;
+                    }
+                    $("#sell-table-body").empty();
+                    $("#buy-table-body").empty();
+
+                    if (data && data.stock_id && data.sell_list) {
+                        var template;
+                        for (i = 0; i < data.sell_list.length; i++) {
+                            var sell = data.sell_list[i];
+                            template = "                                       <tr>\n" +
+                                "                                            <td class=\"sorting_1\">" +
+                                i +
+                                "</td>\n" +
+                                "                                            <td>" + sell.stock_id + "</td>\n" +
+                                "                                            <td>" + sell.stock_name + "</td>\n" +
+                                "                                            <td>" + sell.price + "</td>\n" +
+                                "                                            <td>" + sell.time + "</td>\n" +
+                                "                                            <td>" + sell.share + "</td>\n" +
+                                "                                        </tr>";
+                            $("#sell-table-body").append(template);
+                        }
+                    }
+                    if (data && data.stock_id && data.buy_list) {
+                        for (i = 0; i < data.buy_list.length; i++) {
+                            var buy = data.buy_list[i];
+                            var template = "                                       <tr>\n" +
+                                "                                            <td class=\"sorting_1\">" +
+                                i +
+                                "</td>\n" +
+                                "                                            <td>" + buy.stock_id + "</td>\n" +
+                                "                                            <td>" + buy.stock_name + "</td>\n" +
+                                "                                            <td>" + buy.price + "</td>\n" +
+                                "                                            <td>" + buy.time + "</td>\n" +
+                                "                                            <td>" + buy.share + "</td>\n" +
+                                "                                        </tr>";
+                            $("#buy-table-body").append(template);
+                        }
+                    }
+                    $('#buy-data-table').DataTable();
+                    $('#sell-data-table').DataTable();
+                    $("#newest-pirce").text(data.newest_price);
+                    $("#newest").text(data.newest);
+                    $("#stock-status").text(data.status ? "运行中" : "暂停中");
+                    $("#stock-id").text(data.stock_id);
+                    $("#stock-name").text(data.stock_name);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

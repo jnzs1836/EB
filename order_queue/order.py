@@ -21,6 +21,10 @@ class Order:
         }
         self.id = 'order' + stock_key + segment + 'uid' +self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
 
+    def get_stock_id(self):
+        return self.stock_id
+
+
     def get_string(self):
         return str(self.price) + "xinghong"
 
@@ -41,8 +45,6 @@ class Order:
     def get_id(self):
         return self.id
 
-    def get_stock_id(self):
-        return self.stock_id
 
     def get_volume(self):
         return self.volume

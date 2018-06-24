@@ -1,0 +1,185 @@
+{% extends "template.html" %}
+{% block title %}用户权限管理{% endblock %}
+{% block body %}
+    <div class="am-g">
+        <div class="am-u-sm-12 am-u-mg-8 am-u-lg-6">
+            <div class="am-form">
+                <div class="am-form-group ">
+                    <label for="user-id-input">用户名</label>
+                    <input type="text" class="" id="user-id-input" placeholder="输入要查看的用户名">
+                </div>
+                <button class="am-btn am-btn-block am-btn-primary" onclick="show_stock();return false;">查看</button>
+                <div class="am-form-group ">
+                    <label for="stock-id-input">股票代码</label>
+                    <input type="text" class="" id="stock-id-input" placeholder="输入要添加权限的股票id">
+                </div>
+                <button class="am-btn am-btn-block am-btn-primary" onclick="add_auth();return false;">添加</button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="am-g">
+        <div class="am-u-sm-12">
+            <br/>
+
+            <div class="am-form">
+                <table class="am-table am-table-striped am-table-hover table-main" id="data-table">
+                    <thead>
+                    <tr>
+                        <th class="table-id">ID</th>
+                        <th class="table-type">STOCK ID</th>
+                        <th class="table-title">STOCK NAME</th>
+                        <th class="table-author">NEWEST PRICE</th>
+                        <th class="table-author">NEWEST COUNT</th>
+                        <th class="table-set">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+                <div id="item-count" class="am-cf">
+                </div>
+                <hr/>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function set_event() {
+            $(".delete-auth-btn").click(function () {
+                var btn = $(this);
+                var stock_id = btn.attr('stock-id');
+                var user_id = btn.attr('user-id');
+                var formData = {stock_id: stock_id, user_id: user_id};
+                var status = (btn.attr("status") == "1");
+                var next_status = (btn.attr("status") == "0");
+                var url = "api/delete-auth";
+                if (status) {
+                    url = "api/delete-auth";
+                } else {
+                    url = "api/add-auth";
+                }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    headers: {'token': $.cookie('geeky-token')},
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        console.log(data);
+                        if (data && data.code == 1) {
+                            if (status) {
+                                btn.attr("status", "0");
+                                btn.empty();
+                                btn.append("<span class=\"am-icon-power-off\"></span>添加");
+                                {#btn.text("重启");#}
+                                $("#my-alert-hd").text(user_id + ': ' + stock_id + '已删除');
+                            } else {
+                                btn.attr("status", "1");
+                                btn.empty();
+                                btn.append("<span class=\"am-icon-power-off\"></span>删除");
+                                $("#my-alert-hd").text(user_id + ': ' + stock_id + '已添加');
+
+                            }
+                        } else {
+                            $("my-alert-hd").text(data.msg);
+                        }
+                        $("#my-alert").modal('open');
+
+                    }
+                });
+                return false;
+            });
+        }
+
+        function show_stock() {
+            user = $("#user-id-input").val();
+            formData = {'user_id': user};
+            $.ajax({
+                type: "POST",
+                url: "/manage/api/super-stock",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(formData),
+                headers: {'token': $.cookie('geeky-token')},
+                success: function (data) {
+                    console.log(data);
+                    var tableBody = $("#table-body");
+                    tableBody.empty();
+                    if (data && data.msg) {
+                        alert(data.msg)
+                    } else if (data && data.stock_list) {
+                        for (i = 0; i < data.stock_list.length; i++) {
+                            var stock = data.stock_list[i];
+                            var template = "                            <tr>\n" +
+                                "                                <td>" +
+                                i +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.stock_id +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.stock_name +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.newest_price +
+                                "</td>\n" +
+                                "</td>\n" +
+                                "                                <td>" +
+                                stock.newest +
+                                "<td class=\" \">\n" +
+                                "                            <div class=\"am-btn-toolbar\">\n" +
+                                "                                <div class=\"am-btn-group am-btn-group-xs\">\n" +
+                                "                                    <button class=\"am-btn am-btn-default am-btn-xs am-text-primary delete-auth-btn\"\n" +
+                                "                                            stock-id=\"" + stock.stock_id + "\"\n" +
+                                "                                            status=\"1\"\n" +
+                                "                                            user-id=\"" + user + "\">\n" +
+                                "                                        <span class=\"am-icon-power-off\"></span>删除\n" +
+                                "                                    </button>\n" +
+                                "                                </div>\n" +
+                                "                            </div>\n" +
+                                "                        </td>" +
+                                "                            </tr>";
+                            tableBody.append(template);
+                        }
+                        $('#data-table').DataTable();
+                        $('.am-dropdown').dropdown({justify: '#doc-dropdown-justify-js'});
+                        set_event();
+                    } else {
+                        alert("something error")
+                    }
+                }
+            })
+        }
+
+        function add_auth() {
+            var stock_id = $("#stock-id-input").val();
+            var user_id = $("#user-id-input").val();
+            var formData = {stock_id: stock_id, user_id: user_id};
+            $.ajax({
+                type: "POST",
+                url: "/manage/api/add-auth",
+                headers: {'token': $.cookie('geeky-token')},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    console.log(data);
+                    if (data && data.code == 1) {
+                        $("#my-alert-hd").text(user_id + ': ' + stock_id + '已添加');
+                    } else {
+                        $("#my-alert-hd").text(data.msg);
+                    }
+                    $("#my-alert").modal('open');
+                    show_stock();
+                }
+            });
+        }
+    </script>
+{% endblock %}

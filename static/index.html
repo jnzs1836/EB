@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <label for="username">user name</label>
+    <input type="text" id="username"><br/>
+    <label for="password">password</label>
+    <input type="password" id="password"><br/>
+    <button onclick="login();return false;">login</button>
+    <button onclick="show_stock();return false;">show stock</button>
+    <br/>
+    <label for="old_password">old password</label>
+    <input type="password" id="old_password"><br/>
+    <label for="new_password">new password</label>
+    <input type="password" id="new_password"><br/>
+    <button onclick="reset_password();return false;">reset password</button>
+    <br/>
+    <button onclick="show_stock_info();return false;">show stock info</button>
+    <button onclick="get_buy_sell_items(true);return false;">get buy items</button>
+    <button onclick="get_buy_sell_items(false);return false;">get sell items</button>
+    <button onclick="change_stock_status(true);return false;">restart</button>
+    <button onclick="change_stock_status(false);return false;">stop</button>
+    <br/>
+    price limit<input type="text" id="limit_price">
+    <button onclick="set_price_limit(false);return false;">set decline</button>
+    <button onclick="set_price_limit(true);return false;">set gains</button>
+
+</form>
+<script src="/static/assets/mine/jquery-2.1.0.js"></script>
+<script src="/static/assets/mine/jquery.cookie.js"></script>
+<script>
+    function login() {
+        var formData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        }
+        console.log(formData)
+        $.ajax({
+            type: "POST",
+            url: "/login",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                if (data && data.token) {
+                    console.log(data.token);
+                    $.cookie("token", data.token);
+                } else {
+                    console.log("no token");
+                }
+            }
+        })
+    }
+
+    function reset_password() {
+        var formData = {
+            old_password: $("#old_password").val(),
+            new_password: $("#new_password").val(),
+            confirm_password: $("#confirm_password").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "/reset-password",
+            headers: {'token': $.cookie('token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function show_stock_info() {
+        var formData = {
+            stock_id: "st0001"
+        }
+        $.ajax({
+            type: "POST",
+            url: "/show-stock-info",
+            headers: {'token': $.cookie('token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function show_stock() {
+        $.ajax({
+            type: "POST",
+            url: "/stock",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {'token': $.cookie('token')},
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function change_stock_status(status) {
+        var formData = {
+            stock_id: "st0001",
+            status: status
+        }
+        $.ajax({
+            type: "POST",
+            url: "/change-stock-status",
+            headers: {'token': $.cookie('token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function set_price_limit(is_gains) {
+        var formData = {
+            stock_id: "st0001",
+            price: $("#limit_price").val(),
+            is_gains: is_gains
+        }
+        $.ajax({
+            type: "POST",
+            url: "/set-price-limit",
+            headers: {'token': $.cookie('token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function get_buy_sell_items(is_buy) {
+        var formData = {
+            stock_id: "st0001",
+            is_buy: is_buy
+        }
+        $.ajax({
+            type: "POST",
+            url: "/get-buy-sell-items",
+            headers: {'token': $.cookie('token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>股票交易管理系统</title>
+    <meta name="description" content="这是一个404页面">
+    <meta name="keywords" content="404">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Geeky Max"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/amazeui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/admin.css') }}">
+    <link href="{{ url_for('static',filename='assets/css/bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static',filename='assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Geeky Max 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <strong>Geeky5</strong>
+        <small>股票交易管理系统</small>
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li id="login-li"
+                        data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}"
+                        onclick="$('#login-modal').modal('open')"><a
+                            href="#"><span class="am-icon-user"></span> 登录</a></li>
+                    <li onclick="logout()" id="logout-li" hidden><a href="#"><span class="am-icon-power-off"></span> 退出</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+
+</header>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="login-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">管理员登录
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div class="am-form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="am-form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button class="am-btn am-btn-primary" onclick="login();return false;"> 登录</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+        <div class="am-offcanvas-bar admin-offcanvas-bar">
+            <ul class="am-list admin-sidebar-list">
+                <li><a href="homepage"><span class="am-icon-table"></span> 后台首页</a></li>
+                <li><a href="stock-detail"><span class="am-icon-table"></span> 股票详情</a></li>
+                <li><a href="stock-setting"><span class="am-icon-table"></span> 股票操作</a></li>
+            </ul>
+            <div class="am-panel am-panel-default admin-sidebar-panel">
+                <div class="am-panel-bd">
+                    <p><span class="am-icon-bookmark"></span> 公告</p>
+                    <p>这是一个交易管理系统---G5</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">{% block title %}
+                    查询{% endblock %}</strong> /
+                </div>
+            </div>
+
+            <hr>
+
+            {% block body %}
+                <h1>nothing</h1>
+            {% endblock %}
+
+        </div>
+
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Stock exchange management system-G5</p>
+        </footer>
+    </div>
+    <!-- content end -->
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+
+{#<script src="{{ url_for('static',filename='assets/mine/jquery-3.3.1.min.js') }}"></script>#}
+<script src="{{ url_for('static',filename='assets/mine/jquery-2.1.0.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/mine/jquery.cookie.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/dataTables/jquery.dataTables.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/dataTables/dataTables.bootstrap.js') }}"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+
+<!-- Latest compiled and minified Locales -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<script>
+    // $(document).ready(function () {
+    //     $('#dataTables-example').dataTable();
+    // });
+</script>
+<script>
+    $(function () {
+        console.log($.cookie('geeky-token'));
+        if ($.cookie('geeky-token').length > 10) {
+            $("#login-li").hide();
+            $('#logout-li').show();
+        } else {
+            $("#login-li").show();
+            $('#logout-li').hide();
+        }
+        $("#collapse-2").collapse('close');
+    })
+
+    function logout() {
+        $.cookie('geeky-token', null);
+        location.reload();
+    }
+
+    function login() {
+        var formData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "http://127.0.0.1:5000/api/login",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, status) {
+                if (data && data.token) {
+                    $.cookie('geeky-token', data.token, {expires: 1, path: '/'});
+                    $("#login-modal").modal('close');
+                    $("#login-li").hide();
+                    $('#logout-li').show();
+                } else if (data && data.error) {
+                    $.cookie('geeky-token', null);
+                    alert(data.error);
+                }
+                console.log(data);
+            }
+        });
+    }
+</script>
+{% block script %}
+{% endblock %}
+
+
+<!--[if lt IE 9]>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="{{ url_for('static',filename='assets/js/amazeui.ie8polyfill.min.js')}}"></script>
+    <![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--<![endif]-->
+<script src="{{ url_for('static',filename='assets/js/amazeui.min.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 create database EB;
-
+use EB;
 create table user(
 	user_name varchar(20) primary key,
 	user_password varchar(40) not null,
@@ -8,7 +8,7 @@ create table user(
 	start_time datetime,
 	day_left int
 );
-
+-- --
 DELIMITER $
 create trigger user_limit before insert
 on user for each row
@@ -18,14 +18,14 @@ then signal sqlstate '45000';
 end if;
 end $
 DELIMITER ;
-
+-- --
 create table login_log(
 	user_name varchar(20),
 	date datetime not null,
 	state char(1) not null,
 	foreign key (user_name) references user(user_name)
 );
-
+-- --
 DELIMITER $
 create trigger login_log_limit before insert
 on login_log for each row
@@ -35,25 +35,25 @@ then signal sqlstate '45000';
 end if;
 end $
 DELIMITER ;
-
+-- --
 create table vip_log(
 	user_name varchar(20),
 	start_time datetime not null,
 	duration int not null,
 	foreign key (user_name) references user(user_name)
 );
-
-
-
-
-
+-- --
+-- --
+-- --
+-- --
+-- --
 create table stock_set(
     stock_id char(10),
     stock_name char(20) not null,
     primary key(stock_id)
 );
-
-
+-- --
+-- --
 create table today_stock(
 	stock_id char(10),
 	stock_name char(20) not null,
@@ -61,7 +61,7 @@ create table today_stock(
 	date datetime not null,
 	foreign key (stock_id) references stock_set(stock_id)
 );
-
+-- --
 create table previous_stock(
 	stock_id char(10),
 	stock_name char(20) not null,
@@ -72,72 +72,72 @@ create table previous_stock(
 	date datetime not null,
 	foreign key (stock_id) references stock_set(stock_id)
 );
-
-
+-- --
+-- --
 create table notice(
     stock_id char(10),
     stock_notice varchar(10000),
     foreign key (stock_id) references stock_set(stock_id)
 );
-
-
-
+-- --
+-- --
+-- --
 create table pma5(
     stock_id char(10),
     date datetime not null,
     average_price decimal(5,2) not null,
     foreign key (stock_id) references stock_set(stock_id)
 );
-
+-- --
 create table pma10(
     stock_id char(10),
     date datetime not null,
     average_price decimal(5,2) not null,
     foreign key (stock_id) references stock_set(stock_id)
 );
-
-
+-- --
+-- --
 create table pma30(
     stock_id char(10),
     date datetime not null,
     average_price decimal(5,2) not null,
     foreign key (stock_id) references stock_set(stock_id)
 );
-
+-- --
 CREATE TABLE vcode(
 telephone VARCHAR(15) NULL,
 code CHAR(6) NULL,
 `no` INT NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (`no`));
-
+-- --
 create index ts_index on today_stock(date);
-
+-- --
 create index ps_index on previous_stock(date);
-
+-- --
 create index p5_index on pma5(date);
-
+-- --
 create index p10_index on pma10(date);
-
+-- --
 create index p30_index on pma30(date);
-
-
-
-
+-- --
+-- --
+-- --
+-- --
 create index ts_si on today_stock(stock_id);
-
+-- --
 create index ps_si on previous_stock(stock_id);
-
+-- --
 create index p5_si on pma5(stock_id);
-
+-- --
 create index p10_si on pma10(stock_id);
-
+-- --
 create index p30_si on pma30(stock_id);
-
+-- --
 create index n_si on notice(stock_id);
-
-
+-- --
+-- --
 create database account;
-use account
+use EB
 create table fund_account_manager(
 username varchar(10),
 password varchar(100) not null,

@@ -1,0 +1,387 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>股票交易管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="apple-mobile-web-app-title" content="Geeky Max"/>
+    <link rel="icon" href="{{ url_for('static',filename='assets/i/favicon.png') }}" type="image/png">
+    <!--收藏夹显示图标-->
+    <link rel="shortcut icon" href="{{ url_for('static',filename='assets/i/favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/amazeui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/admin.css') }}">
+    {#    <link href="{{ url_for('static',filename='assets/css/bootstrap.css') }}" rel="stylesheet"/>#}
+    {#    <link href="{{ url_for('static',filename='assets/js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet"/>#}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    {#    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">#}
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Geeky Max 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <strong>Geeky5</strong>
+        <small>股票交易管理系统</small>
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-users"></span> <span id="username-text">管理员</span> <span
+                        class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li id="login-li"
+                        data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}"
+                        onclick="$('#login-modal').modal('open')"><a
+                            href="#"><span class="am-icon-user"></span> 登录</a></li>
+                    <li onclick="logout()" id="logout-li" hidden><a href="#"><span class="am-icon-power-off"></span> 退出</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+
+</header>
+
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="login-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">管理员登录
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form" id="login-form">
+                <div class="am-form-group" id="username-group">
+                    <label for="username" class="am-align-left">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="am-form-group" id="password-group">
+                    <label for="password" class="am-align-left">Password</label>
+                    <input type="password" class="form-control" id="password" minlength="6" required>
+                </div>
+                <button class="am-btn am-btn-primary" type="submit"> 登录</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="reset-password-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">修改密码
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form" id="reset-password-form">
+                <fieldset>
+                    <div class="am-form-group" id="old-password-parent">
+                        <label for="old-password" class="am-align-left">原密码</label>
+                        <input type="password" class="form-control" id="old-password" minlength="6" required
+                               placeholder="输入旧密码">
+                    </div>
+                    <div class="am-form-group" id="new-password-parent">
+                        <label for="new-password" class="am-align-left">新密码</label>
+                        <input type="password" class="form-control" id="new-password" placeholder="输入至少6位的新密码"
+                               minlength="6">
+                    </div>
+                    <div class="am-form-group" id="confirm-password-parent">
+                        <label for="confirm-password" class="am-align-left">重复密码</label>
+                        <input type="password" class="form-control" id="confirm-password" data-equal-to="#new-password"
+                               placeholder="再次输入新密码">
+                    </div>
+                    <button class="am-btn am-btn-primary" type="submit"> 重设密码</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="my-alert-hd"></div>
+        <div class="am-modal-bd"></div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+        <div class="am-offcanvas-bar admin-offcanvas-bar">
+            <ul class="am-list admin-sidebar-list">
+                <li><a href="/manage/homepage"><span class="am-icon-table"></span> 后台首页</a></li>
+                <li>
+                    <a data-am-modal="{target: '#reset-password-modal', closeViaDimmer: 0}"><span
+                            onclick="$('#login-modal').modal('open');return false;" class="am-icon-table"></span>
+                        修改密码</a></li>
+                <li><a href="/manage/auth-manage"><span class="am-icon-table"></span> 用户授权</a></li>
+            </ul>
+            <div class="am-panel am-panel-default admin-sidebar-panel">
+                <div class="am-panel-bd">
+                    <p><span class="am-icon-bookmark"></span> 公告</p>
+                    <p>这是一个交易管理系统---G5</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- content start -->
+
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">
+                    {% block title %}{% endblock %}</strong>
+                </div>
+            </div>
+            <hr>
+
+            {% block body %}
+                <h1>nothing</h1>
+            {% endblock %}
+
+        </div>
+
+        <footer class="admin-content-footer">
+            <hr>
+            <p class="am-padding-left">Stock exchange management system-G5</p>
+        </footer>
+    </div>
+    <!-- content end -->
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+
+{#<script src="{{ url_for('static',filename='assets/mine/jquery-3.3.1.min.js') }}"></script>#}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="{{ url_for('static',filename='assets/mine/jquery.cookie.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+{#<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>#}
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+{#<!-- Latest compiled and minified JavaScript -->#}
+{#<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>#}
+{##}
+{#<!-- Latest compiled and minified Locales -->#}
+{#<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>#}
+<script>
+    // $(document).ready(function () {
+    //     $('#dataTables-example').dataTable();
+    // });
+</script>
+<script>
+    user_valid = false;
+    $(function () {
+        console.log($.cookie('geeky-token'));
+        // 表单验证部分
+        $('#reset-password-form').validator({
+            markValid: function (validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+                console.log("valid");
+            },
+            markInValid: function (validity) {
+                console.log("inValid");
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().appendTo($group);
+                }
+
+                $alert.html(msg).show();
+            },
+            submit: function () {
+                if (this.isFormValid()) {
+                    reset_password();
+                }
+                return false;
+            }
+        });
+        // login 表单验证
+        $('#login-form').validator({
+            markValid: function (validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+                console.log("valid");
+            },
+            markInValid: function (validity) {
+                console.log("inValid");
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().appendTo($group);
+                }
+
+                $alert.html(msg).show();
+            },
+            submit: function () {
+                if (this.isFormValid()) {
+                    login();
+                }
+                return false;
+            }
+        });
+        // user token 验证
+        $.ajax({
+            type: "POST",
+            url: "/manage/api/check-token",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {'token': $.cookie('geeky-token')},
+            success: function (data) {
+                console.log(data);
+                if (data && data.code && data.code == "1" && data.user_id) {
+                    $("#username-text").text(data.user_id);
+                    $("#login-li").hide();
+                    $('#logout-li').show();
+                    user_valid = true;
+                } else if (data && data.msg) {
+                    user_valid = true;
+                    console.log(data.msg);
+                    $("#login-li").show();
+                    $('#logout-li').hide();
+                    $("#my-alert-hd").text("请先登录");
+                    $("#my-alert").modal('open');
+
+                }
+            }
+        });
+    })
+
+    function logout() {
+        $.cookie('geeky-token', null,{expires: 1, path: '/'});
+        window.location.href = "homepage";
+    }
+
+    function login() {
+        var formData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/manage/api/login",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, status) {
+                console.log(data);
+                if (data && data.token) {
+                    $.cookie('geeky-token', data.token, {expires: 1, path: '/'});
+                    $("#login-modal").modal('close');
+                    $("#login-li").hide();
+                    $('#logout-li').show();
+                    location.reload();
+                } else if (data && data.msg) {
+                    $.cookie('geeky-token', null,{expires: 1, path: '/'});
+                    switch (data.code) {
+                        case 0:
+                            $("#my-alert-hd").text(data.msg);
+                            $("#my-alert").modal('open');
+                            window.location.reload();
+                            break;
+                        case 1:
+                            window.location.reload();
+                            break;
+                        case 2:
+                            $("#password-group").append("<div class=\"am-alert am-alert-danger\" style=\"\">" + data.msg + "</div>");
+                            break;
+                        case 3:
+                            $("#username-group").append("<div class=\"am-alert am-alert-danger\" style=\"\">" + data.msg + "</div>");
+                            break;
+                        default:
+                    }
+                }
+                console.log(data);
+            }
+        });
+    }
+
+    function reset_password() {
+        var old_password = $("#old-password").val();
+        var new_password = $("#new-password").val();
+        var confirm_password = $("#confirm-password").val();
+        var formData = {
+            old_password: old_password,
+            new_password: new_password,
+            confirm_password: confirm_password
+        };
+        $.ajax({
+            type: "POST",
+            url: "/manage/api/reset-password",
+            headers: {'token': $.cookie('geeky-token')},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+                if (data && data.result) {
+                    alert("重设密码成功！");
+                    $('#reset-password-modal').modal('close');
+                } else if (data && data.code) {
+                    switch (data.code) {
+                        case 0:
+                            $("#my-alert-hd").text(data.msg);
+                            $("#my-alert").modal('open');
+                            window.location.reload();
+                            break;
+                        case 1:
+                            $("#confirm-password-parent").append("<div class=\"am-alert am-alert-danger\" style=\"\">" + data.msg + "</div>");
+                            break;
+                        case 2:
+                            $("#new-password-parent").append("<div class=\"am-alert am-alert-danger\" style=\"\">" + data.msg + "</div>");
+                            break;
+                        case 3:
+                            $("#my-alert-hd").text(data.msg);
+                            $("#my-alert").modal('open');
+                            window.location.reload();
+                            break;
+                        case 4:
+                            $("#old-password-parent").append("<div class=\"am-alert am-alert-danger\" style=\"\">" + data.msg + "</div>");
+                            break;
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% block script %}
+{% endblock %}
+
+
+<!--[if lt IE 9]>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+    <script src="{{ url_for('static',filename='assets/js/amazeui.ie8polyfill.min.js')}}"></script>
+    <![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--<![endif]-->
+<script src="{{ url_for('static',filename='assets/js/amazeui.min.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
+</body>
+</html>

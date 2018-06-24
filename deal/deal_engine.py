@@ -25,47 +25,54 @@ class DealEngine:
 
     def save_deal(self, result,buy_order,sell_order):
         cursor = self.db_conn.cursor()
-        result.price = 2
-        result.buy_id = 1
-        result.sell_id = 1
-        print(result.buy_id)
-        cursor.execute('insert into trade_log (stock_id,buy_id,sell_id,price,volume) values (%s,%s,%s,%s,%s) ',[result.stock_id,result.buy_id,result.sell_id,int(result.price),result.volume])
-        cursor.execute('select enabled_money from fund_account_user where username=%s', [result.buy_id])
+        # result.price = 2
+        # result.buy_id = 1
+        # result.sell_id = 1
+        print('-----------------------')
+        print(result.sell_id)
+        buy_id = 'F' + str(result.buy_id)
+        sell_id = 'F' + str(result.sell_id)
+
+        cursor.execute('insert into trade_log (stock_id,buy_id,sell_id,price,volume) values (%s,%s,%s,%s,%s) ',[result.stock_id,buy_id,sell_id,int(result.price),result.volume])
+        cursor.execute('select enabled_money from fund_account_user where username=%s', [buy_id])
         buy_money = float(cursor.fetchall()[0][0])
-        cursor.execute('select enabled_money from fund_account_user where username=%s', [result.sell_id])
+        cursor.execute('select enabled_money from fund_account_user where username=%s', [sell_id])
         sell_money = float(cursor.fetchall()[0][0])
         buy_money -= result.volume * result.price
         sell_money += result.volume * result.price
         if buy_money < 0:
             return
-
-        cursor.execute('select freezing_amount from security_in_account where username=%s', [result.sell_id])
+        cursor.execute('select freezing_amount from security_in_account where username=%s', [sell_id])
         sell_freezing_security = int(cursor.fetchall()[0][0])
         sell_freezing_security -= result.volume
 
         #---------------------------------------------------------------------------------------------------------------
         # change security
-        cursor.execute('select amount from security_in_account where username=%s', [result.sell_id])
+        cursor.execute('select amount from security_in_account where username=%s', [sell_id])
         sell_security = int(cursor.fetchall()[0][0])
         sell_security -= result.volume
-        cursor.execute('update security_in_account set amount = %s， freezing_amount = %s where username = %s',[sell_security,sell_freezing_security,result.sell_id])
+        print(sell_security)
+        print(sell_freezing_security)
+        sql = "update security_in_account set amount = %s, freezing_amount = %s  where username = '%s'" % (sell_security,sell_freezing_security,str(sell_id))
+        print(sql)
+        cursor.execute(sql)
 
-        cursor.execute('select amount from security_in_account where username=%s', [result.buy_id])
+        cursor.execute('select amount from security_in_account where username=%s', [buy_id])
         buy_security = int(cursor.fetchall()[0][0])
         buy_security += result.volume
         cursor.execute('update security_in_account set amount = %s where username = %s',
-                       [buy_security, result.buy_id])
+                       [buy_security, buy_id])
 
         #---------------------------------------------------------------------------------------------------------------
-        cursor.execute('select freezing_money from fund_account_user where username=%s', [result.buy_id])
+        cursor.execute('select freezing_money from fund_account_user where username=%s', [buy_id])
         buy_freezing_money = float(cursor.fetchall()[0][0])
-        buy_freezing_money -= buy_order.get_price() * result.volume
+        buy_freezing_money -= float(buy_order.get_price()) * result.volume
 
-        cursor.execute('select freezing_money from fund_account_user where username=%s', [result.sell_id])
+        cursor.execute('select freezing_money from fund_account_user where username=%s', [sell_id])
         sell_freezing_money = float(cursor.fetchall()[0][0])
-        sell_freezing_money -= sell_order.get_price() * result.volume
-        cursor.execute('update fund_account_user set enabled_money=%s, freezing_money = %s where username=%s',[buy_money,buy_freezing_money,result.buy_id])
-        cursor.execute('update fund_account_user set enabled_money=%s, freezing_money = %s where username=%s',[sell_money,sell_freezing_security,result.sell_id])
+        sell_freezing_money -= float(sell_order.get_price()) * result.volume
+        cursor.execute('update fund_account_user set enabled_money=%s, freezing_money = %s where username=%s',[buy_money,buy_freezing_money,buy_id])
+        cursor.execute('update fund_account_user set enabled_money=%s, freezing_money = %s where username=%s',[sell_money,sell_freezing_security,sell_id])
         # cursor.execute('update fund_account_user set enabled_money=%s where username=%s',[sell_money,result.sell_id])
         self.db_conn.commit()
         cursor.close()
@@ -74,6 +81,8 @@ class DealEngine:
 
     def deal(self):
         long_order, short_order = self.pair_queue.pop()
+        self.pair_queue.push(long_order)
+        self.pair_queue.push(short_order)
         if not long_order:
             self.logger.info("No Order Now")
             return False
@@ -81,13 +90,27 @@ class DealEngine:
         if not short_order:
             self.logger.info("No Order Now")
             return False
-        a = ctypes.c_float(1.0)
-        b = ctypes.c_double(1.0)
+        a = ctypes.c_double(10.0)
+        b = ctypes.c_double(11.0)
         dll = ctypes.CDLL('./deal/libdeal.so')
         dll.Deal.restype = exchange
         dll.Deal.argtypes = [
             stock,stock, ctypes.c_double, ctypes.c_double
         ]
+        converted_long_order = order_conversion(long_order)
+        converted_short_order = order_conversion(short_order)
+        print("opppppppppp")
+        # print(converted_long_order.buy_id)
+        result = dll.Deal(converted_long_order, converted_short_order, a, b)
+        print("------------");
+        print(result.volume)
+        self.save_deal(result, long_order, short_order)
+        re_order = regenerate_order(result, long_order, short_order)
+        if re_order:
+            self.pair_queue.push(re_order)
+        else:
+            pass
+        self.logger.info("Success")
         try:
             converted_long_order = order_conversion(long_order)
             converted_short_order = order_conversion(short_order)
@@ -95,8 +118,11 @@ class DealEngine:
             result = dll.Deal(converted_long_order,converted_short_order,a,b)
             print("finish")
             self.save_deal(result,long_order,short_order)
-            re_order = regenerate_order(result=result)
-            self.pair_queue.push(re_order)
+            re_order = regenerate_order(result,long_order,short_order)
+            if re_order:
+                self.pair_queue.push(re_order)
+            else:
+                pass
             self.logger.info("Success")
         except ctypes.ArgumentError:
             print("in except")

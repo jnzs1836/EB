@@ -4,7 +4,7 @@ from order_queue.order import Order,segment
 from order_queue.constant import *
 # import random
 class Queue :
-    def __init__(self, stock_id, direction = LONG, r = None):
+    def __init__(self, stock_id, direction = LONG, r = None, stock_name = None):
         self.id  = stock_id
         if r:
             self.r = r
@@ -16,7 +16,7 @@ class Queue :
             self.prefix = 'long'
         else:
             self.prefix = 'short'
-
+        self.stock_name = stock_id
         self.key = self.prefix + str(self.id)
 
     def push(self, order):
@@ -51,6 +51,8 @@ class Queue :
             order = dict()
             for key, value in order_dict.items():
                 order[key.decode('utf-8')] = value.decode('utf-8')
+            order['share'] = order['volume']
+            order['stock_name'] = self.stock_name
             print(order)
             order_list.append(order)
             # order_list.append(self.r.hget())
@@ -89,7 +91,7 @@ class Queue :
             order = Order(self.id,order_dict['user_id'.encode('utf-8')].decode('utf-8'),
                           order_dict['price'.encode('utf-8')].decode('utf-8'),
                           order_dict['volume'.encode('utf-8')].decode('utf-8'),
-                          order_dict['direction'.encode('utf-8')].decode('utf-8'))
+                          self.direction)
         else:
             order = None
         return order

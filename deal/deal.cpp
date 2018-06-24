@@ -1,6 +1,7 @@
 /*
-   ±àÒëÃüÁî
+   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    g++ -fPIC deal.cpp -o libdeal.so -shared
+   export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/home/jnzs1836/anaconda3/include/python3.6m"
 */
 
 #include <time.h>
@@ -18,7 +19,7 @@ struct stock{
 	int user_id;
 	int volume;
 	double price; 
-}; /*Ö¸Áî³ö¶Óºó´æÈë½á¹¹Ìå*/
+}__attribute__ ((packed, aligned(1)));
 
 struct exchange{
 	int stock_id;
@@ -27,7 +28,7 @@ struct exchange{
 	char Time[40];
 	int volume;
 	double price;
-};  /*´æ½á¹û*/
+}__attribute__ ((packed, aligned(1)));  ;
 
 struct testStructure {
     int a;
@@ -58,10 +59,11 @@ exchange Deal(stock LongOrderStructure, stock ShortOrderStructure, double Limit,
     stock *ShortOrder = &ShortOrderStructure;
 	double limit_up = ClosePrice + (ClosePrice*Limit);  /*?????????????*/
 	double limit_down = ClosePrice - (ClosePrice*Limit);
-	double MiddlePrice;   /*?§Þ??*/
+	double MiddlePrice;   /*?ï¿½ï¿½??*/
 	if(LongOrder->price == ShortOrder->price){    /*???????*/
 		if(LongOrder->price>limit_up||LongOrder->price<limit_down){  /*?????????*/;
 			Result.volume=0;
+			printf("Hello World\n");
 			return Result;    /*????????????????0????*/
 		}
 		else{
@@ -142,5 +144,5 @@ exchange Deal(stock LongOrderStructure, stock ShortOrderStructure, double Limit,
 		}
 	}
 }
-/*¸ù¾Ý½á¹ûÖÐ¹ÉÆ±Á¿ÊÇ·ñÎª0ÅÐ¶ÏÊÇ·ñ´éºÏ³É¹¦*/ 
-/*¸ù¾ÝÁ½Ö¸Áî½á¹¹ÖÐ¹ÉÆ±Á¿ÊÇ·ñÎª0ÅÐ¶ÏÊÇ·ñÐèÒªÖØÐÂÈë¶Ó*/ 
+/*ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½Ð¹ï¿½Æ±ï¿½ï¿½ï¿½Ç·ï¿½Îª0ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ï³É¹ï¿½*/ 
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½á¹¹ï¿½Ð¹ï¿½Æ±ï¿½ï¿½ï¿½Ç·ï¿½Îª0ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/ 

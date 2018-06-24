@@ -1,0 +1,329 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GeekyMax图书管理系统</title>
+    <meta name="description" content="这是一个404页面">
+    <meta name="keywords" content="404">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <strong>GeekyMax</strong>
+        <small>图书管理系统</small>
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li id="login-li"
+                        data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}"
+                        onclick="$('#login-modal').modal('open')"><a
+                            href="#"><span class="am-icon-user"></span> 登录</a></li>
+                    <li onclick="logout()" id="logout-li" hidden><a href="#"><span class="am-icon-power-off"></span> 退出</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+
+</header>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="login-modal">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">Modal 标题
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button class="am-btn am-btn-primary" onclick="login();return false;"> 登录</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+        <div class="am-offcanvas-bar admin-offcanvas-bar">
+            <ul class="am-list admin-sidebar-list">
+                <li><a href="query-book.html"><span class="am-icon-table"></span> 查询图书</a></li>
+                <li><a href="insert-book.html"><span class="am-icon-table"></span> 图书入库</a></li>
+                <li><a href="query-borrow.html"><span class="am-icon-table"></span> 查询借书记录\还书</a></li>
+                <li><a href="card-manage.html"><span class="am-icon-pencil-square-o"></span> 借书证管理</a></li>
+                <li><a href="borrow-book.html"><span class="am-icon-sign-out"></span> 借书</a></li>
+            </ul>
+
+            <div class="am-panel am-panel-default admin-sidebar-panel">
+                <div class="am-panel-bd">
+                    <p><span class="am-icon-bookmark"></span> 公告</p>
+                    <p>时光静好，与君语；细水流年，与君同。—— Geeky Max</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- sidebar end -->
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">查询借书记录</strong>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="am-g">
+                <div class="am-u-sm-12">
+                    <label for="input-cno">借书证 ID</label>
+                    <input type="text" id="input-cno">
+                    <button class="am-btn am-btn-primary" onclick="queryBook();return false;">查询</button>
+                    <div id="real-body"></div>
+                    <div class="am-form">
+                        <table class="am-table am-table-striped am-table-hover table-main">
+                            <thead>
+                            <tr>
+                                <th class="table-id">ID</th>
+                                <th class="table-id">BNO</th>
+                                <th class="table-title">标题</th>
+                                <th class="table-type">类别</th>
+                                <th class="table-type">出版社</th>
+                                <th class="table-author am-hide-sm-only">作者</th>
+                                <th class="table-date am-hide-sm-only">价格</th>
+                                <th class="table-date am-hide-sm-only">出版日期</th>
+                                <th class="table-date am-hide-sm-only">库存</th>
+                                <th class="table-date am-hide-sm-only">总量</th>
+                                <th class="table-set">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-body">
+                            </tbody>
+                        </table>
+                        <div id="item-count" class="am-cf">
+                        </div>
+                        <hr/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu"
+   data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+<script src="assets/mine/jquery-2.1.0.js"></script>
+<script src="assets/mine/jquery.cookie.js"></script>
+<script>
+    $(function () {
+        console.log($.cookie('geeky-token'));
+        if ($.cookie('geeky-token') && $.cookie('geeky-token').length > 10) {
+            $("#login-li").hide();
+            $('#logout-li').show();
+        } else {
+            $("#login-li").show();
+            $('#logout-li').hide();
+        }
+    })
+
+    function logout() {
+        $.cookie('geeky-token', null);
+        location.reload();
+    }
+
+    function login() {
+        var formData = {
+            username: $("#username").val(),
+            password: $("#password").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/servlet/login",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, status) {
+                if (data && data.token) {
+                    $.cookie('geeky-token', data.token, {expires: 1, path: '/'});
+                    $("#login-modal").modal('close');
+                    $("#login-li").hide();
+                    $('#logout-li').show();
+                } else if (data && data.error) {
+                    $.cookie('geeky-token', null);
+                    alert(data.error);
+                }
+                console.log(data);
+            }
+        });
+    }
+</script>
+<script>
+    function setEvent() {
+        $(".return-btn").click(function () {
+            var thisBtn = $(this);
+            var bno = $(this).attr("bno");
+            var cno = $(this).attr("cno");
+            var formData = {
+                "token": $.cookie('geeky-token'),
+                "cno": cno,
+                "bno": bno
+            };
+            $.ajax({
+                type: "post",
+                url: "/servlet/return-book",
+                // 1 需要使用JSON.stringify 否则格式为 a=2&b=3&now=14...
+                // 2 需要强制类型转换，否则格式为 {"a":"2","b":"3"}
+                data: JSON.stringify(formData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data, status) {
+                    console.log(data);
+                    if (data && data.msg) {
+                        $("#real-body").append("<div class=\"am-alert am-alert-success\" data-am-alert>\n" +
+                            "  <button type=\"button\" class=\"am-close\">&times;</button>\n" +
+                            "  <p>" +
+                            data.msg +
+                            "</p>\n" +
+                            "</div>");
+                        // if (data.msg.equals("return successfully")) {
+                        thisBtn.addClass("am-disabled");
+                        // }
+                    } else {
+                        alert("error!");
+                    }
+                }
+            });
+            return false;
+        })
+    };
+
+    function queryBook() {
+        var formData = {
+            "token": $.cookie('geeky-token'),
+            "cno": $("#input-cno").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/servlet/query-borrow",
+            // 1 需要使用JSON.stringify 否则格式为 a=2&b=3&now=14...
+            // 2 需要强制类型转换，否则格式为 {"a":"2","b":"3"}
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, status) {
+                console.log(data);
+                var tableBody = $("#table-body");
+                tableBody.empty();
+                $("#item-count").text("共 " + data.length + " 条记录");
+                if (data && data.msg) {
+                    $("#real-body").append("<div class=\"am-alert am-alert-success\" data-am-alert>\n" +
+                        "  <button type=\"button\" class=\"am-close\">&times;</button>\n" +
+                        "  <p>" +
+                        data.msg +
+                        "</p>\n" +
+                        "</div>");
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var borrow = data[i];
+                    var book = borrow.book;
+                    var template = "                            <tr>\n" +
+                        "                                <td>" +
+                        i +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.bno +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.title +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.category +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.press +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.author +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.price +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.year +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.stock +
+                        "</td>\n" +
+                        "                                <td>" +
+                        book.total +
+                        "</td>\n" +
+                        "                                <td>\n" +
+                        "                                    <div class=\"am-btn-toolbar\">\n" +
+                        "                                        <div class=\"am-btn-group am-btn-group-xs\">\n" +
+                        "                                            <button class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only return-btn\" " +
+                        "bno=\"" + book.bno + "\" " +
+                        "cno=\"" + $("#input-cno").val() + "\" " +
+                        ">\n" +
+                        "                                                <span class=\"am-icon-trash-o\"></span> 还书\n" +
+                        "                                            </button>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </td>\n" +
+                        "                            </tr>";
+                    tableBody.append(template);
+                }
+                setEvent();
+            }
+        });
+    }
+</script>
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--<![endif]-->
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
