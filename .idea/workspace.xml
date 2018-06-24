@@ -262,8 +262,8 @@
       <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="159" column="44" lean-forward="true" selection-start-line="159" selection-start-column="44" selection-end-line="159" selection-end-column="44" />
+            <state relative-caret-position="156">
+              <caret line="158" column="116" selection-start-line="158" selection-start-column="116" selection-end-line="158" selection-end-column="116" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -1102,8 +1102,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/trading/order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="159" column="44" lean-forward="true" selection-start-line="159" selection-start-column="44" selection-end-line="159" selection-end-column="44" />
+        <state relative-caret-position="156">
+          <caret line="158" column="116" selection-start-line="158" selection-start-column="116" selection-end-line="158" selection-end-column="116" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
