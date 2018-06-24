@@ -116,6 +116,8 @@ class DealEngine:
             converted_short_order = order_conversion(short_order)
 
             result = dll.Deal(converted_long_order,converted_short_order,a,b)
+            if result.volume == 0:
+                raise ctypes.ArgumentError
             print("finish")
             self.save_deal(result,long_order,short_order)
             re_order = regenerate_order(result,long_order,short_order)
