@@ -60,11 +60,14 @@ class Order:
         return self.direction
 
     def get_map(self):
+        now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
         return {
             'user_id':self.user_id,
             'stock_id':self.stock_id,
             'price':self.price,
             'volume':self.volume,
             'direction':self.direction,
-            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+            'timestamp':now,
+            'time': now
+
         }
