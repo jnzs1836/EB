@@ -17,11 +17,28 @@ class DealEngine:
             self.r = redis.Redis()
         else:
             self.r = redis_conn
-        self.last_price = 4
+        cursor = self.db_conn.cursor()
+        cursor.execute('select gains from stock_state where stock_id=%s',[str(self.stock_id)])
+        result = cursor.fetchall()
+        try:
+            self.limit = result[0][0]
+            self.last_price = self.r.hget(self.stock_id,'newest_price').decode('utf-8')
+            self.on = True
+            print( str(stock_id) +" is running")
+        except:
+            self.on = False
+            print( str(stock_id) +" is stop")
+
+
+        # self.last_price = 4
+        # self.
 
 
     def on_trading(self):
-        return True
+        if self.on:
+            return True
+        else:
+            return False
 
     def save_deal(self, result,buy_order,sell_order):
         cursor = self.db_conn.cursor()
@@ -90,8 +107,8 @@ class DealEngine:
         if not short_order:
             self.logger.info("No Order Now")
             return False
-        a = ctypes.c_double(10.0)
-        b = ctypes.c_double(11.0)
+        a = ctypes.c_double(self.limit)
+        b = ctypes.c_double(self.close_price)
         dll = ctypes.CDLL('./deal/libdeal.so')
         dll.Deal.restype = exchange
         dll.Deal.argtypes = [

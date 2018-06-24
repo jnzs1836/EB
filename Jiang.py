@@ -106,8 +106,8 @@ def qid(name):
     fres = {"state": "false", "id": name}
     td = datetime.datetime.now()
     yd = td + datetime.timedelta(days = -1)
-    wd = td + datetime.timedelta(days = -td.weekday())
-    md = datetime.datetime(td.year, td.month, 1)
+    wd = td + datetime.timedelta(days = -yd.weekday())
+    md = datetime.datetime(yd.year, yd.month, 1)
     tdate = td.strftime("%Y-%m-%d")
     ydate = yd.strftime("%Y-%m-%d")
     wdate = wd.strftime("%Y-%m-%d")

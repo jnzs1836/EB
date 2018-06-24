@@ -1205,7 +1205,7 @@ def fund_user_reg():
         items=db.session.execute("insert into fund_account_user values('"+username
                                      +"','"+request.form['password']+"','"+request.form['fund_pwd']+"','"
                                      +request.form['ID_card']+"','0','0','Y','"+security_account+"')")
-        return render_template( 'fund_user_reg.html',error_message='注册成功')
+        return render_template( 'fund_user_reg.html',error_message='注册成功,资金账户号码是：'+username)
 
 
 # 资金账户挂失
