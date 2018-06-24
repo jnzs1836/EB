@@ -29,7 +29,11 @@ class Order:
         return str(self.price) + "xinghong"
 
     def get_score(self):
-        return float(self.price)
+        if self.direction == SHORT:
+            return float(self.price)
+        else:
+            return 10000.0/float(self.price)
+
 
     def get_price(self):
         return self.price
