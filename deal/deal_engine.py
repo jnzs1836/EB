@@ -81,8 +81,6 @@ class DealEngine:
 
     def deal(self):
         long_order, short_order = self.pair_queue.pop()
-        self.pair_queue.push(long_order)
-        self.pair_queue.push(short_order)
         if not long_order:
             self.logger.info("No Order Now")
             return False
