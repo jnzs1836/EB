@@ -40,7 +40,8 @@ class QueueManager():
             self.r.hmset(item[0], mapping)
 
 
-
+    def get_newest_price(self,stock_id):
+        self.r.h
 
     def clean(self):
         self.r.flushall()
@@ -68,10 +69,14 @@ class QueueManager():
         print("count "+ str(self.count))
         return self.queues[stock_id]
 
+def get_stock_current_state(stock_id):
+    queue_manager = get_queue_manager()
+    extreme_price= queue_manager.get_extreme_price(stock_id)
+    last_price = queue_manager.get_newest_price(stock_id)
+    return {"latest_price": last_price, "buy_highest_price": extreme_price['buy'], "sale_lowest_price": extreme_price['sell']}
 
 def get_stock_info_manage(stock_id):
     queue_manager = get_queue_manager()
-    print(stock_id)
     stock_hash = queue_manager.r.hgetall(stock_id)
     stock_dict = dict()
     try:
@@ -112,8 +117,8 @@ def start_trading(stock_name):
 
 def create_order( user_id, stock_id, direction, price, volume,db):
     queue_manager = get_queue_manager()
-    # if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
-    #     return -1
+    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
+        return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
     print('here')
