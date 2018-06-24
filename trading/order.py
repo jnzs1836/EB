@@ -38,10 +38,12 @@ class QueueManager():
                 'decline':0,
             }
             self.r.hmset(item[0], mapping)
-
+    # def get_extreme_price(stock_id):
+        # get = dict()
+        # return self.
 
     def get_newest_price(self,stock_id):
-        self.r.h
+        return float(self.r.hget(stock_id,'newest_price').decode('utf-8'))
 
     def clean(self):
         self.r.flushall()
@@ -71,7 +73,8 @@ class QueueManager():
 
 def get_stock_current_state(stock_id):
     queue_manager = get_queue_manager()
-    extreme_price= queue_manager.get_extreme_price(stock_id)
+    pair_queue = queue_manager.get_pair_queue(stock_id)
+    extreme_price = pair_queue.get_extreme_price()
     last_price = queue_manager.get_newest_price(stock_id)
     return {"latest_price": last_price, "buy_highest_price": extreme_price['buy'], "sale_lowest_price": extreme_price['sell']}
 

@@ -77,6 +77,8 @@ class DealEngine:
         self.db_conn.commit()
         cursor.close()
         self.r.hset(result.stock_id,'last_price',result.price)
+        self.r.hset(result.stock_id,'newest_price',result.price)
+
         print("deal finished")
 
     def deal(self):

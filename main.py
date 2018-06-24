@@ -2061,10 +2061,16 @@ def order_handler():
         # print(user_id)
         # user_id = 'uid001'
         order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'],db)
-        msg = {
-            'state':'true',
-            'transaction_id':order_id
-        }
+        if order_id == -1:
+            msg = {
+                'state': 'false',
+                'transaction_id': order_id
+            }
+        else:
+            msg = {
+                'state':'true',
+                'transaction_id':order_id
+            }
         response = app.response_class(
             response=json.dumps(msg),
             status=200,

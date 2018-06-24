@@ -96,6 +96,13 @@ class Queue :
             order = None
         return order
 
+    def get_first_price(self):
+        order_list = self.r.zrange(self.key, 0, 0)
+        if not order_list:
+            return None
+        order_id = order_list[0]
+        order_dict = self.r.hgetall(order_id)
+        return float(order_dict['price'.encode('utf-8')])
 
     def clean(self):
         order_ids = self.r.zrangebyscore(self.key, '-inf', 'inf')

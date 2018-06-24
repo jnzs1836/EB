@@ -21,6 +21,9 @@ class PairQueue :
     def set_decline(self,decline):
         self.decline = decline
 
+    def get_extreme_price(self):
+        return {'buy':self.long_queue.get_first_price(),'sell':self.short_queue.get_first_price()}
+
     def get_gains(self):
         return self.gains
 
