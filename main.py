@@ -267,9 +267,9 @@ def get_stock_price(stock_id):
         return None
 
 # 中央交易系统给我们提供的函数，我这里随便模拟数据
-# def get_stock_info(stock_id):
-#     dic = {"latest_price": "1.11", "buy_highest_price": "2.22", "sale_lowest_price": "3.33"}
-#     return dic
+def get_stock_info(stock_id):
+    dic = {"latest_price": "1.11", "buy_highest_price": "2.22", "sale_lowest_price": "3.33"}
+    return dic
 
 
 # 输入股票名字模糊查找
