@@ -104,6 +104,7 @@ class DealEngine:
         return self.exist
     def on_trading(self):
         status = self.r.hget(self.stock_id,'status'.encode('utf-8')).decode('utf-8')
+        status = bool(status)
         if self.on is True and status is False:
             print(str(self.stock_id) + ' is stopped')
         elif self.on is False and status is True:
