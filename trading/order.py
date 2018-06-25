@@ -221,12 +221,12 @@ def unfreeze_fund(username,price,volume,db):
         fund = float(str(query_result[0]))
         freeze_fund = float(str(query_result[1]))
     freeze_fund -= price * volume
-    result = db.session.execute("update fund_account_user set freeze_fund = "+  freeze_fund + "where username ='" + username + "'")
+    result = db.session.execute("update fund_account_user set freeze_fund = "+  str(freeze_fund) + "where username ='" + username + "'")
     db.session.commit()
     return True
 
 def unfreeze_stock(username,security_number,volume,db):
-    esult = db.session.execute("select * from security_in_account where username ='"
+    result = db.session.execute("select * from security_in_account where username ='"
                                + username + "' and security_number='" + security_number + "'")
     if result.first() is None:
         return False
@@ -240,7 +240,7 @@ def unfreeze_stock(username,security_number,volume,db):
         security = query_result[0]
         freeze_security = query_result[1]
     freeze_security -= volume
-    result = db.session.execute("update security_in_account set amount = "+  freeze_security + "where username ='" + username + "' and security_number='" + security_number + "'")
+    result = db.session.execute("update security_in_account set amount = "+  str(freeze_security) + "where username ='" + username + "' and security_number='" + security_number + "'")
     db.session.commit()
     return True
 
