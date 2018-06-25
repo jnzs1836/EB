@@ -150,7 +150,6 @@ class DealEngine:
         # result.buy_id = 1
         # result.sell_id = 1
         print('-----------------------')
-        print(result.sell_id)
         buy_fund_id = 'F' + str(result.buy_id)
         sell_fund_id = 'F' + str(result.sell_id)
         cursor.execute('select security_account from fund_account_user where username=%s',(sell_fund_id,))
@@ -158,7 +157,6 @@ class DealEngine:
         cursor.execute('select security_account from fund_account_user where username=%s', (buy_fund_id,))
         buy_id = cursor.fetchall()[0][0]
         cursor.execute('select enabled_money from fund_account_user where username=%s', [buy_fund_id])
-        print(buy_id)
         buy_money = float(cursor.fetchall()[0][0])
         cursor.execute('select enabled_money from fund_account_user where username=%s', [sell_fund_id])
         sell_money = float(cursor.fetchall()[0][0])
@@ -175,10 +173,7 @@ class DealEngine:
         cursor.execute('select amount from security_in_account where username=%s', [sell_id])
         sell_security = int(cursor.fetchall()[0][0])
         sell_security -= result.volume
-        print(sell_security)
-        print(sell_freezing_security)
         sql = "update security_in_account set amount = %s, freezing_amount = %s  where username = '%s'" % (sell_security,sell_freezing_security,str(sell_id))
-        print(sql)
         cursor.execute(sql)
         # quantity = result.price * result.volume
 
@@ -212,7 +207,6 @@ class DealEngine:
 
     def deal(self):
         long_order, short_order = self.pair_queue.get_first_order()
-        print(long_order)
 
         if not long_order:
             # self.logger.info("No Order Now")
@@ -284,5 +278,8 @@ class DealEngine:
         return True
 
     def run(self):
-        while self.on_trading():
-            self.deal()
+        while True:
+            if self.on_trading():
+                self.deal()
+            else:
+                pass
