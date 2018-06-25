@@ -280,7 +280,7 @@ class DealEngine:
     def run(self):
         while True:
             if str(self.stock_id) is '101':
-                print(self.on_trading())
+                print('101' + str(self.on_trading()))
             if self.on_trading():
                 self.deal()
             else:
