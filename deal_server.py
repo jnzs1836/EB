@@ -42,10 +42,10 @@ def all_run():
 
 
 if __name__ == '__main__':
-    item  = ['105']
-    item[0] = '105'
-    single_run(item)
-    # all_run()
+    # item  = ['105']
+    # item[0] = '105'
+    # single_run(item)
+    all_run()
     # redis_conn = redis.Redis()
     # conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
     # deal_engine = DealEngine('130',db_conn=conn,redis_conn=redis_conn)

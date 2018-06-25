@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1149b1b7-b65a-4c00-bc55-814f0f63e79b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/clean_deal_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/EB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EB.iml" afterDir="false" />
@@ -16,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/Jiang.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jiang.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/add_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/add_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clean_deal_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/clean_deal_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deal/deal.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal.cpp" afterDir="false" />
@@ -23,6 +23,7 @@
       <change beforePath="$PROJECT_DIR$/deal/deal_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal/deal_engine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deal/trade_logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal/trade_logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deal_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/deal_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dump.rdb" beforeDir="false" afterPath="$PROJECT_DIR$/dump.rdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/everyday.py" beforeDir="false" afterPath="$PROJECT_DIR$/everyday.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kline_control.py" beforeDir="false" afterPath="$PROJECT_DIR$/kline_control.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/log/__init__.py" afterDir="false" />
@@ -171,7 +172,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="304">
@@ -183,13 +184,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deal.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="deal.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deal/deal.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="95">
               <caret line="5" column="147" lean-forward="true" selection-start-line="5" selection-start-column="147" selection-end-line="5" selection-end-column="147" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db_config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/db_config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3135">
+              <caret line="2364" lean-forward="true" selection-start-line="2364" selection-end-line="2364" />
+              <folding>
+                <element signature="e#0#104#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -234,18 +256,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deal_server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deal_server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="queue.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/order_queue/queue.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -270,18 +280,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order_queue/order.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-              <folding>
-                <element signature="e#0#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -294,7 +292,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>from user</find>
       <find>st00</find>
       <find>creat_</find>
       <find>create_</find>
@@ -324,6 +321,7 @@
       <find>[0</find>
       <find>Result.volume</find>
       <find>helloworld</find>
+      <find>F100</find>
     </findStrings>
     <replaceStrings>
       <replace>admin_user</replace>
@@ -377,9 +375,7 @@
         <option value="$PROJECT_DIR$/templates/sell.html" />
         <option value="$PROJECT_DIR$/templates/stock_info.html" />
         <option value="$PROJECT_DIR$/templates/stock_query.html" />
-        <option value="$PROJECT_DIR$/db_config.py" />
         <option value="$PROJECT_DIR$/trading/order.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/clean_deal_server.py" />
         <option value="$PROJECT_DIR$/order_queue/order.py" />
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
@@ -389,6 +385,8 @@
         <option value="$PROJECT_DIR$/deal/deal.cpp" />
         <option value="$PROJECT_DIR$/deal/deal_engine.py" />
         <option value="$PROJECT_DIR$/deal/deal.py" />
+        <option value="$PROJECT_DIR$/db_config.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -986,27 +984,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/stock_query.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="628">
           <caret line="293" column="8" selection-start-line="293" selection-start-column="8" selection-end-line="293" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="2042" column="24" lean-forward="true" selection-start-line="2042" selection-start-column="24" selection-end-line="2042" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1084,16 +1065,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deal/deal.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1216">
@@ -1107,6 +1078,33 @@
           <caret line="5" column="147" lean-forward="true" selection-start-line="5" selection-start-column="147" selection-end-line="5" selection-end-column="147" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3135">
+          <caret line="2364" lean-forward="true" selection-start-line="2364" selection-end-line="2364" />
+          <folding>
+            <element signature="e#0#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
