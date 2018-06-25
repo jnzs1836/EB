@@ -12,6 +12,7 @@ class Order:
         self.direction = direction
         self._time = time.localtime(time.time())
         self.id = None
+        self.timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
     def set_id(self, order_id, stock_key):
         direction_map = {
@@ -20,6 +21,9 @@ class Order:
 
         }
         self.id = 'order' + stock_key + segment + 'uid' +self.user_id + segment + direction_map[int(self.direction)] +segment +  str(order_id)
+    def from_hash(self,hash):
+        self.id = hash['id'.encode('utf-8')].decode('utf-8')
+        self.timestamp = hash['timestamp'.encode('utf-8')].decode('utf-8')
 
     def get_stock_id(self):
         return self.stock_id
@@ -60,14 +64,15 @@ class Order:
         return self.direction
 
     def get_map(self):
-        now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        # now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
         return {
+            'id':self.id,
             'user_id':self.user_id,
             'stock_id':self.stock_id,
             'price':self.price,
             'volume':self.volume,
             'direction':self.direction,
-            'timestamp':now,
-            'time': now
+            'timestamp':self.timestamp,
+            'time': self.timestamp
 
         }

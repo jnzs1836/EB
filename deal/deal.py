@@ -3,7 +3,7 @@ import time
 from order_queue.order import Order
 
 class stock(ctypes.Structure):
-    _fields_ = [('stock_id', ctypes.c_int), ('order_type',ctypes.c_int),('Time',ctypes.c_char * 40),('user_id',ctypes.c_int),('volume',ctypes.c_int,4),
+    _fields_ = [('stock_id', ctypes.c_int), ('order_type',ctypes.c_int),('Time',ctypes.c_char * 40),('user_id',ctypes.c_int),('volume',ctypes.c_int),
                 ('price',ctypes.c_double)
         ]
 class exchange(ctypes.Structure):
@@ -26,9 +26,6 @@ def time_conversion(input):
 
 def order_conversion(order):
     get_time = time_conversion(order.time)
-    print(order.get_user_id())
-    print(float(order.get_price()))
-    print(int(order.get_user_id()[1:]))
     get = stock(int(order.get_stock_id()),int(order.get_direction()),get_time,int(order.get_user_id()[1:]),int(order.get_volume()),float(order.get_price()))
     return get
 

@@ -42,7 +42,8 @@ class PairQueue :
             return self.long_queue.push(order)
         else:
             return self.short_queue.push(order)
-
+    def get_first_order(self):
+        return self.long_queue.get_first_order(),self.short_queue.get_first_order()
     def pop(self):
         return self.long_queue.pop(),self.short_queue.pop()
 

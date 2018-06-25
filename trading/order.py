@@ -13,14 +13,17 @@ class QueueManager():
     def __init__(self):
         self.queues = {}
         self.count = 0
+        self.result = None
         self.r = redis.Redis()
         self.db_conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
         self.set_default_queues()
+
 
     def set_default_queues(self):
         cursor = self.db_conn.cursor()
         cursor.execute('select * from stock_set')
         result = cursor.fetchall()
+        self.result = result
         for item in result:
             stock_id = item[0]
             print(stock_id)
@@ -38,6 +41,12 @@ class QueueManager():
                 'decline':0,
             }
             self.r.hmset(item[0], mapping)
+    def set_count(self):
+        print("set count")
+        for item in self.result:
+            self.r.hset(item[0], 'long_count',0)
+            self.r.hset(item[0], 'short_count',0)
+
     # def get_extreme_price(stock_id):
         # get = dict()
         # return self.
@@ -120,11 +129,13 @@ def start_trading(stock_name):
 
 def create_order( user_id, stock_id, direction, price, volume,db):
     queue_manager = get_queue_manager()
-    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
-        return -1
+    print(user_id)
+    # return -1
+
+    # if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
+        # return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
-    print('here')
     pair_queue = queue_manager.get_pair_queue(stock_id)
     order_id = pair_queue.push(order)
     return order_id

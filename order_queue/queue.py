@@ -2,7 +2,7 @@
 import redis
 from order_queue.order import Order,segment
 from order_queue.constant import *
-# import random
+import random
 class Queue :
     def __init__(self, stock_id, direction = LONG, r = None, stock_name = None):
         self.id  = stock_id
@@ -24,17 +24,23 @@ class Queue :
             pass
         else:
             return 0
+        self.count = int(random.random()*1000)
+        self.count = int(self.r.hget(self.id, self.prefix + '_count'))
         order.set_id(self.count,self.key)
         self.count  = self.count + 1
-        print(self.id)
 
+        self.r.hset(self.id, self.prefix + '_count', self.count)
         # key = prefix + str(self.id)
+        print(order.get_score())
         # self.r.zadd(self.id,order.get_score(),order.get_id())
+        # a = 'ss' + 2
+        print("snnnnnnnnnnnnn")
         self.r.zadd(self.key,order.get_id(),order.get_score())
         self.r.hmset(order.get_id(),order.get_map())
         return order.get_id()
 
     def remove(self,order_id):
+        print("remove "+ order_id)
         if isinstance(order_id,str):
             pass
         else:
@@ -79,6 +85,7 @@ class Queue :
         return orders
 
     def pop(self):
+        print("pop")
         order_list = self.r.zrange(self.key,0,0)
         if not order_list:
             return None
@@ -86,7 +93,7 @@ class Queue :
         order_dict = self.r.hgetall(order_id)
         self.r.delete(order_id)
         self.r.zrem(self.key,order_id)
-        print(order_dict)
+        # print(order_dict)
         if order_dict:
             order = Order(self.id,order_dict['user_id'.encode('utf-8')].decode('utf-8'),
                           order_dict['price'.encode('utf-8')].decode('utf-8'),
@@ -95,7 +102,23 @@ class Queue :
         else:
             order = None
         return order
-
+    def get_first_order(self):
+        order_list = self.r.zrange(self.key, 0, 0)
+        order_list = self.r.zrange(self.key, 0, 0)
+        if not order_list:
+            return None
+        order_id = order_list[0]
+        order_dict = self.r.hgetall(order_id)
+        # print(order_dict)
+        if order_dict:
+            order = Order(self.id, order_dict['user_id'.encode('utf-8')].decode('utf-8'),
+                          order_dict['price'.encode('utf-8')].decode('utf-8'),
+                          order_dict['volume'.encode('utf-8')].decode('utf-8'),
+                        self.direction)
+            order.from_hash(order_dict)
+        else:
+            order = None
+        return order
     def get_first_price(self):
         order_list = self.r.zrange(self.key, 0, 0)
         if not order_list:

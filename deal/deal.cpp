@@ -60,10 +60,14 @@ exchange Deal(stock LongOrderStructure, stock ShortOrderStructure, double Limit,
 	double limit_up = ClosePrice + (ClosePrice*Limit);  /*?????????????*/
 	double limit_down = ClosePrice - (ClosePrice*Limit);
 	double MiddlePrice;   /*?��??*/
-	if(LongOrder->price == ShortOrder->price){    /*???????*/
+
+	if(LongOrder->price == ShortOrder->price){
+        printf("volume cpp %d\n",LongOrder->volume);
+	  /*???????*/
 		if(LongOrder->price>limit_up||LongOrder->price<limit_down){  /*?????????*/;
+
 			Result.volume=0;
-			printf("Hello World\n");
+//			printf("Hello World\n");
 			return Result;    /*????????????????0????*/
 		}
 		else{
@@ -89,7 +93,9 @@ exchange Deal(stock LongOrderStructure, stock ShortOrderStructure, double Limit,
         	    return Result;
 		    }
 		    else{
+
 			    Result.volume = LongOrder->volume;  /*?????????????????????????????0*/
+
 			    LongOrder->volume = 0;
 			    ShortOrder->volume = 0;
 			    return Result;
