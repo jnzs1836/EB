@@ -11,10 +11,10 @@ from trading.order import QueueManager
 def single_run(item):
     conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
     redis_conn = redis.Redis()
-    sys_status = redis_conn.hget('sys','status'.encode('utf-8'))
+    sys_status = redis_conn.hget('sys','status'.encode('utf-8')).decode('utf-8')
     print(sys_status)
     deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
-    while sys_status == 0:
+    while sys_status == '0':
         print('not start')
         sys_status = redis_conn.hget('sys', 'status'.encode('utf-8'))
     deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
