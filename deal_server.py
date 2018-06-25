@@ -27,27 +27,29 @@ def seq_run():
         stock_id = item[0]
         my = []
         my.append(stock_id)
-        my.append(None)
-        my.append(None)
         data_set.append(my)
+        conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
+        redis_conn = redis.Redis()
+        deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
+        my.append(deal_engine)
 
     while True:
         for item in data_set:
             single_run(item)
 
 def single_run(item):
-    conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
-    redis_conn = redis.Redis()
-    sys_status = redis_conn.hget('sys','status'.encode('utf-8')).decode('utf-8')
-    print(sys_status)
-    deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
+    # conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
+    # redis_conn = redis.Redis()
+    # sys_status = redis_conn.hget('sys','status'.encode('utf-8')).decode('utf-8')
+    # print(sys_status)
     # while str(sys_status) == '0':
     #     print('not start')
     #     sys_status = redis_conn.hget('sys', 'status'.encode('utf-8'))
     # deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
+    engine = item[1]
     if deal_engine.is_exist():
         print(item[0])
-        deal_engine.single_run()
+        engine.single_run()
 
 
 def all_run():
