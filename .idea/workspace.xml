@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1149b1b7-b65a-4c00-bc55-814f0f63e79b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/sql/stock_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/EB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/EB.iml" afterDir="false" />
@@ -62,6 +61,7 @@
       <change beforePath="$PROJECT_DIR$/sql/drop_stock.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/drop_stock.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/seed.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/seed.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sql/stock.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/stock.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/stock_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/sql/stock_info.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/assets/css/admin.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/css/admin.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/assets/css/amazeui.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/css/amazeui.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/assets/css/amazeui.flat.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/assets/css/amazeui.flat.css" afterDir="false" />
@@ -204,11 +204,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
+            <state relative-caret-position="418">
+              <caret line="223" column="91" selection-start-line="223" selection-start-column="91" selection-end-line="223" selection-end-column="91" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -243,11 +243,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="1989" column="35" selection-start-line="1989" selection-start-column="35" selection-end-line="1989" selection-end-column="35" />
+            <state relative-caret-position="323">
+              <caret line="1991" column="36" lean-forward="true" selection-start-line="1991" selection-start-column="36" selection-end-line="1991" selection-end-column="36" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
               </folding>
@@ -309,13 +309,13 @@
       <find>self.pair_queue</find>
       <find>create</find>
       <find>fetchall</find>
-      <find />
+      <find>not</find>
       <find>chag</find>
       <find>home</find>
       <find>home'</find>
       <find>print</find>
-      <find />
-      <find />
+      <find>not st</find>
+      <find>return -1</find>
       <find>helloworld</find>
       <find>started</find>
       <find>running</find>
@@ -383,9 +383,9 @@
         <option value="$PROJECT_DIR$/deal/deal_engine.py" />
         <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$USER_HOME$/Documents/Tencent Files/714582542/FileRecv/zzy.py" />
-        <option value="$PROJECT_DIR$/trading/order.py" />
         <option value="$PROJECT_DIR$/sql/stock_info.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/trading/order.py" />
       </list>
     </option>
   </component>
@@ -398,7 +398,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1116" />
     <option name="y" value="116" />
     <option name="width" value="1404" />
@@ -654,7 +654,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32992327" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5025381" side_tool="true" weight="0.27877238" />
@@ -1084,16 +1083,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trading/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Documents/Tencent Files/714582542/FileRecv/zzy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -1110,10 +1099,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="1989" column="35" selection-start-line="1989" selection-start-column="35" selection-end-line="1989" selection-end-column="35" />
+        <state relative-caret-position="323">
+          <caret line="1991" column="36" lean-forward="true" selection-start-line="1991" selection-start-column="36" selection-end-line="1991" selection-end-column="36" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trading/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="223" column="91" selection-start-line="223" selection-start-column="91" selection-end-line="223" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>

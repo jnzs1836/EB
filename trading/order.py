@@ -221,7 +221,7 @@ def unfreeze_fund(username,price,volume,db):
         fund = float(str(query_result[0]))
         freeze_fund = float(str(query_result[1]))
     freeze_fund -= price * volume
-    result = db.session.execute("update fund_account_user set freeze_fund = "+  freezing_money + "where username ='" + username + "'")
+    result = db.session.execute("update fund_account_user set freeze_fund = "+  freeze_fund + "where username ='" + username + "'")
     db.session.commit()
     return True
 
