@@ -103,6 +103,8 @@ class DealEngine:
     def is_exist(self):
         return self.exist
     def on_trading(self):
+        if str(self.stock_id) == '101':
+            return True
         status = self.r.hget(self.stock_id,'status'.encode('utf-8')).decode('utf-8')
         status = bool(status)
         if self.on is True and status is False:
