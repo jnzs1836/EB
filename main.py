@@ -2039,8 +2039,8 @@ def stock_orders_info():
 @app.route('/all_transaction',methods=['GET','POST'])
 def orders_info():
     data = request.get_json()
-    # user_id = session.get('userid')
-    user_id = 'F1000000'
+    user_id = session.get('userid')
+    # user_id = 'F1000000'
     json_data = {
         "state":'true',
         'message':'Hello World',
@@ -2057,8 +2057,8 @@ def orders_info():
 def order_handler():
     if request.method == 'POST':
         data = request.get_json()
-        # user_id = session.get('userid')
-        user_id = 'F1000000'
+        user_id = session.get('userid')
+        # user_id = 'F1000000'
         # print(user_id)
         # user_id = 'uid001'
         order_id = create_order(user_id,data['stock_id'],data['order_type'],data['price'],data['volume'],db)
