@@ -29,18 +29,6 @@ class QueueManager():
             print(stock_id)
             stock_name = item[1]
             self.queues[stock_id] = PairQueue(stock_id, stock_name, self.r)
-
-            mapping = {
-                'stock_id': stock_id,
-                'stock_name':stock_name,
-                'status': True,
-                'last_price': 0,
-                'newest_price':0,
-                'newest':0,
-                'gains':100000000,
-                'decline':0,
-            }
-            self.r.hmset(item[0], mapping)
     def set_count(self):
         print("set count")
         for item in self.result:
@@ -58,6 +46,7 @@ class QueueManager():
         self.r.flushall()
     def get_stock_id(self, stock_name):
         return self.r.hget(stock_name,'stock_id').decode('utf-8')
+
     def get_stock_status(self,stock_id):
         return self.r.hget(stock_id,'status').decode('utf-8')
 
@@ -79,6 +68,8 @@ class QueueManager():
         self.count += 1
         print("count "+ str(self.count))
         return self.queues[stock_id]
+
+
 
 def get_stock_current_state(stock_id):
     queue_manager = get_queue_manager()
@@ -122,10 +113,10 @@ def stop_trading(stock_name):
     stock_id = queue_manager.get_stock_id(stock_name)
     queue_manager.set_stock_off(stock_name)
 
-def start_trading(stock_name):
+def start_trading(stock_id):
     queue_manager = get_queue_manager()
-    stock_id = queue_manager.get_stock_id(stock_name)
-    queue_manager.set_stock_on(stock_name)
+    # stock_id = queue_manager.get_stock_id(stock_name)
+    queue_manager.set_stock_on(stock_id)
 
 def create_order( user_id, stock_id, direction, price, volume,db):
     queue_manager = get_queue_manager()
@@ -273,6 +264,7 @@ def change_stock_status(stock_id, status):
         start_trading(stock_id)
     else:
         stop_trading(stock_id)
+    return True
 
 def get_buy_sell_items(stock_id, is_buy):
     if is_buy:

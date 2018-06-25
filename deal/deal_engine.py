@@ -32,23 +32,30 @@ class DealEngine:
                            [str(self.stock_id)])
             result = cursor.fetchall()[0]
             self.stock_name = result[0]
-            cursor.execute('select gains,decline,status from stock_state where stock_id=%s',[str(self.stock_id)])
+            cursor.execute('select gains,decline,status,close_price from stock_state where stock_id=%s',[str(self.stock_id)])
             result = cursor.fetchall()
             self.limit = result[0][0]
+            self.decline = result[0][1]
             status = int(result[0][2])
+            self.close_price = float(result[0][3])
+            self.last_price = self.close_price
             self.exist = True
+            self.r.hset(stock_id, 'engine_exist', True)
             if status == 1:
+                self.redis_init(True,True,self.gains,self.decline,self.close_price)
                 self.on = True
                 print(str(stock_id) + " is running")
             else:
+                self.redis_init(False,True,self.gains,self.decline,self.close_price)
                 self.on = False
                 print(str(stock_id) + " is pending")
-            self.last_price = float(self.r.hget(self.stock_id,'newest_price').decode('utf-8'))
+            # self.last_price = float(self.r.hget(self.stock_id,'newest_price').decode('utf-8'))
 
-            self.close_price = self.last_price
-            if self.close_price == 0:
-                self.close_price = 10
+            # self.close_price = self.last_price
+            # if self.close_price == 0:
+            #     self.close_price = 10
         except Exception as e:
+            self.redis_init(False,False,0,0,0)
             self.close_price = 0
             self.on = False
             self.last_price = 0
@@ -62,25 +69,65 @@ class DealEngine:
 
 
         # self.last_price = 4
-        # self.
+        # self
 
+    def redis_init(self,status,engine_exists,gains,decline,close_price):
+        mapping = {
+            'stock_id': self.stock_id,
+            'stock_name': self.stock_name,
+            'status': status,
+            'last_price': close_price,
+            'newest_price': close_price,
+            'newest': close_price,
+            'gains': gains,
+            'decline': decline,
+            'engine_exist':engine_exists,
+            'long_count':0,
+            'short_count':0
+        }
+        self.r.hmset(self.stock_id, mapping)
     def is_exist(self):
         return self.exist
     def on_trading(self):
+        status = self.r.hget(self.stock_id,'status'.encode('utf-8')).decode('utf-8')
+        if self.on is True and status is False:
+            print(str(self.stock_id) + ' is stopped')
+        elif self.on is False and status is True:
+            print(str(self.stock_id) + ' is started')
+        self.on = status
         if not self.exist:
             return False
-        if self.on:
-            return True
-        else:
-            # time.sleep(1)
-            cursor = self.db_conn.cursor()
-            cursor.execute('select status from stock_state where stock_id=%s',[self.stock_id])
-            status = int(cursor.fetchall()[0][0])
-            if status ==1 :
-                self.on = status
-                return True
-            else:
-                return False
+
+        return self.on
+
+        # if self.on:
+        #     return True
+        # else:
+        #
+        #     # time.sleep(1)
+        #     cursor = self.db_conn.cursor()
+        #     cursor.execute('select status from stock_state where stock_id=%s',[self.stock_id])
+        #     status = int(cursor.fetchall()[0][0])
+        #     if status ==1 :
+        #         self.on = status
+        #         return True
+        #     else:
+        #         return False
+
+    def on_stop(self):
+        self.on = False
+        self.r.hset(self.id,'status',False)
+        pass
+
+    def on_resume(self):
+        self.on = True
+        self.r.hset(self.id, 'status', True)
+
+    def on_close(self):
+        self.on = False
+        self.exist = False
+        self.r.hest(self.id,'engine_exist',False)
+        self.r.hset(self.id, 'status', False)
 
     def save_deal(self, result,buy_order,sell_order):
         cursor = self.db_conn.cursor()
@@ -145,7 +192,7 @@ class DealEngine:
         cursor.close()
         self.r.hset(result.stock_id,'last_price',result.price)
         self.r.hset(result.stock_id,'newest_price',result.price)
-
+        self.r.hset(result.stock_id,'newest',result.price)
         print("deal finished")
 
     def deal(self):
