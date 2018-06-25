@@ -299,7 +299,12 @@ def set_price_limit(stock_id, price, is_gains): # is_gains true设置涨幅 ，f
     queue_manager = get_queue_manager()
     pair_queue = queue_manager.get_pair_queue(stock_id)
     if is_gains:
+        cursor = pair_queue.db_conn.cursor()
+        cursor.execute('update stock_state set gains=%s where stock_id=%s',[price,stock_id])
+        # cursor.close()
         pair_queue.set_gains(price)
     else:
-        pair.queue.set_decline(price)
+        cursor = pair_queue.db_conn.cursor()
+        cursor.execute('update stock_state set decline=%s where stock_id=%s',[price,stock_id])
+        pair_queue.set_decline(price)
     return True
