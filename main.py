@@ -1988,7 +1988,7 @@ def cancel_order():
     order_id = data['transaction_id']
     order_type = data['order_type']
     if order_type == 2:
-        remove_order(order_id)
+        remove_order(order_id,user_id,db)
         json_data = {
             "status":True,
             'msg':'删除成功'

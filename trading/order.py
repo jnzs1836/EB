@@ -125,8 +125,8 @@ def create_order( user_id, stock_id, direction, price, volume,db):
     status = queue_manager.r.hget(stock_id,'status'.encode('utf-8')).decode('utf-8')
     if status == 'False':
         return -1
-    # if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
-    #     return -1
+    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
+        return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
     pair_queue = queue_manager.get_pair_queue(stock_id)
@@ -143,12 +143,21 @@ def get_order_status(order_id):
     except:
         return False
 
-def remove_order(order_id):
+def remove_order(order_id, user_id,db):
     queue_manager = get_queue_manager()
     stock_id = queue_manager.r.hget(order_id,'stock_id').decode('utf-8')
+    price = float(queue_manager.r.hget(order_id,'price').decode('utf-8'))
+    volume = int(queue_manager.r.hget(order_id,'volume').decode('utf-8'))
     direction = int(queue_manager.r.hget(order_id,'direction').decode('utf-8'))
+    result = db.session.execute("select security_account from fund_account_user where username ='" + username + "'")
+    security_account = result.first()[0]
+    if not unfreeze_fund(user_id,price,volume,db):
+        return False
+    if not unfreeze_stock(security_account,stock_id,volume,db):
+        return False
     pair_queue = queue_manager.get_pair_queue(stock_id)
     pair_queue.remove(order_id,direction)
+
 
 
 def clean_queue(stock_name):
@@ -198,6 +207,42 @@ def get_stock_orders(stock_id,type):
     else:
         return pair_queue.get_long_orders()
 
+def unfreeze_fund(username,price,volume,db):
+    result = db.session.execute("select * from fund_account_user where username ='" + username + "'")
+    if result.first() is None:
+        return False
+    result = db.session.execute(
+        "select enabled_money,freezing_money from fund_account_user where username ='" + username + "'")
+    fund = 0
+    freeze_fund = 0
+    new_fund = 0
+    new_freeze_fund = 0
+    for query_result in result:
+        fund = float(str(query_result[0]))
+        freeze_fund = float(str(query_result[1]))
+    freeze_fund -= price * volume
+    result = db.session.execute("update fund_account_user set freeze_fund = "+  freezing_money + "where username ='" + username + "'")
+    db.session.commit()
+    return True
+
+def unfreeze_stock(username,security_number,volume,db):
+    esult = db.session.execute("select * from security_in_account where username ='"
+                               + username + "' and security_number='" + security_number + "'")
+    if result.first() is None:
+        return False
+    result = db.session.execute("select amount,freezing_amount from security_in_account where username ='"
+                                + username + "' and security_number='" + security_number + "'")
+    security = 0
+    freeze_security = 0
+    new_security = 0
+    new_freeze_security = 0
+    for query_result in result:
+        security = query_result[0]
+        freeze_security = query_result[1]
+    freeze_security -= volume
+    result = db.session.execute("update security_in_account set amount = "+  freeze_security + "where username ='" + username + "' and security_number='" + security_number + "'")
+    db.session.commit()
+    return True
 
 def trade_fund(username, money, operation_type,db):
     # db =
