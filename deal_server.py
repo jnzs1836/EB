@@ -12,6 +12,7 @@ def single_run(item):
     conn = mysql.connector.connect(user=db_user, password=db_secret, database='EB', use_unicode=True)
     redis_conn = redis.Redis()
     sys_status = redis_conn.hget('sys','status'.encode('utf-8')).decode('utf-8')
+    print(sys_status)
     while sys_status is 'False':
         print('not start')
         sys_status = redis_conn.hget('sys', 'status'.encode('utf-8')).decode('utf-8')
