@@ -13,6 +13,7 @@ def single_run(item):
     redis_conn = redis.Redis()
     sys_status = redis_conn.hget('sys','status'.encode('utf-8')).decode('utf-8')
     while sys_status is False:
+        print('not start')
         sys_status = redis_conn.hget('sys', 'status'.encode('utf-8')).decode('utf-8')
     deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
     if deal_engine.is_exist():
@@ -32,8 +33,8 @@ def all_run():
     cursor.close()
     agents = len(result)
     data_set = []
-    queue_manager = QueueManager()
-    queue_manager.set_count()
+    # queue_manager = QueueManager()
+    # queue_manager.set_count()
     for item in result:
         stock_id = item[0]
         my = []
