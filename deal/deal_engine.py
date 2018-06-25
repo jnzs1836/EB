@@ -278,6 +278,8 @@ class DealEngine:
         # # self.pair_queue.push(re_order)
         self.logger.info("Success")
         return True
+    def single_run(self):
+        self.deal()
 
     def run(self):
         while True:

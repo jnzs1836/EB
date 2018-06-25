@@ -125,8 +125,8 @@ def create_order( user_id, stock_id, direction, price, volume,db):
     status = queue_manager.r.hget(stock_id,'status'.encode('utf-8')).decode('utf-8')
     if status == 'False':
         return -1
-    if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
-        return -1
+    # if not check_user(user_id,stock_id,float(price),int(volume),int(direction),db):
+    #     return -1
     # stock_id = queue_manager.get_stock_id(stock_name)
     order = Order(stock_id, user_id, price, volume, direction)
     pair_queue = queue_manager.get_pair_queue(stock_id)
