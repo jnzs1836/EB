@@ -86,7 +86,10 @@ def get_stock_info_manage(stock_id):
         print(stock_hash)
         for key,value in stock_hash.items():
             stock_dict[key.decode('utf-8')] = value.decode('utf-8')
-
+        if stock_dict['status'] is 'True':
+            stock_dict['status'] = 'true'
+        elif stock_dict['status'] is 'False':
+            stock_dict['status'] = 'false'
         return stock_dict
     except :
         return {}
@@ -151,10 +154,12 @@ def remove_order(order_id, user_id,db):
     direction = int(queue_manager.r.hget(order_id,'direction').decode('utf-8'))
     result = db.session.execute("select security_account from fund_account_user where username ='" + user_id + "'")
     security_account = result.first()[0]
-    if not unfreeze_fund(user_id,price,volume,db):
-        return False
-    if not unfreeze_stock(security_account,stock_id,volume,db):
-        return False
+    if direction == LONG:
+        if not unfreeze_fund(user_id,price,volume,db):
+            return False
+    else:
+        if not unfreeze_stock(security_account,stock_id,volume,db):
+            return False
     pair_queue = queue_manager.get_pair_queue(stock_id)
     pair_queue.remove(order_id,direction)
 

@@ -207,8 +207,8 @@
       <file leaf-file-name="order.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/trading/order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="242" column="64" selection-start-line="242" selection-start-column="64" selection-end-line="242" selection-end-column="64" />
+            <state relative-caret-position="451">
+              <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -234,22 +234,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db_config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_config.py">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="16" selection-start-column="16" selection-end-column="16" />
+            <state relative-caret-position="251">
+              <caret line="2301" column="24" selection-start-line="2301" selection-start-column="13" selection-end-line="2301" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#104#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+      <file leaf-file-name="homepage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/homepage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="1991" column="36" selection-start-line="1991" selection-start-column="36" selection-end-line="1991" selection-end-column="36" />
+            <state relative-caret-position="413">
+              <caret line="177" column="85" selection-start-line="177" selection-start-column="85" selection-end-line="177" selection-end-column="85" />
               <folding>
-                <element signature="e#0#104#0" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#div#0;n#td#5;n#tr#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -291,10 +294,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>commit</find>
-      <find>F100000</find>
-      <find>-----------------------</find>
-      <find>get_extreme</find>
       <find>printf</find>
       <find>8</find>
       <find>volume</find>
@@ -321,6 +320,10 @@
       <find>running</find>
       <find>F1000</find>
       <find>remove</find>
+      <find>manage/api/s</find>
+      <find>暂停</find>
+      <find>/api/stock</find>
+      <find>manage/home</find>
     </findStrings>
     <replaceStrings>
       <replace>admin_user</replace>
@@ -715,7 +718,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/trading/order.py</url>
-          <line>281</line>
+          <line>286</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
@@ -723,13 +726,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/寤鸿〃.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1091,6 +1087,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/homepage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="177" column="85" selection-start-line="177" selection-start-column="85" selection-end-line="177" selection-end-column="85" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#div#0;n#td#5;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sql/stock_info.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
@@ -1100,8 +1106,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="1991" column="36" selection-start-line="1991" selection-start-column="36" selection-end-line="1991" selection-end-column="36" />
+        <state relative-caret-position="251">
+          <caret line="2301" column="24" selection-start-line="2301" selection-start-column="13" selection-end-line="2301" selection-end-column="24" />
           <folding>
             <element signature="e#0#104#0" expanded="true" />
           </folding>
@@ -1110,8 +1116,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/trading/order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="242" column="64" selection-start-line="242" selection-start-column="64" selection-end-line="242" selection-end-column="64" />
+        <state relative-caret-position="451">
+          <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
