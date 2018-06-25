@@ -11,7 +11,7 @@ import time
 class DealEngine:
     def __init__(self, stock_id, db_conn = None, redis_conn = None):
         self.stock_id = stock_id
-        self.stock_name = None
+        self.stock_name = 'Not Set'
         self.pair_queue = PairQueue(stock_id)
         self.logger = Logger('engine')
         self.db_conn = db_conn
@@ -63,8 +63,9 @@ class DealEngine:
             print( str(stock_id) +" fails: " + str(e))
             self.exist = False
         finally:
-            cursor.execute('insert into today_stock (stock_id,stock_name,price,date) values (%s,%s,%s,%s)',
-                           [self.stock_id, self.stock_name, self.close_price, now])
+            self.set_open_price()
+            # cursor.execute('insert into today_stock (stock_id,stock_name,price,date) values (%s,%s,%s,%s)',
+            #                [self.stock_id, self.stock_name, self.close_price, now])
             self.db_conn.commit()
             cursor.close()
 
@@ -87,6 +88,18 @@ class DealEngine:
             'short_count':0
         }
         self.r.hmset(self.stock_id, mapping)
+
+    def set_open_price(self):
+        cursor = self.db_conn.cursor()
+        cursor.execute("select max(date) from previous_stock where stock_id = %s",[self.stock_id])
+        last_date = cursor.fetchall()[0][0]
+        print(last_date)
+        cursor.execute("select end_price from previous_stock where stock_id=%s and date=%s",[self.stock_id,last_date])
+        price = float(cursor.fetchall()[0][0])
+        self.r.hset(self.stock_id,'newest_price',price)
+        now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        cursor.execute('insert into today_stock (stock_id,stock_name,price,date) values (%s,%s,%s,%s)',[self.stock_id,self.stock_name,price,now])
+
     def is_exist(self):
         return self.exist
     def on_trading(self):

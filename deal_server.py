@@ -13,12 +13,14 @@ def single_run(item):
     redis_conn = redis.Redis()
     sys_status = redis_conn.hget('sys','status'.encode('utf-8'))
     print(sys_status)
+    deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
     while sys_status == 0:
         print('not start')
         sys_status = redis_conn.hget('sys', 'status'.encode('utf-8'))
     deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
     if deal_engine.is_exist():
         deal_engine.run()
+
 
 def all_run():
     redis_conn = redis.Redis()
