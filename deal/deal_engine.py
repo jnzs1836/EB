@@ -180,10 +180,18 @@ class DealEngine:
         # quantity = result.price * result.volume
 
         cursor.execute('select amount from security_in_account where username=%s', [buy_id])
-        buy_security = int(cursor.fetchall()[0][0])
+        result_c = cursor.fetchall()
+        if result_c:
+            buy_security = int(result_c[0][0])
+        else:
+            buy_security = 0
         buy_security += result.volume
-        cursor.execute('update security_in_account set amount = %s where username = %s',
+        if result_c:
+            cursor.execute('update security_in_account set amount = %s where username = %s',
                        [buy_security, buy_id])
+        else:
+            cursor.execute('insert into security_in_account (username, security_number,security_name ,amount,total_price,freezing_amount ) values (%s,%s,%s,%s,%s,%s)',
+                           [buy_id,self.stock_id,self.stock_name,buy_security,1000,0])
 
         #---------------------------------------------------------------------------------------------------------------
         cursor.execute('select freezing_money from fund_account_user where username=%s', [buy_fund_id])

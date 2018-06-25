@@ -173,11 +173,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="deal_engine.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="282" selection-start-line="282" selection-end-line="282" />
+            <state relative-caret-position="570">
+              <caret line="192" column="54" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="54" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -263,11 +263,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deal_server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="deal_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/deal_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="49" column="32" lean-forward="true" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="32" />
+            <state relative-caret-position="646">
+              <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -324,11 +324,11 @@
       <find>home'</find>
       <find>running</find>
       <find>print</find>
-      <find>started</find>
       <find>not st</find>
       <find>return -1</find>
       <find>helloworld</find>
       <find>F1000</find>
+      <find>started</find>
     </findStrings>
     <replaceStrings>
       <replace>admin_user</replace>
@@ -388,12 +388,12 @@
         <option value="$PROJECT_DIR$/order_queue/pair_queue.py" />
         <option value="$PROJECT_DIR$/sql/addon.sql" />
         <option value="$PROJECT_DIR$/trading/order.py" />
-        <option value="$PROJECT_DIR$/deal/deal_engine.py" />
         <option value="$PROJECT_DIR$/db_config.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/deal/deal.cpp" />
         <option value="$PROJECT_DIR$/Jiang.py" />
         <option value="$PROJECT_DIR$/deal_server.py" />
+        <option value="$PROJECT_DIR$/deal/deal_engine.py" />
       </list>
     </option>
   </component>
@@ -1035,16 +1035,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="282" selection-start-line="282" selection-end-line="282" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trading/order.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2755">
@@ -1111,10 +1101,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deal_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="49" column="32" lean-forward="true" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="32" />
+        <state relative-caret-position="646">
+          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deal/deal_engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="192" column="54" selection-start-line="192" selection-start-column="35" selection-end-line="192" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
