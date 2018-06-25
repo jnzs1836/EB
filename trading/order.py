@@ -149,7 +149,7 @@ def remove_order(order_id, user_id,db):
     price = float(queue_manager.r.hget(order_id,'price').decode('utf-8'))
     volume = int(queue_manager.r.hget(order_id,'volume').decode('utf-8'))
     direction = int(queue_manager.r.hget(order_id,'direction').decode('utf-8'))
-    result = db.session.execute("select security_account from fund_account_user where username ='" + username + "'")
+    result = db.session.execute("select security_account from fund_account_user where username ='" + user_id + "'")
     security_account = result.first()[0]
     if not unfreeze_fund(user_id,price,volume,db):
         return False
