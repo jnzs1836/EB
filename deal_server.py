@@ -47,7 +47,7 @@ def single_run(item):
     #     sys_status = redis_conn.hget('sys', 'status'.encode('utf-8'))
     # deal_engine = DealEngine(str(item[0]), db_conn=conn, redis_conn=redis_conn)
     engine = item[1]
-    if deal_engine.is_exist():
+    if engine.is_exist():
         print(item[0])
         engine.single_run()
 
