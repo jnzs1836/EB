@@ -240,7 +240,7 @@ def unfreeze_stock(username,security_number,volume,db):
         security = query_result[0]
         freeze_security = query_result[1]
     freeze_security -= volume
-    result = db.session.execute("update security_in_account set amount = "+  str(freeze_security) + "where username ='" + username + "' and security_number='" + security_number + "'")
+    result = db.session.execute("update security_in_account set amount = "+  str(freeze_security) + " where username ='" + username + "' and security_number='" + security_number + "'")
     db.session.commit()
     return True
 
