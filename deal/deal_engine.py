@@ -35,6 +35,7 @@ class DealEngine:
             cursor.execute('select gains,decline,status,close_price from stock_state where stock_id=%s',[str(self.stock_id)])
             result = cursor.fetchall()
             self.limit = result[0][0]
+            self.gains = self.limit
             self.decline = result[0][1]
             status = int(result[0][2])
             self.close_price = float(result[0][3])
