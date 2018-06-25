@@ -1987,6 +1987,7 @@ def cancel_order():
     data = request.get_json()
     order_id = data['transaction_id']
     order_type = data['order_type']
+    user_id = session.get('userid')
     if order_type == 2:
         remove_order(order_id,user_id,db)
         json_data = {
