@@ -2,6 +2,7 @@
    ��������
    g++ -fPIC deal.cpp -o libdeal.so -shared
    export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/home/jnzs1836/anaconda3/include/python3.6m"
+   export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:/root/anaconda3/include/python3.6m
 */
 
 #include <time.h>
